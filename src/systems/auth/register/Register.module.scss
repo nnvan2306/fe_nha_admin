@@ -1,0 +1,40 @@
+.form-register {
+    height : 100%;
+    width  : 100%;
+    padding: 10px 10px;
+
+    .form-header {
+        height : 60px;
+        width  : 100%;
+        display: flex;
+
+        .logo {
+            width : 20%;
+            height: 50px;
+
+            img {
+                width        : 50px;
+                height       : 50px;
+                border-radius: 50%;
+                object-fit   : cover;
+            }
+        }
+
+        .text-header {
+            width      : 75%;
+            margin-left: 20px;
+
+            p {
+                font-weight: 700;
+                font-size  : 20px;
+                line-height: 50px;
+            }
+
+        }
+
+        .close {
+            width: 5%;
+
+        }
+    }
+}
