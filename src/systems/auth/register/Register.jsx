@@ -1,9 +1,62 @@
 import classNames from "classnames/bind";
 import styles from "./Register.module.scss";
+import { NavLink, useLocation } from "react-router-dom";
+import { useState } from "react";
+import Swal from "sweetalert2";
 
 const cx = classNames.bind(styles);
+const path = "/auth/register";
 
 export default function Register() {
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const [password, setPassword] = useState("");
+    const [rePassword, setRePassword] = useState("");
+
+    let loction = useLocation().pathname;
+
+    const handleValidateRegister = () => {
+        const arrCheck = [email, name, password, rePassword];
+        for (let i = 0; i < arrCheck.length; i++) {
+            if (!arrCheck[i]) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Please fill in all information !",
+                });
+                return false;
+            }
+        }
+
+        const validRegex =
+            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+        if (!validRegex.test(email)) {
+            Swal.fire({
+                icon: "warning",
+                title: "Please enter the correct email format",
+            });
+            return false;
+        }
+
+        if (password !== rePassword) {
+            Swal.fire({
+                icon: "warning",
+                title: "password and re-pasword are not the same",
+            });
+            return false;
+        }
+        return true;
+    };
+
+    const handleRegister = () => {
+        let check = handleValidateRegister();
+        if (!check) return;
+    };
+
+    const handleLogin = () => {
+        console.log("login");
+    };
+
     return (
         <div className={cx("form-register")}>
             <div className={cx("form-header")}>
@@ -15,11 +68,12 @@ export default function Register() {
                 </div>
 
                 <div className={cx("text-header")}>
-                    <p>Register</p>
+                    <p>{loction === path ? "Register" : "Login"}</p>
                 </div>
+
                 <div className={cx("close")}>
                     <i
-                        className={cx("bi bi-x-circle")}
+                        className={cx("bi bi-x-circle", "icon-close")}
                         style={{
                             color: "red",
                             fontSize: "25px",
@@ -28,6 +82,97 @@ export default function Register() {
                     ></i>
                 </div>
             </div>
+
+            <div className={cx("input-control")}>
+                <div className={cx("form-input")}>
+                    <label htmlFor="email">Email</label>
+                    <br />
+                    <input
+                        type="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+
+                {loction === path ? (
+                    <div className={cx("form-input")}>
+                        <label htmlFor="name">Name</label>
+                        <br />
+                        <input
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </div>
+                ) : (
+                    <></>
+                )}
+
+                <div className={cx("form-input")}>
+                    <label htmlFor="password">Password</label>
+                    <br />
+                    <input
+                        type="text"
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+
+                {loction === path ? (
+                    <div className={cx("form-input")}>
+                        <label htmlFor="re-password">Re-password</label>
+                        <br />
+                        <input
+                            type="text"
+                            id="re-password"
+                            value={rePassword}
+                            onChange={(e) => setRePassword(e.target.value)}
+                        />
+                    </div>
+                ) : (
+                    <></>
+                )}
+            </div>
+
+            <div className={cx("form-submit")}>
+                <button
+                    className={cx("button-submit")}
+                    onClick={() =>
+                        loction === path ? handleRegister() : handleLogin()
+                    }
+                >
+                    {loction === path ? "Register" : "Login"}
+                </button>
+            </div>
+
+            <div className={cx("form-support")}>
+                <span>
+                    {loction === path
+                        ? "Do you already have an account"
+                        : "Already have an account?"}{" "}
+                    ?{" "}
+                </span>
+                <NavLink
+                    className={cx("navlink")}
+                    to={loction === path ? "/auth/login" : "/auth/register"}
+                >
+                    {loction === path ? "(Login)" : "(Register)"}
+                </NavLink>
+            </div>
+
+            {/* {loction === path ? (
+                <></>
+            ) : (
+                <div className={cx("form-footer")}>
+                    <img
+                        src="https://www.thethaothientruong.vn/uploads/2023/giai-ngoai-hang-anh-la-gi.jpg"
+                        alt=""
+                    />
+                </div>
+            )} */}
         </div>
     );
 }

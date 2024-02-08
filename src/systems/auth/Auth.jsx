@@ -1,21 +1,17 @@
 import classNames from "classnames/bind";
 import styles from "./Auth.module.scss";
 import { NavLink, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect } from "react";
 import Register from "./register/Register";
-import Login from "./login/Login";
 
 const cx = classNames.bind(styles);
 
 export default function Auth() {
-    const [isShowForm, setIsShowForm] = useState(false);
+    // const [path, setPath] = useState("");
 
     const location = useLocation().pathname;
+    useEffect(() => {}, []);
 
-    const handleShowForm = () => {
-        console.log("a");
-        setIsShowForm(true);
-    };
     return (
         <div className={cx("form-home")}>
             <img
@@ -25,20 +21,12 @@ export default function Auth() {
             <div className={cx("form-control")}>
                 <p>Welcome to Premier League</p>
                 <div className={cx("form-button")}>
-                    <NavLink
-                        className={cx("navlink")}
-                        to="/auth/login"
-                        onClick={() => handleShowForm()}
-                    >
+                    <NavLink className={cx("navlink")} to="/auth/login">
                         <button>
                             <p>Login</p>
                         </button>
                     </NavLink>
-                    <NavLink
-                        className={cx("navlink")}
-                        to="/auth/register"
-                        onClick={() => handleShowForm()}
-                    >
+                    <NavLink className={cx("navlink")} to="/auth/register">
                         <button>
                             <p>Register</p>
                         </button>
@@ -46,9 +34,11 @@ export default function Auth() {
                 </div>
             </div>
 
-            <div className={cx(isShowForm ? "form-auth" : "d-none")}>
-                {location === "/auth/login" ? <Login /> : <Register />}
-            </div>
+            {location === "/auth/login" || location === "/auth/register" ? (
+                <Register />
+            ) : (
+                <></>
+            )}
         </div>
     );
 }

@@ -71,19 +71,19 @@
         }
     }
 
-    .form-auth {
-        position        : absolute;
-        z-index         : 3;
-        border          : none;
-        border-radius   : 10px;
-        box-shadow      : 5px 8px 5px 8px rgba(0, 0, 0, 0.4);
-        width           : 25vw;
-        height          : 80vh;
-        background-color: #fff;
-        animation       : show-form 0.5s ease-in-out forwards;
+    // .form-auth {
+    //     position        : absolute;
+    //     z-index         : 3;
+    //     border          : none;
+    //     border-radius   : 10px;
+    //     box-shadow      : 5px 8px 5px 8px rgba(0, 0, 0, 0.4);
+    //     width           : 25vw;
+    //     height          : 80vh;
+    //     background-color: #fff;
+    //     animation       : show-form 0.5s ease-in-out forwards;
 
 
-    }
+    // }
 
 }
 
@@ -115,18 +115,18 @@
     }
 }
 
-@keyframes show-form {
-    0% {
-        top      : 100%;
-        left     : 50%;
-        transform: translateX(-50%);
-        opacity  : 0;
-    }
+// @keyframes show-form {
+//     0% {
+//         top      : 100%;
+//         left     : 50%;
+//         transform: translateX(-50%);
+//         opacity  : 0;
+//     }
 
-    100% {
-        top      : 50%;
-        left     : 50%;
-        transform: translate(-50%, -50%);
-        opacity  : 1;
-    }
-}
+//     100% {
+//         top      : 50%;
+//         left     : 50%;
+//         transform: translate(-50%, -50%);
+//         opacity  : 1;
+//     }
+// }
