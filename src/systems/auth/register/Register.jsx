@@ -3,6 +3,7 @@ import styles from "./Register.module.scss";
 import { NavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import validateEmail from "../../../helps/validateEmail";
 
 const cx = classNames.bind(styles);
 const path = "/auth/register";
@@ -14,6 +15,8 @@ export default function Register() {
     const [rePassword, setRePassword] = useState("");
 
     let loction = useLocation().pathname;
+
+    // Register
 
     const handleValidateRegister = () => {
         const arrCheck = [email, name, password, rePassword];
@@ -27,10 +30,7 @@ export default function Register() {
             }
         }
 
-        const validRegex =
-            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-        if (!validRegex.test(email)) {
+        if (!validateEmail(email)) {
             Swal.fire({
                 icon: "warning",
                 title: "Please enter the correct email format",
@@ -51,10 +51,40 @@ export default function Register() {
     const handleRegister = () => {
         let check = handleValidateRegister();
         if (!check) return;
+
+        let dataBuider = {
+            email: email,
+            name: name,
+            password: password,
+            rePassword: rePassword,
+        };
     };
 
+    // Login
+
+    const validateLogin = () => {
+        const arrCheck = [email, password];
+        for (let i = 0; i < arrCheck.length; i++) {
+            if (!arrCheck[i]) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Please fill in all information !",
+                });
+                return false;
+            }
+        }
+        if (!validateEmail(email)) {
+            Swal.fire({
+                icon: "warning",
+                title: "Please enter the correct email format",
+            });
+            return false;
+        }
+        return true;
+    };
     const handleLogin = () => {
-        console.log("login");
+        let check = validateLogin();
+        if (!check) return;
     };
 
     return (
