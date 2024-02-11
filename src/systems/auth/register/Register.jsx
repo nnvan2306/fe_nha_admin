@@ -1,9 +1,13 @@
 import classNames from "classnames/bind";
 import styles from "./Register.module.scss";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import validateEmail from "../../../helps/validateEmail";
+import {
+    RegisterService,
+    handleLoginService,
+} from "../../../service/authService";
 
 const cx = classNames.bind(styles);
 const path = "/auth/register";
@@ -14,7 +18,15 @@ export default function Register() {
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
 
+    const navigate = useNavigate();
     let loction = useLocation().pathname;
+
+    const reSetValue = () => {
+        setEmail("");
+        setName("");
+        setPassword("");
+        setRePassword("");
+    };
 
     // Register
 
@@ -48,7 +60,7 @@ export default function Register() {
         return true;
     };
 
-    const handleRegister = () => {
+    const handleRegister = async () => {
         let check = handleValidateRegister();
         if (!check) return;
 
@@ -58,6 +70,16 @@ export default function Register() {
             password: password,
             rePassword: rePassword,
         };
+
+        try {
+            let fetch = await RegisterService(dataBuider);
+            if (fetch?.errorCode === 0) {
+                reSetValue();
+                navigate("/auth/login");
+            }
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     // Login
@@ -82,9 +104,25 @@ export default function Register() {
         }
         return true;
     };
-    const handleLogin = () => {
+
+    const handleLogin = async () => {
         let check = validateLogin();
         if (!check) return;
+
+        let dataBuider = {
+            email: email,
+            password: password,
+        };
+
+        try {
+            let fetch = await handleLoginService(dataBuider);
+            if (fetch?.errorCode === 0) {
+                reSetValue();
+                navigate("/");
+            }
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (
@@ -192,17 +230,6 @@ export default function Register() {
                     {loction === path ? "(Login)" : "(Register)"}
                 </NavLink>
             </div>
-
-            {/* {loction === path ? (
-                <></>
-            ) : (
-                <div className={cx("form-footer")}>
-                    <img
-                        src="https://www.thethaothientruong.vn/uploads/2023/giai-ngoai-hang-anh-la-gi.jpg"
-                        alt=""
-                    />
-                </div>
-            )} */}
         </div>
     );
 }

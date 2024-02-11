@@ -1,5 +1,5 @@
 export const RouterDTO = Object.freeze({
-    home: "*",
+    home: "/*",
     auth: {
         manageAuth: "/auth/*",
         register: "/auth/register",
