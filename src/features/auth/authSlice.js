@@ -1,12 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initState = {};
+const initState = {
+    isLogin: false,
+    token: null,
+};
 
 export const authSlice = createSlice({
     initialState: initState,
     name: "authSlice",
     reducers: {
-        // loginSuccess(state, action) {},
+        loginSuccess(state, action) {
+            const stateClone = {
+                ...state,
+            };
+
+            stateClone.isLogin = true;
+            stateClone.token = action.payload.token;
+            return stateClone;
+        },
         // logoutAction(state) {},
     },
 });

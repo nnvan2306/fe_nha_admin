@@ -5,5 +5,7 @@ export const RegisterService = (data) => {
 };
 
 export const handleLoginService = (data) => {
-    return axios.post("/login", data);
+    return axios.post("/login", data, {
+        withCredentials: true,
+    });
 };

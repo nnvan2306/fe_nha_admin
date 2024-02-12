@@ -3,11 +3,18 @@ import styles from "./Auth.module.scss";
 import { NavLink, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Register from "./register/Register";
+import { useSelector } from "react-redux";
 
 const cx = classNames.bind(styles);
 
 export default function Auth() {
-    // const [path, setPath] = useState("");
+    const isLogin = useSelector((state) => state.authSlice.isLogin);
+    const token = useSelector((state) => state.authSlice.token);
+
+    useEffect(() => {
+        console.log("isLogin:", isLogin);
+        console.log("token:", token);
+    }, [isLogin, token]);
 
     const location = useLocation().pathname;
     useEffect(() => {}, []);

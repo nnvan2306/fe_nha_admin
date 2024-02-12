@@ -1,13 +1,15 @@
 import classNames from "classnames/bind";
 import styles from "./Register.module.scss";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import validateEmail from "../../../helps/validateEmail";
 import {
     RegisterService,
     handleLoginService,
 } from "../../../service/authService";
+import { useDispatch, useSelector } from "react-redux";
+import { loginSuccess } from "../../../features/auth/authSlice";
 
 const cx = classNames.bind(styles);
 const path = "/auth/register";
@@ -18,8 +20,16 @@ export default function Register() {
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
 
+    const isLogin = useSelector((state) => state.authSlice.isLogin);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     let loction = useLocation().pathname;
+
+    useEffect(() => {
+        if (!isLogin) {
+            navigate("/auth/login");
+        }
+    }, [navigate, isLogin]);
 
     const reSetValue = () => {
         setEmail("");
@@ -118,6 +128,7 @@ export default function Register() {
             let fetch = await handleLoginService(dataBuider);
             if (fetch?.errorCode === 0) {
                 reSetValue();
+                dispatch(loginSuccess(fetch?.data?.access_token));
                 navigate("/");
             }
         } catch (err) {
