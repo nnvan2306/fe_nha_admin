@@ -5,4 +5,19 @@ export const RouterDTO = Object.freeze({
         register: "/auth/register",
         login: "/auth/login",
     },
+    season: {
+        manageSeason: "/season/*",
+        create: "/season/create",
+        allSeason: "/season/all",
+    },
+    team: {
+        manageTeam: "/team/*",
+        create: "/team/create",
+        allTeam: "/team/all",
+    },
+    player: {
+        managePlayer: "player",
+        create: "/player/create",
+        allPlayer: "/player/all",
+    },
 });

@@ -38,6 +38,10 @@ export default function Register() {
         setRePassword("");
     };
 
+    const handleClose = () => {
+        navigate("/auth");
+    };
+
     // Register
 
     const handleValidateRegister = () => {
@@ -150,7 +154,7 @@ export default function Register() {
                     <p>{loction === path ? "Register" : "Login"}</p>
                 </div>
 
-                <div className={cx("close")}>
+                <div className={cx("close")} onClick={handleClose}>
                     <i
                         className={cx("bi bi-x-circle", "icon-close")}
                         style={{

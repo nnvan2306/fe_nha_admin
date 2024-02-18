@@ -1,0 +1,37 @@
+.form-table {
+    margin-top : 40px;
+    width      : 60%;
+    margin-left: 50%;
+    transform  : translateX(-50%);
+
+    table {
+        width: 100%;
+
+        thead {
+            tr {
+                .col-index {
+                    text-align: center;
+                    width     : 20%;
+                }
+
+                .col-season {
+                    text-align: center;
+                    width     : 30%;
+                }
+
+                .col-des {
+                    text-align: center;
+
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                td {
+                    text-align: center;
+                }
+            }
+        }
+    }
+}

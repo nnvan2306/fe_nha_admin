@@ -1,0 +1,20 @@
+.form-season {
+    margin-top: 20px;
+
+    .header-season {
+        display        : flex;
+        justify-content: space-around;
+
+        .button-swap {
+
+            button {
+                border          : none;
+                padding         : 10px 20px;
+                background-color: rgb(51, 144, 236);
+                color           : #fff;
+                font-size       : 20px;
+                border-radius   : 5px;
+            }
+        }
+    }
+}

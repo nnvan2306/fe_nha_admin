@@ -14,7 +14,7 @@ export default function Auth() {
     useEffect(() => {
         console.log("isLogin:", isLogin);
         console.log("token:", token);
-    }, [isLogin, token]);
+    }, [isLogin, token ,]);
 
     const location = useLocation().pathname;
     useEffect(() => {}, []);
