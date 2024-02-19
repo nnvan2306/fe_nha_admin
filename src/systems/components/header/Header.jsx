@@ -16,15 +16,18 @@ export default function Header() {
         <>
             <div className={cx("form-header")}>
                 <div className={cx("form-nav", "container")}>
+                    <div className={cx("icon-menu")}>
+                        <i className={cx("bi", " bi-list")}></i>
+                    </div>
                     <ul>
                         <li>
                             <button
                                 className={cx(
-                                    loction === RouterDTO.season.allSeason
+                                    loction === RouterDTO.season.manageSeason
                                         ? "active"
                                         : ""
                                 )}
-                                onClick={() => handleNavigate("/season/all")}
+                                onClick={() => handleNavigate("/season")}
                             >
                                 <p>Season</p>
                             </button>
@@ -36,7 +39,7 @@ export default function Header() {
                                         ? "active"
                                         : ""
                                 )}
-                                onClick={() => handleNavigate("/team/all")}
+                                onClick={() => handleNavigate("/team")}
                             >
                                 <p>Team</p>
                             </button>
@@ -48,7 +51,7 @@ export default function Header() {
                                         ? "active"
                                         : ""
                                 )}
-                                onClick={() => handleNavigate("/player/all")}
+                                onClick={() => handleNavigate("/player")}
                             >
                                 <p>Player</p>
                             </button>

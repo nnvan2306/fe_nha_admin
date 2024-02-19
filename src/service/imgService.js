@@ -3,9 +3,9 @@ import axios from "../axios";
 export const uploadFileService = (data) => {
     return axios.post("/upload", data, {
         withCredentials: true,
-        // headers: {
-        //     "Content-Type": "multipart/form-data",
-        // },
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
     });
 };
 

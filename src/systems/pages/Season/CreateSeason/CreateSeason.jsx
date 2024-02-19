@@ -1,3 +1,116 @@
+import classNames from "classnames/bind";
+import styles from "./CreateSeason.module.scss";
+import MarkdownIt from "markdown-it";
+import MdEditor from "react-markdown-editor-lite";
+import "react-markdown-editor-lite/lib/index.css";
+import { useState } from "react";
+import Swal from "sweetalert2";
+import { CreateSeasonService } from "../../../../service/seasonService";
+
+const cx = classNames.bind(styles);
+const mdParser = new MarkdownIt(/* Markdown-it options */);
+
 export default function CreateSeason() {
-    return <div>CreateSeason</div>;
+    const [code, setCode] = useState(0);
+    const [name, setName] = useState("");
+    const [markdown, setMarkdown] = useState({
+        text: "",
+        html: "",
+    });
+
+    function handleEditorChange({ html, text }) {
+        setMarkdown({ html: html, text: text });
+    }
+
+    const handleValidate = () => {
+        if (!code || !name || !markdown.text || !markdown.html) {
+            Swal.fire({
+                icon: "warning",
+                title: "Please enter complete information !",
+            });
+            return false;
+        }
+        return true;
+    };
+
+    const reSetValue = () => {
+        setCode(0);
+        setName("");
+        setMarkdown({
+            text: "",
+            html: "",
+        });
+    };
+
+    const handleCreateSeason = async () => {
+        let check = handleValidate();
+        if (!check) {
+            return;
+        }
+        let dataBuider = {
+            index: code,
+            name: name,
+            description: markdown.html,
+        };
+        console.log(dataBuider);
+
+        let res = await CreateSeasonService(dataBuider);
+        if (res.errorCode === 0) {
+            Swal.fire({
+                icon: "success",
+                title: "Create season successfully !",
+            });
+            reSetValue();
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: res.message,
+            });
+        }
+    };
+
+    return (
+        <div className={cx("form-create", "container")}>
+            <div className={cx("row")}>
+                <div className={cx("col-12", "col-md-6")}>
+                    <div className={cx("form-input")}>
+                        <label htmlFor="code">code</label> <br />
+                        <input
+                            type="number"
+                            id="code"
+                            value={code}
+                            onChange={(e) => setCode(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div className={cx("col-12", "col-md-6")}>
+                    <div className={cx("form-input")}>
+                        <label htmlFor="name">name</label> <br />
+                        <input
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </div>
+                </div>
+            </div>
+            <div className={cx("row")}>
+                <div className={cx("form-markdown")}>
+                    <label>Description</label>
+                    <MdEditor
+                        value={markdown.text}
+                        style={{ height: "500px" }}
+                        // onImageUpload={handleUploadImageMarkdown}
+                        renderHTML={(text) => mdParser.render(text)}
+                        onChange={handleEditorChange}
+                    />
+                </div>
+            </div>
+
+            <div className={cx("button-Create")}>
+                <button onClick={handleCreateSeason}>Create</button>
+            </div>
+        </div>
+    );
 }

@@ -14,13 +14,11 @@ export default function View() {
     };
 
     const handleUpload = async () => {
-        const formData = new FormData();
-        formData.append("file", file);
         let dataBuider = {
             code: code,
             name: name,
             description: description,
-            logo: formData,
+            file: file,
         };
         console.log(dataBuider);
         await createTeamService(dataBuider);

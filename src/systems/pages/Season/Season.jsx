@@ -28,20 +28,22 @@ export default function Season() {
                 <h4>Premier League</h4>
                 <div className={cx("button-swap")}>
                     <button onClick={handleNavigate}>
-                        {handleCompare() ? "Create Season" : "Manage Season"}
+                        {handleCompare()
+                            ? "To Create Season"
+                            : "To Manage Season"}
                     </button>
                 </div>
             </div>
 
-            <div>
-                {location === "/season" ? (
-                    <></>
-                ) : handleCompare() ? (
-                    <ManageSeason />
-                ) : (
-                    <CreateSeason />
-                )}
-            </div>
+            {location === "/season" ? (
+                <div className={cx("form-text")}>
+                    <h3>Manage Season Premier League</h3>
+                </div>
+            ) : handleCompare() ? (
+                <ManageSeason />
+            ) : (
+                <CreateSeason />
+            )}
         </div>
     );
 }

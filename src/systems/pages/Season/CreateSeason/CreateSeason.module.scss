@@ -1,0 +1,49 @@
+.form-create {
+    margin-top: 30px;
+
+    .form-input {
+        width      : 80%;
+        margin-left: 50%;
+        transform  : translateX(-50%);
+
+        label {
+            margin-bottom: 15px;
+            font-size    : 20px;
+            font-weight  : 500;
+        }
+
+        input {
+            width        : 100%;
+            padding      : 10px 15px;
+            border       : 1px solid #ccc;
+            border-radius: 10px;
+        }
+    }
+
+    .form-markdown {
+        label {
+            margin-bottom: 15px;
+            font-size    : 20px;
+            font-weight  : 500;
+        }
+
+        margin-top : 40px;
+        width      : 90%;
+        margin-left: 50%;
+        transform  : translateX(-50%);
+    }
+
+    .button-Create {
+        margin-top  : 30px;
+        float       : right;
+        margin-right: 5%;
+
+        button {
+            padding         : 10px 40px;
+            border          : none;
+            border-radius   : 10px;
+            background-color: rgb(51, 144, 236);
+            color           : #fff;
+        }
+    }
+}
