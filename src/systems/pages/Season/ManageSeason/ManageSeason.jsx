@@ -28,6 +28,10 @@ export default function ManageSeason() {
         handleChangePage(index);
     };
 
+    const handleReload = () => {
+        setIsReload(!isReload);
+    };
+
     const handleDelete = (data) => {
         Swal.fire({
             title: `Do you want to delete season ${data.name} ?`,
@@ -40,7 +44,7 @@ export default function ManageSeason() {
                     let Res = await deleteSeasonService(data.index);
                     console.log(Res);
                     if (Res.errorCode === 0) {
-                        setIsReload(!isReload);
+                        handleReload();
                     }
                 };
                 _fetch();
@@ -128,6 +132,7 @@ export default function ManageSeason() {
                 <ModalUpdate
                     infoSeason={infoSeasonUpdate}
                     funcClose={handleClose}
+                    funcReLoad={handleReload}
                 />
             ) : (
                 <></>

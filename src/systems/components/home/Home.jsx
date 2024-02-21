@@ -22,11 +22,11 @@ export default function Home() {
                         element={<Season />}
                     ></Route>
                     <Route
-                        path={RouterDTO.team.allTeam}
+                        path={RouterDTO.team.manageTeam}
                         element={<Team />}
                     ></Route>
                     <Route
-                        path={RouterDTO.player.allPlayer}
+                        path={RouterDTO.player.managePlayer}
                         element={<Player />}
                     ></Route>
                 </Routes>

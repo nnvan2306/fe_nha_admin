@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import classNames from "classnames/bind";
 import styles from "./ModalUpdate.module.scss";
 import { memo, useState } from "react";
@@ -5,18 +6,22 @@ import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import Swal from "sweetalert2";
+import { updateSeasonService } from "../../../../../service/seasonService";
 
 const cx = classNames.bind(styles);
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-// eslint-disable-next-line react/prop-types
-const ModalUpdate = memo(function ModalUpdate({ infoSeason, funcClose }) {
+const ModalUpdate = memo(function ModalUpdate({
+    infoSeason,
+    funcClose,
+    funcReLoad,
+}) {
     const [isLoading, setIsLoading] = useState(false);
     const [index, setIndex] = useState(infoSeason?.index);
     const [name, setName] = useState(infoSeason?.name);
     const [markdown, setMarkdown] = useState({
-        text: "",
-        html: "",
+        text: infoSeason?.des_text,
+        html: infoSeason?.html,
     });
 
     function handleEditorChange({ html, text }) {
@@ -28,7 +33,7 @@ const ModalUpdate = memo(function ModalUpdate({ infoSeason, funcClose }) {
     };
 
     const handleValidate = () => {
-        if (!index || !name || !markdown.html) {
+        if (!index || !name || !markdown.html || !markdown.text) {
             Swal.fire({
                 icon: "warning",
                 title: "Please enter complete information !",
@@ -39,7 +44,7 @@ const ModalUpdate = memo(function ModalUpdate({ infoSeason, funcClose }) {
         return true;
     };
 
-    const handleUpdateSeason = () => {
+    const handleUpdateSeason = async () => {
         setIsLoading(true);
         const check = handleValidate();
         if (!check) {
@@ -48,11 +53,32 @@ const ModalUpdate = memo(function ModalUpdate({ infoSeason, funcClose }) {
         }
 
         let dataBuider = {
+            id: infoSeason?.id,
             index: index,
             name: name,
-            descriiption: markdown.html,
+            description: markdown.html,
             des_text: markdown.text,
         };
+
+        console.log(dataBuider);
+        try {
+            let res = await updateSeasonService(dataBuider);
+            if (res.errorCode === 0) {
+                Swal.fire({
+                    icon: "success",
+                    title: "update season successfully",
+                });
+                handleCloseModal();
+                funcReLoad();
+            }
+        } catch (err) {
+            console.log(err);
+            Swal.fire({
+                icon: "error",
+                text: "error occurred. Please try again later !",
+            });
+        }
+        setIsLoading(false);
     };
 
     return (

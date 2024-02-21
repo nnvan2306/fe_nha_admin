@@ -51,19 +51,21 @@ export default function CreateSeason() {
             index: code,
             name: name,
             description: markdown.html,
+            des_text: markdown.text,
         };
-
-        let res = await CreateSeasonService(dataBuider);
-        if (res.errorCode === 0) {
-            Swal.fire({
-                icon: "success",
-                title: "Create season successfully !",
-            });
-            reSetValue();
-        } else {
+        try {
+            let res = await CreateSeasonService(dataBuider);
+            if (res.errorCode === 0) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Create season successfully !",
+                });
+                reSetValue();
+            }
+        } catch (err) {
             Swal.fire({
                 icon: "error",
-                title: res.message,
+                title: "error occurred. Please try again later !",
             });
         }
     };
