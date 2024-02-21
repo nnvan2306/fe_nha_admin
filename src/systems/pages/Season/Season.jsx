@@ -22,6 +22,7 @@ export default function Season() {
                 : RouterDTO.season.allSeason
         );
     };
+
     return (
         <div className={cx("form-season")}>
             <div className={cx("header-season")}>

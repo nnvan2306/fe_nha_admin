@@ -5,3 +5,7 @@
     box-sizing     : border-box;
     text-decoration: none;
 }
+
+:root{
+    --color-button:rgb(51, 144, 236);
+}

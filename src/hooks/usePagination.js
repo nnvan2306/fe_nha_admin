@@ -7,7 +7,7 @@ const usePagination = ({
     is_load_more = false,
     is_reload = false,
 }) => {
-    const [isLoading, setIsLoading] = useState(false);
+    // const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState([]);
     const [meta, setMeta] = useState(null);
     const [pagination, setPagination] = useState({
@@ -18,7 +18,7 @@ const usePagination = ({
     useEffect(() => {
         const _fetch = async () => {
             let res;
-            setIsLoading(true);
+            // setIsLoading(true);
             try {
                 res = await api({
                     page: pagination.page,
@@ -35,7 +35,6 @@ const usePagination = ({
             } catch (err) {
                 console.log(err);
             }
-            setIsLoading(false);
         };
         _fetch();
     }, [api, pagination.page, pagination.pageSize, is_load_more, is_reload]);
@@ -43,7 +42,6 @@ const usePagination = ({
     const handleChangePage = (page) => {
         if (meta) {
             if (page >= 0 && page <= meta.totalPages) {
-                console.log("if");
                 setPagination({
                     page: page,
                     pageSize: pagination.pageSize,
@@ -51,7 +49,7 @@ const usePagination = ({
             }
         }
     };
-    return { isLoading, data, meta, handleChangePage };
+    return { data, meta, handleChangePage };
 };
 
 export default usePagination;

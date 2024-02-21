@@ -11,3 +11,7 @@ export const getAllSeasonService = ({ page, pageSize }) => {
 export const deleteSeasonService = (index) => {
     return axios.delete(`/delete-season?index=${index}`);
 };
+
+export const updateSeasonService = (data) => {
+    return axios.put("/update-season", data);
+};

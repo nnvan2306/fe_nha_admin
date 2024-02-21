@@ -52,7 +52,6 @@ export default function CreateSeason() {
             name: name,
             description: markdown.html,
         };
-        console.log(dataBuider);
 
         let res = await CreateSeasonService(dataBuider);
         if (res.errorCode === 0) {
