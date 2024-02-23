@@ -1,25 +1,22 @@
-.form-season {
+.form-player {
     margin-top: 10px;
 
-    .header-season {
+    .header-player {
         display        : flex;
         justify-content: space-around;
 
         .button-swap {
 
             button {
-                border          : none;
+                width           : 200px;
                 padding         : 10px 20px;
                 color           : #fff;
                 font-size       : 20px;
+                border          : none;
                 border-radius   : 5px;
                 background-color: var(--color-button-primary);
             }
         }
     }
 
-    .form-text {
-        margin-top: 30px;
-        text-align: center;
-    }
 }

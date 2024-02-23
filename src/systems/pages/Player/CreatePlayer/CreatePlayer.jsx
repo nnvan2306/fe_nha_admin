@@ -1,17 +1,16 @@
 import classNames from "classnames/bind";
-import styles from "./CreateTeam.module.scss";
+import styles from "./CreatePlayer.module.scss";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import { useRef, useState } from "react";
-import Swal from "sweetalert2";
 import { createTeamService } from "../../../../service/teamService";
 import handleValidateImage from "../../../../helps/handleValidate";
+import Swal from "sweetalert2";
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 const cx = classNames.bind(styles);
-
-export default function CreateTeam() {
+export default function CreatePlayer() {
     const [code, setCode] = useState(0);
     const [name, setName] = useState("");
     const [logo, setLogo] = useState(null);

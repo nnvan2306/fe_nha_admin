@@ -8,18 +8,21 @@
         .button-swap {
 
             button {
-                border          : none;
+                width           : 200px;
                 padding         : 10px 20px;
                 color           : #fff;
                 font-size       : 20px;
+                border          : none;
                 border-radius   : 5px;
-                background-color: var(--color-button);
+                background-color: var(--color-button-primary);
+
+
+                i {
+                    margin-right: 20px;
+                }
+
             }
         }
     }
 
-    .form-text {
-        margin-top: 30px;
-        text-align: center;
-    }
 }
