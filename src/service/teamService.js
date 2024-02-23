@@ -13,8 +13,8 @@ export const getTeamservice = ({ page, pageSize }) => {
     return axios.get(`/get-team?page=${page}&pageSize=${pageSize}`);
 };
 
-export const deletTeameService = (index) => {
-    return axios.delete(`/delete-team?index=${index}`);
+export const deletTeameService = (code) => {
+    return axios.delete(`/delete-team?code=${code}`);
 };
 
 export const updateTeamService = (data) => {

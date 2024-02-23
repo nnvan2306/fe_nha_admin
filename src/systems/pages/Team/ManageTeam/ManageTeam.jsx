@@ -42,18 +42,28 @@ export default function ManageTeam() {
     };
 
     const handleDelete = (data) => {
+        console.log(data);
         Swal.fire({
-            title: `Do you want to delete season ${data.name} ?`,
+            title: `Do you want to delete ${data.name} ?`,
             showCancelButton: true,
             confirmButtonText: "Yes",
         }).then((result) => {
             if (result.isConfirmed) {
                 console.log("ok");
                 const _fetch = async () => {
-                    let Res = await deletTeameService(data.index);
+                    let Res = await deletTeameService(data.code);
                     console.log(Res);
                     if (Res.errorCode === 0) {
+                        Swal.fire({
+                            icon: "success",
+                            title: `delete ${data.name} successfully`,
+                        });
                         handleReload();
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: `delete ${data.name} failure !`,
+                        });
                     }
                 };
                 _fetch();
