@@ -4,13 +4,10 @@ import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import { useEffect, useRef, useState } from "react";
-import {
-    createTeamService,
-    getAllTeam,
-    getTeamservice,
-} from "../../../../service/teamService";
+import { getAllTeam } from "../../../../service/teamService";
 import handleValidateImage from "../../../../helps/handleValidate";
 import Swal from "sweetalert2";
+import { createPlayerService } from "../../../../service/playerService";
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 const cx = classNames.bind(styles);
@@ -111,8 +108,9 @@ export default function CreatePlayer() {
         return true;
     };
 
-    const handleCreateTeam = async () => {
+    const handleCreatePlayer = async () => {
         let check = handleValidate();
+        console.log(check);
         if (!check) {
             return;
         }
@@ -128,21 +126,22 @@ export default function CreatePlayer() {
             description: markdown.html,
             des_text: markdown.text,
         };
-        // try {
-        //     let res = await createTeamService(dataBuider);
-        //     if (res.errorCode === 0) {
-        //         Swal.fire({
-        //             icon: "success",
-        //             title: "Create team successfully !",
-        //         });
-        //         reSetValue();
-        //     }
-        // } catch (err) {
-        //     Swal.fire({
-        //         icon: "error",
-        //         title: "error occurred. Please try again later !",
-        //     });
-        // }
+        console.log(dataBuider);
+        try {
+            let res = await createPlayerService(dataBuider);
+            if (res.errorCode === 0) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Create team successfully !",
+                });
+                reSetValue();
+            }
+        } catch (err) {
+            Swal.fire({
+                icon: "error",
+                title: "error occurred. Please try again later !",
+            });
+        }
     };
 
     return (
@@ -223,7 +222,6 @@ export default function CreatePlayer() {
                             accept="image/png, image/gif, image/jpeg"
                             hidden
                             ref={refInputThumbnail}
-                            value={avatar}
                             onChange={handleChangeFile}
                         />
                         <div className={cx("upload-image")}>
@@ -246,10 +244,9 @@ export default function CreatePlayer() {
                     <div className={cx("form-select")}>
                         <label htmlFor="team">team</label> <br />
                         <select
-                            name=""
-                            id=""
                             onChange={(e) => handleChangeTeam(e.target.value)}
                         >
+                            <option value={0}>teams</option>
                             {options &&
                                 options.length > 0 &&
                                 options.map((item, index) => {
@@ -278,7 +275,7 @@ export default function CreatePlayer() {
             </div>
 
             <div className={cx("button-Create")}>
-                <button onClick={handleCreateTeam}>Create</button>
+                <button onClick={handleCreatePlayer}>Create</button>
             </div>
         </div>
     );
