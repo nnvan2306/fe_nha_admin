@@ -125,7 +125,7 @@ const ModalUpdate = memo(function ModalUpdate({
             <div className={cx("button-edit")}>
                 {isLoading ? (
                     <button
-                        onClick={handleUpdateSeason}
+                        // onClick={handleUpdateSeason}
                         disabled
                         className={cx("button-disabled")}
                     >

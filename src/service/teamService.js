@@ -17,6 +17,10 @@ export const deletTeameService = (code) => {
     return axios.delete(`/delete-team?code=${code}`);
 };
 
+export const updateTeamServiceNotFileService = (data) => {
+    return axios.put("/update-team-not-file", data);
+};
+
 export const updateTeamService = (data) => {
     return axios.put("/update-team", data, {
         withCredentials: true,

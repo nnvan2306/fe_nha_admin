@@ -14,6 +14,7 @@ export const RouterDTO = Object.freeze({
         manageTeam: "/team/*",
         create: "/team/create",
         allTeam: "/team/all",
+        updateTeam: "/team/update",
         managePlayerOfTeam: "/team/managePlayer",
     },
     player: {

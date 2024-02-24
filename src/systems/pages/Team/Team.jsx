@@ -53,6 +53,7 @@ export default function Team() {
                         path={"/managePlayer"}
                         element={<ManagePlayerOfTeam />}
                     ></Route>
+                    <Route path="/update" element={<CreateTeam />}></Route>
                 </Routes>
             </>
         </div>

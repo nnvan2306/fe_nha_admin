@@ -61,7 +61,7 @@
                     td {
                         text-align: center;
                         border    : 1px solid #ccc;
-                        height    : 200px;
+                        height    : 100px;
 
                         .form-active {
                             display        : flex;
@@ -116,7 +116,16 @@
                     }
 
                     .td-des {
-                        padding: 0 5px;
+                        padding: 5px 10px;
+
+                        .text-des {
+                            height    : 100px;
+                            overflow-y: auto;
+
+                            &::-webkit-scrollbar {
+                                display: none;
+                            }
+                        }
                     }
                 }
             }

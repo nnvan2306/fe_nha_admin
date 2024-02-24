@@ -108,6 +108,44 @@ export default function CreatePlayer() {
                         />
                     </div>
 
+                    <div className={cx("form-input")}>
+                        <label htmlFor="name">name</label> <br />
+                        <input
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </div>
+
+                    <div className={cx("form-input")}>
+                        <label htmlFor="nationality">nationality</label> <br />
+                        <input type="text" id="nationality" />
+                    </div>
+                    <div className={cx("form-input")}>
+                        <label htmlFor="birthday">birthday</label> <br />
+                        <input type="date" id="birthday" />
+                    </div>
+
+                    <div className={cx("row", "form-hei-wei")}>
+                        <div className={cx("form-input", "col-4")}>
+                            <label htmlFor="height">
+                                height <span>(m)</span>
+                            </label>
+                            <br />
+                            <input type="text" id="height" />
+                        </div>
+
+                        <div className={cx("form-input", "col-4")}>
+                            <label htmlFor="weight">
+                                weight <span>(kg)</span>
+                            </label>
+                            <br />
+                            <input type="text" id="weight" />
+                        </div>
+                    </div>
+                </div>
+                <div className={cx("col-12", "col-md-6")}>
                     <div className={cx("form-upload-image")}>
                         <input
                             type="file"
@@ -132,17 +170,6 @@ export default function CreatePlayer() {
                                 alt=""
                             />
                         </div>
-                    </div>
-                </div>
-                <div className={cx("col-12", "col-md-6")}>
-                    <div className={cx("form-input")}>
-                        <label htmlFor="name">name</label> <br />
-                        <input
-                            type="text"
-                            id="name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
                     </div>
                 </div>
             </div>

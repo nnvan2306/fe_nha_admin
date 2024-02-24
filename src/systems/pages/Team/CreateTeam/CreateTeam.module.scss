@@ -6,6 +6,7 @@
         margin-left: 50%;
         transform  : translateX(-50%);
 
+
         label {
             margin-bottom: 15px;
             font-size    : 20px;
@@ -19,11 +20,16 @@
             border-radius: 10px;
             box-shadow   : rgba(0, 0, 0, 0.24) 0px 3px 8px;
         }
+
+        &:first-child {
+            margin-top   : 20px;
+            margin-bottom: 50px;
+        }
     }
 
     .form-upload-image {
 
-        margin-top   : 50px;
+        // margin-top   : 50px;
         border-radius: 10px;
 
         input {}

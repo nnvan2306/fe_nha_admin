@@ -6,7 +6,6 @@ import {
     getTeamservice,
 } from "../../../../service/teamService";
 import { Pagination } from "antd";
-import ModalUpdate from "../../Season/ManageSeason/ModalUpdate/ModalUpdate";
 import { useState } from "react";
 import usePagination from "../../../../hooks/usePagination";
 import { BASE_URL } from "../../../../utils/constants";
@@ -17,8 +16,6 @@ const cx = classNames.bind(styles);
 
 export default function ManageTeam() {
     const [isReload, setIsReload] = useState(false);
-    const [isOpenModal, setIsOpenModal] = useState(false);
-    const [infoSeasonUpdate, setInfoSeasonUpdtae] = useState(null);
     const { data, meta, handleChangePage } = usePagination({
         api: getTeamservice,
         page: 1,
@@ -71,13 +68,8 @@ export default function ManageTeam() {
         });
     };
 
-    const handleUpdate = (season) => {
-        setInfoSeasonUpdtae(season);
-        setIsOpenModal(true);
-    };
-
-    const handleClose = () => {
-        setIsOpenModal(false);
+    const handleUpdate = (team) => {
+        navigate("/team/update", { state: team });
     };
 
     return (
@@ -112,6 +104,7 @@ export default function ManageTeam() {
                                         <td>{item.name}</td>
                                         <td className={cx("td-des")}>
                                             <div
+                                                className={cx("text-des")}
                                                 dangerouslySetInnerHTML={{
                                                     __html: item.description,
                                                 }}
@@ -166,16 +159,6 @@ export default function ManageTeam() {
                     className={cx("form-pagination")}
                     onChange={handleChangePagination}
                 />
-            )}
-
-            {isOpenModal ? (
-                <ModalUpdate
-                    infoSeason={infoSeasonUpdate}
-                    funcClose={handleClose}
-                    funcReLoad={handleReload}
-                />
-            ) : (
-                <></>
             )}
         </div>
     );
