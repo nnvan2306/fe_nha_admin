@@ -35,7 +35,6 @@ export default function CreateTeam() {
     const location = useLocation().pathname;
     const { state } = useLocation();
     const navigate = useNavigate();
-    console.log(state);
 
     useEffect(() => {
         if (location === RouterDTO.team.updateTeam) {
@@ -171,7 +170,6 @@ export default function CreateTeam() {
             let res = isChangeFileUpload
                 ? await updateTeamService(dataBuider)
                 : await updateTeamServiceNotFileService(dataBuider);
-            console.log(res);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",
@@ -188,7 +186,6 @@ export default function CreateTeam() {
         }
         setIsLoading(false);
     };
-    // console.log(state);
 
     return (
         <div className={cx("form-create", "container")}>
