@@ -3,8 +3,12 @@ import styles from "./CreatePlayer.module.scss";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
-import { useRef, useState } from "react";
-import { createTeamService } from "../../../../service/teamService";
+import { useEffect, useRef, useState } from "react";
+import {
+    createTeamService,
+    getAllTeam,
+    getTeamservice,
+} from "../../../../service/teamService";
 import handleValidateImage from "../../../../helps/handleValidate";
 import Swal from "sweetalert2";
 
@@ -13,12 +17,19 @@ const cx = classNames.bind(styles);
 export default function CreatePlayer() {
     const [code, setCode] = useState(0);
     const [name, setName] = useState("");
-    const [logo, setLogo] = useState(null);
-    const [logoPreview, setLogoPreview] = useState("");
+    const [nationality, setNationality] = useState("");
+    const [birthday, setBirthday] = useState("");
+    const [height, setHeight] = useState(0);
+    const [weight, setWeight] = useState(0);
+    const [avatar, setAvatar] = useState(null);
+    const [avatarPreview, setAvatarPreview] = useState("");
+    const [teamId, setTeamId] = useState(0);
     const [markdown, setMarkdown] = useState({
         text: "",
         html: "",
     });
+
+    const [options, setOptions] = useState([]);
 
     const refInputThumbnail = useRef(null);
 
@@ -26,11 +37,31 @@ export default function CreatePlayer() {
         setMarkdown({ html: html, text: text });
     }
 
+    useEffect(() => {
+        const _fetch = async () => {
+            let res = await getAllTeam();
+            setOptions(
+                res.data.map((item) => {
+                    return {
+                        value: item.id,
+                        label: item.name,
+                    };
+                })
+            );
+        };
+        _fetch();
+    }, []);
+
     const reSetValue = () => {
         setCode(0);
         setName("");
-        setLogo(null);
-        setLogoPreview("");
+        setNationality("");
+        setBirthday("");
+        setHeight(0);
+        setWeight(0);
+        setTeamId(0);
+        setAvatar(null);
+        setAvatarPreview("");
         setMarkdown({
             text: "",
             html: "",
@@ -49,13 +80,28 @@ export default function CreatePlayer() {
     const handleChangeFile = (e) => {
         const file = e.target.files[0];
         if (handleValidateImage(file)) {
-            setLogoPreview(URL.createObjectURL(file));
-            setLogo(file);
+            setAvatarPreview(URL.createObjectURL(file));
+            setAvatar(file);
         }
     };
 
+    const handleChangeTeam = (id) => {
+        setTeamId(id);
+    };
+
     const handleValidate = () => {
-        if (!code || !name || !markdown.text || !markdown.html) {
+        if (
+            !code ||
+            !name ||
+            !markdown.text ||
+            !markdown.html ||
+            !nationality ||
+            !height ||
+            !weight ||
+            !birthday ||
+            !teamId ||
+            !avatar
+        ) {
             Swal.fire({
                 icon: "warning",
                 title: "Please enter complete information !",
@@ -73,25 +119,30 @@ export default function CreatePlayer() {
         let dataBuider = {
             code: code,
             name: name,
-            file: logo,
+            nationality: nationality,
+            height: height,
+            weight: weight,
+            birthday: birthday,
+            teamId: teamId,
+            file: avatar,
             description: markdown.html,
             des_text: markdown.text,
         };
-        try {
-            let res = await createTeamService(dataBuider);
-            if (res.errorCode === 0) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Create team successfully !",
-                });
-                reSetValue();
-            }
-        } catch (err) {
-            Swal.fire({
-                icon: "error",
-                title: "error occurred. Please try again later !",
-            });
-        }
+        // try {
+        //     let res = await createTeamService(dataBuider);
+        //     if (res.errorCode === 0) {
+        //         Swal.fire({
+        //             icon: "success",
+        //             title: "Create team successfully !",
+        //         });
+        //         reSetValue();
+        //     }
+        // } catch (err) {
+        //     Swal.fire({
+        //         icon: "error",
+        //         title: "error occurred. Please try again later !",
+        //     });
+        // }
     };
 
     return (
@@ -120,28 +171,48 @@ export default function CreatePlayer() {
 
                     <div className={cx("form-input")}>
                         <label htmlFor="nationality">nationality</label> <br />
-                        <input type="text" id="nationality" />
+                        <input
+                            type="text"
+                            id="nationality"
+                            value={nationality}
+                            onChange={(e) => setNationality(e.target.value)}
+                        />
                     </div>
                     <div className={cx("form-input")}>
                         <label htmlFor="birthday">birthday</label> <br />
-                        <input type="date" id="birthday" />
+                        <input
+                            type="date"
+                            id="birthday"
+                            value={birthday}
+                            onChange={(e) => setBirthday(e.target.value)}
+                        />
                     </div>
 
                     <div className={cx("row", "form-hei-wei")}>
-                        <div className={cx("form-input", "col-4")}>
+                        <div className={cx("form-input", "col-6")}>
                             <label htmlFor="height">
                                 height <span>(m)</span>
                             </label>
                             <br />
-                            <input type="text" id="height" />
+                            <input
+                                type="text"
+                                id="height"
+                                value={height}
+                                onChange={(e) => setHeight(e.target.value)}
+                            />
                         </div>
 
-                        <div className={cx("form-input", "col-4")}>
+                        <div className={cx("form-input", "col-6")}>
                             <label htmlFor="weight">
                                 weight <span>(kg)</span>
                             </label>
                             <br />
-                            <input type="text" id="weight" />
+                            <input
+                                type="text"
+                                id="weight"
+                                value={weight}
+                                onChange={(e) => setWeight(e.target.value)}
+                            />
                         </div>
                     </div>
                 </div>
@@ -152,6 +223,7 @@ export default function CreatePlayer() {
                             accept="image/png, image/gif, image/jpeg"
                             hidden
                             ref={refInputThumbnail}
+                            value={avatar}
                             onChange={handleChangeFile}
                         />
                         <div className={cx("upload-image")}>
@@ -163,13 +235,31 @@ export default function CreatePlayer() {
                             </button>
                             <img
                                 src={
-                                    logoPreview
-                                        ? logoPreview
+                                    avatarPreview
+                                        ? avatarPreview
                                         : "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg"
                                 }
                                 alt=""
                             />
                         </div>
+                    </div>
+                    <div className={cx("form-select")}>
+                        <label htmlFor="team">team</label> <br />
+                        <select
+                            name=""
+                            id=""
+                            onChange={(e) => handleChangeTeam(e.target.value)}
+                        >
+                            {options &&
+                                options.length > 0 &&
+                                options.map((item, index) => {
+                                    return (
+                                        <option key={index} value={item.value}>
+                                            {item.label}
+                                        </option>
+                                    );
+                                })}
+                        </select>
                     </div>
                 </div>
             </div>
