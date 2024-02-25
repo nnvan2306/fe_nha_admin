@@ -110,7 +110,6 @@ export default function CreatePlayer() {
 
     const handleCreatePlayer = async () => {
         let check = handleValidate();
-        console.log(check);
         if (!check) {
             return;
         }

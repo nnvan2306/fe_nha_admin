@@ -39,6 +39,7 @@ export default function Player() {
                 <Routes>
                     <Route path="/create" element={<CreatePlayer />}></Route>
                     <Route path={"/all"} element={<ManagePlayer />}></Route>
+                    <Route path={"/update"} element={<CreatePlayer />}></Route>
                 </Routes>
             </>
         </div>

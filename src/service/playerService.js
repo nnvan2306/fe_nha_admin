@@ -8,3 +8,11 @@ export const createPlayerService = (data) => {
         },
     });
 };
+
+export const getPlayerService = ({ page, pageSize }) => {
+    return axios.get(`/get-player?page=${page}&pageSize=${pageSize}`);
+};
+
+export const deletePlayerService = (code) => {
+    return axios.delete(`/delete-player?code=${code}`);
+};

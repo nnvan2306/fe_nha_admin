@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 import {
     createTeamService,
     updateTeamService,
-    updateTeamServiceNotFileService,
 } from "../../../../service/teamService";
 import handleValidateImage from "../../../../helps/handleValidate";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -36,6 +35,7 @@ export default function CreateTeam() {
     const { state } = useLocation();
     const navigate = useNavigate();
 
+    console.log(state);
     useEffect(() => {
         if (location === RouterDTO.team.updateTeam) {
             setId(state.id);
@@ -97,7 +97,7 @@ export default function CreateTeam() {
         return true;
     };
 
-    const handleValidateNotChangeFile = () => {
+    const handleValidateUpdate = () => {
         if (!code || !name || !markdown.text || !markdown.html) {
             Swal.fire({
                 icon: "warning",
@@ -146,9 +146,7 @@ export default function CreateTeam() {
 
     const handleUpdate = async () => {
         setIsLoading(true);
-        let check = isChangeFileUpload
-            ? handleValidate()
-            : handleValidateNotChangeFile();
+        let check = handleValidateUpdate();
         if (!check) {
             setIsLoading(false);
             return;
@@ -161,15 +159,15 @@ export default function CreateTeam() {
             logo_url: logoUrlUpdate,
             description: markdown.html,
             des_text: markdown.text,
+            isChangeFile: isChangeFileUpload,
         };
+        console.log(dataBuider);
         if (isChangeFileUpload) {
             dataBuider.file = logo;
         }
 
         try {
-            let res = isChangeFileUpload
-                ? await updateTeamService(dataBuider)
-                : await updateTeamServiceNotFileService(dataBuider);
+            let res = await updateTeamService(dataBuider);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",
@@ -271,7 +269,6 @@ export default function CreateTeam() {
                                 : handleCreateTeam
                         }
                     >
-                        {" "}
                         {location === RouterDTO.team.updateTeam
                             ? "Edit"
                             : "Create"}

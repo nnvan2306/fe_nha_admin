@@ -21,5 +21,6 @@ export const RouterDTO = Object.freeze({
         managePlayer: "player/*",
         create: "/player/create",
         allPlayer: "/player/all",
+        updatePlayer: "/player/update",
     },
 });
