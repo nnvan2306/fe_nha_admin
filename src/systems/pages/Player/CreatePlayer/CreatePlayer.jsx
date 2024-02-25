@@ -247,7 +247,6 @@ export default function CreatePlayer() {
         }
         setIsLoading(false);
     };
-    console.log(state);
 
     return (
         <div className={cx("form-create", "container")}>

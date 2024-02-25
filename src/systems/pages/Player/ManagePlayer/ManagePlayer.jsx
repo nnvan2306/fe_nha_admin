@@ -14,6 +14,7 @@ import moment from "moment";
 import { RouterDTO } from "../../../../utils/routes.dto";
 
 const cx = classNames.bind(styles);
+
 export default function ManagePlayer() {
     const [isReload, setIsReload] = useState(false);
     const { data, meta, handleChangePage } = usePagination({
