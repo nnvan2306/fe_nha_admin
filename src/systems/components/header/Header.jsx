@@ -29,7 +29,13 @@ export default function Header() {
                                 )}
                                 onClick={() => handleNavigate("/season")}
                             >
-                                <p>Season</p>
+                                <p>
+                                    <i
+                                        className="bi bi-calendar-event"
+                                        style={{ paddingRight: "10px" }}
+                                    ></i>
+                                    Season
+                                </p>
                             </button>
                         </li>
                         <li>
@@ -41,7 +47,13 @@ export default function Header() {
                                 )}
                                 onClick={() => handleNavigate("/team")}
                             >
-                                <p>Team</p>
+                                <p>
+                                    <i
+                                        className="bi bi-people"
+                                        style={{ paddingRight: "10px" }}
+                                    ></i>
+                                    Team
+                                </p>
                             </button>
                         </li>
                         <li>
@@ -53,7 +65,13 @@ export default function Header() {
                                 )}
                                 onClick={() => handleNavigate("/player")}
                             >
-                                <p>Player</p>
+                                <p>
+                                    <i
+                                        className="bi bi-person"
+                                        style={{ paddingRight: "10px" }}
+                                    ></i>
+                                    Player
+                                </p>
                             </button>
                         </li>
                         <li>

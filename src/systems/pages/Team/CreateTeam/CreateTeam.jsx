@@ -35,7 +35,6 @@ export default function CreateTeam() {
     const { state } = useLocation();
     const navigate = useNavigate();
 
-    console.log(state);
     useEffect(() => {
         if (location === RouterDTO.team.updateTeam) {
             setId(state.id);

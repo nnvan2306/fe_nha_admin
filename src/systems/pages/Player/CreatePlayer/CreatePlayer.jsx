@@ -7,11 +7,19 @@ import { useEffect, useRef, useState } from "react";
 import { getAllTeam } from "../../../../service/teamService";
 import handleValidateImage from "../../../../helps/handleValidate";
 import Swal from "sweetalert2";
-import { createPlayerService } from "../../../../service/playerService";
+import {
+    createPlayerService,
+    updatePlayerService,
+} from "../../../../service/playerService";
+import { useLocation, useNavigate } from "react-router-dom";
+import { RouterDTO } from "../../../../utils/routes.dto";
+import { BASE_URL } from "../../../../utils/constants";
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 const cx = classNames.bind(styles);
 export default function CreatePlayer() {
+    const [isLoading, setIsLoading] = useState(false);
+    const [id, setId] = useState(0);
     const [code, setCode] = useState(0);
     const [name, setName] = useState("");
     const [nationality, setNationality] = useState("");
@@ -20,11 +28,36 @@ export default function CreatePlayer() {
     const [weight, setWeight] = useState(0);
     const [avatar, setAvatar] = useState(null);
     const [avatarPreview, setAvatarPreview] = useState("");
+    const [avatarUrlOld, setAvatarUrlOld] = useState("");
     const [teamId, setTeamId] = useState(0);
+    const [isChangeFileUpdate, setIsChangeFileUpdate] = useState(false);
     const [markdown, setMarkdown] = useState({
         text: "",
         html: "",
     });
+
+    const location = useLocation().pathname;
+    const { state } = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (location === RouterDTO.player.updatePlayer) {
+            setId(state.id);
+            setCode(state.code);
+            setName(state.name);
+            setNationality(state.nationality);
+            setBirthday(state.birthday);
+            setHeight(state.height);
+            setWeight(state.weight);
+            setAvatarPreview(`${BASE_URL}${state.avatar_url}`);
+            setTeamId(state.teamId);
+            setMarkdown({
+                text: state.des_text,
+                html: state.description,
+            });
+            setAvatarUrlOld(state.avatar_url);
+        }
+    }, [state, location]);
 
     const [options, setOptions] = useState([]);
 
@@ -69,7 +102,6 @@ export default function CreatePlayer() {
     const handleChooseFile = () => {
         const input = refInputThumbnail.current;
         if (input) {
-            console.log("ref");
             input.click();
         }
     };
@@ -79,6 +111,7 @@ export default function CreatePlayer() {
         if (handleValidateImage(file)) {
             setAvatarPreview(URL.createObjectURL(file));
             setAvatar(file);
+            setIsChangeFileUpdate(true);
         }
     };
 
@@ -108,9 +141,13 @@ export default function CreatePlayer() {
         return true;
     };
 
+    // create
+
     const handleCreatePlayer = async () => {
+        setIsLoading(true);
         let check = handleValidate();
         if (!check) {
+            setIsLoading(false);
             return;
         }
         let dataBuider = {
@@ -125,13 +162,12 @@ export default function CreatePlayer() {
             description: markdown.html,
             des_text: markdown.text,
         };
-        console.log(dataBuider);
         try {
             let res = await createPlayerService(dataBuider);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",
-                    title: "Create team successfully !",
+                    title: "Create Player successfully !",
                 });
                 reSetValue();
             }
@@ -141,7 +177,77 @@ export default function CreatePlayer() {
                 title: "error occurred. Please try again later !",
             });
         }
+        setIsLoading(false);
     };
+
+    // update
+
+    const handleValidateUpdate = () => {
+        if (
+            !code ||
+            !name ||
+            !markdown.text ||
+            !markdown.html ||
+            !nationality ||
+            !height ||
+            !weight ||
+            !birthday ||
+            !teamId
+        ) {
+            Swal.fire({
+                icon: "warning",
+                title: "Please enter complete information !",
+            });
+            return false;
+        }
+        return true;
+    };
+
+    const handleUpdatePlayer = async () => {
+        setIsLoading(true);
+        let check = handleValidateUpdate();
+        if (!check) {
+            setIsLoading(false);
+            return;
+        }
+
+        let dataBuider = {
+            id: id,
+            code: code,
+            name: name,
+            description: markdown.html,
+            des_text: markdown.text,
+            nationality: nationality,
+            height: height,
+            weight: weight,
+            birthday: birthday,
+            teamId: teamId,
+            avatar_url: avatarUrlOld,
+            isChangeFile: isChangeFileUpdate,
+        };
+        if (isChangeFileUpdate) {
+            dataBuider.file = avatar;
+        }
+
+        try {
+            let res = await updatePlayerService(dataBuider);
+            if (res.errorCode === 0) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Update Player successfully !",
+                });
+                navigate(RouterDTO.player.allPlayer);
+            }
+        } catch (err) {
+            console.log(err);
+            Swal.fire({
+                icon: "error",
+                title: "error occurred. Please try again later !",
+            });
+        }
+        setIsLoading(false);
+    };
+    console.log(state);
 
     return (
         <div className={cx("form-create", "container")}>
@@ -243,6 +349,7 @@ export default function CreatePlayer() {
                     <div className={cx("form-select")}>
                         <label htmlFor="team">team</label> <br />
                         <select
+                            value={teamId}
                             onChange={(e) => handleChangeTeam(e.target.value)}
                         >
                             <option value={0}>teams</option>
@@ -274,7 +381,26 @@ export default function CreatePlayer() {
             </div>
 
             <div className={cx("button-Create")}>
-                <button onClick={handleCreatePlayer}>Create</button>
+                {isLoading ? (
+                    <button disabled className={cx("button-disabled")}>
+                        <div
+                            className="spinner-border text-light"
+                            role="status"
+                        ></div>
+                    </button>
+                ) : (
+                    <button
+                        onClick={
+                            location === RouterDTO.player.updatePlayer
+                                ? handleUpdatePlayer
+                                : handleCreatePlayer
+                        }
+                    >
+                        {location === RouterDTO.player.updatePlayer
+                            ? "Edit"
+                            : "Create"}
+                    </button>
+                )}
             </div>
         </div>
     );

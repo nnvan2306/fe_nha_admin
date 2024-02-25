@@ -16,3 +16,12 @@ export const getPlayerService = ({ page, pageSize }) => {
 export const deletePlayerService = (code) => {
     return axios.delete(`/delete-player?code=${code}`);
 };
+
+export const updatePlayerService = (data) => {
+    return axios.put("/update-player", data, {
+        withCredentials: true,
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+};
