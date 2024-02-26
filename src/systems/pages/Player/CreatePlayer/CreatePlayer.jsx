@@ -14,6 +14,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
 import { BASE_URL } from "../../../../utils/constants";
+// import moment from "moment";
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 const cx = classNames.bind(styles);
@@ -46,7 +47,9 @@ export default function CreatePlayer() {
             setCode(state.code);
             setName(state.name);
             setNationality(state.nationality);
-            setBirthday(state.birthday);
+            //"2024-02-26T03:32:26.000Z"
+            setBirthday(state.birthday.split("T")[0]);
+            // setBirthday(new Date(state.birthday).toLocaleDateString());
             setHeight(state.height);
             setWeight(state.weight);
             setAvatarPreview(`${BASE_URL}${state.avatar_url}`);
@@ -228,7 +231,6 @@ export default function CreatePlayer() {
         if (isChangeFileUpdate) {
             dataBuider.file = avatar;
         }
-
         try {
             let res = await updatePlayerService(dataBuider);
             if (res.errorCode === 0) {

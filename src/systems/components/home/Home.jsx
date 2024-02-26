@@ -6,6 +6,7 @@ import Season from "../../pages/Season/Season";
 import { RouterDTO } from "../../../utils/routes.dto";
 import Team from "../../pages/Team/Team";
 import Player from "../../pages/Player/Player";
+import Statistical from "../../pages/Statistical/Statistical";
 
 const cx = classNames.bind(styles);
 
@@ -28,6 +29,10 @@ export default function Home() {
                     <Route
                         path={RouterDTO.player.managePlayer}
                         element={<Player />}
+                    ></Route>
+                    <Route
+                        path={RouterDTO.statistical.manageStatistical}
+                        element={<Statistical />}
                     ></Route>
                 </Routes>
             </div>

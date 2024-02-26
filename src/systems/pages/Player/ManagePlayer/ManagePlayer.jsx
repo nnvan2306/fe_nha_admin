@@ -40,17 +40,14 @@ export default function ManagePlayer() {
     };
 
     const handleDelete = (data) => {
-        console.log(data);
         Swal.fire({
             title: `Do you want to delete ${data.name} ?`,
             showCancelButton: true,
             confirmButtonText: "Yes",
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("ok");
                 const _fetch = async () => {
                     let Res = await deletePlayerService(data.code);
-                    console.log(Res);
                     if (Res.errorCode === 0) {
                         Swal.fire({
                             icon: "success",

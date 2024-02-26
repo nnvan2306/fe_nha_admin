@@ -7,10 +7,10 @@ const cx = classNames.bind(styles);
 
 export default function Header() {
     const navigate = useNavigate();
-    const loction = useLocation().pathname;
+    const loction = `${useLocation().pathname}/*`;
 
     const handleNavigate = (link) => {
-        navigate(link);
+        navigate(link.split("/*")[0]);
     };
     return (
         <>
@@ -27,7 +27,11 @@ export default function Header() {
                                         ? "active"
                                         : ""
                                 )}
-                                onClick={() => handleNavigate("/season")}
+                                onClick={() =>
+                                    handleNavigate(
+                                        RouterDTO.season.manageSeason
+                                    )
+                                }
                             >
                                 <p>
                                     <i
@@ -45,7 +49,9 @@ export default function Header() {
                                         ? "active"
                                         : ""
                                 )}
-                                onClick={() => handleNavigate("/team")}
+                                onClick={() =>
+                                    handleNavigate(RouterDTO.team.manageTeam)
+                                }
                             >
                                 <p>
                                     <i
@@ -63,7 +69,11 @@ export default function Header() {
                                         ? "active"
                                         : ""
                                 )}
-                                onClick={() => handleNavigate("/player")}
+                                onClick={() =>
+                                    handleNavigate(
+                                        RouterDTO.player.managePlayer
+                                    )
+                                }
                             >
                                 <p>
                                     <i
@@ -77,11 +87,24 @@ export default function Header() {
                         <li>
                             <button
                                 className={cx(
-                                    loction === "/wait" ? "active" : ""
+                                    loction ===
+                                        RouterDTO.statistical.manageStatistical
+                                        ? "active"
+                                        : ""
                                 )}
-                                onClick={() => handleNavigate("/wait")}
+                                onClick={() =>
+                                    handleNavigate(
+                                        RouterDTO.statistical.manageStatistical
+                                    )
+                                }
                             >
-                                <p>Wait</p>
+                                <p>
+                                    <i
+                                        className="bi bi-calculator-fill"
+                                        style={{ paddingRight: "10px" }}
+                                    ></i>
+                                    Statistical
+                                </p>
                             </button>
                         </li>
                         <li>

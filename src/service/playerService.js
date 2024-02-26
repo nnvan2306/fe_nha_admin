@@ -25,3 +25,7 @@ export const updatePlayerService = (data) => {
         },
     });
 };
+
+export const searchPlayerService = (q) => {
+    return axios.get(`/search-player?q=${q}&page=1&pageSize=5`);
+};
