@@ -67,6 +67,48 @@
     }
 
     .form-content {
-        margin-top: 50px;
+        margin-top : 50px;
+        margin-left: 5%;
+
+
+        .form-img {
+            display: flex;
+
+            img {
+                height       : 200px;
+                width        : 200px;
+                border       : 1px solid #ccc;
+                border-radius: 20px;
+                object-fit   : contain;
+            }
+
+            .info {
+                padding: 10px 20px;
+
+                .name {
+                    font-size  : 20px;
+                    font-weight: 500;
+                    color      : green;
+                }
+
+                .birthday {
+                    font-size: 16px;
+                }
+
+                span {
+                    color: var(--color-button-primary);
+                }
+            }
+        }
+
+        .form-detail {
+            margin-top   : 20px;
+            padding-right: 50px;
+        }
+
+
+        .form-statistical {
+            padding: 10px 20px;
+        }
     }
 }

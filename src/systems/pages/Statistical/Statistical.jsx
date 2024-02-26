@@ -3,6 +3,8 @@ import styles from "./Statistical.module.scss";
 import { useEffect, useState } from "react";
 import { useDebounce } from "../../../hooks/useDebounce";
 import { searchPlayerService } from "../../../service/playerService";
+import { BASE_URL } from "../../../utils/constants";
+import moment from "moment";
 const cx = classNames.bind(styles);
 
 export default function Statistical() {
@@ -30,8 +32,10 @@ export default function Statistical() {
 
     const handleView = (player) => {
         setIsOptionItems(false);
-        console.log(player);
+        setPlayerView(player);
     };
+
+    console.log(playerView);
 
     return (
         <div className={cx("form-statistical")}>
@@ -49,7 +53,6 @@ export default function Statistical() {
                     <i className="bi bi-search"></i>
                 </div>
             </div>
-
             {isOptionItems && (
                 <div className={cx("form-items")}>
                     {listPlayers &&
@@ -67,10 +70,52 @@ export default function Statistical() {
                         })}
                 </div>
             )}
+            {playerView && (
+                <div className={cx("form-content", "container")}>
+                    <div className={cx("row")}>
+                        <div className={cx("col-6")}>
+                            <div className={cx("form-img")}>
+                                <img
+                                    src={`${BASE_URL}${playerView?.avatar_url}`}
+                                    alt=""
+                                />
+                                <div className={cx("info")}>
+                                    <p className={cx("name")}>
+                                        {playerView?.name}
+                                    </p>
+                                    <p className={cx("birthday")}>
+                                        {moment(playerView.birthday).format(
+                                            "DD/MM/YYYY"
+                                        )}
+                                    </p>
+                                    <p className={cx("nationality")}>
+                                        nationality :
+                                        <span> {playerView.nationality}</span>
+                                    </p>
+                                    <p className={cx("height")}>
+                                        Height :
+                                        <span> {playerView.height}</span>
+                                    </p>
+                                    <p className={cx("weight")}>
+                                        weight :
+                                        <span> {playerView.weight}</span>
+                                    </p>
+                                </div>
+                            </div>
 
-            {!playerView && (
-                <div className={cx("form-content")}>
-                    adadhhhhhhhhhhhhhhhhhhhhhhhhhh
+                            <div className={cx("form-detail")}>
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: playerView.description,
+                                    }}
+                                ></div>
+                            </div>
+                        </div>
+
+                        <div className={cx("col-6", "form-statistical")}>
+                            <h5 style={{ textAlign: "center" }}>Statistical</h5>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
