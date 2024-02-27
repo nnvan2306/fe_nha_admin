@@ -15,6 +15,7 @@ export default function Statistical() {
                     element={<ManageStatistical />}
                 ></Route>
                 <Route path={"/create"} element={<CreateStatistical />}></Route>
+                <Route path="/update" element={<CreateStatistical />}></Route>
             </Routes>
         </div>
     );

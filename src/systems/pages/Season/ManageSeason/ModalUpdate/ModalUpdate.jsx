@@ -21,8 +21,9 @@ const ModalUpdate = memo(function ModalUpdate({
     const [name, setName] = useState(infoSeason?.name);
     const [markdown, setMarkdown] = useState({
         text: infoSeason?.des_text,
-        html: infoSeason?.html,
+        html: infoSeason?.description,
     });
+    console.log(infoSeason);
 
     function handleEditorChange({ html, text }) {
         setMarkdown({ html: html, text: text });
@@ -60,7 +61,6 @@ const ModalUpdate = memo(function ModalUpdate({
             des_text: markdown.text,
         };
 
-        console.log(dataBuider);
         try {
             let res = await updateSeasonService(dataBuider);
             if (res.errorCode === 0) {

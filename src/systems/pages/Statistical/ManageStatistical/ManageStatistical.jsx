@@ -47,6 +47,10 @@ export default function ManageStatistical() {
     const handleToCreate = () => {
         navigate(RouterDTO.statistical.create, { state: playerView });
     };
+
+    const handleUpdate = (data) => {
+        navigate(RouterDTO.statistical.update, { state: data });
+    };
     return (
         <div className={cx("form-statistical")}>
             <h4>Manage Statistical</h4>
@@ -128,23 +132,23 @@ export default function ManageStatistical() {
                                 <table>
                                     <thead>
                                         <tr>
-                                            <td className={cx("season")}>
+                                            <th className={cx("season")}>
                                                 Season
-                                            </td>
-                                            <td className={cx("goal")}>Goal</td>
-                                            <td className={cx("assist")}>
+                                            </th>
+                                            <th className={cx("goal")}>Goal</th>
+                                            <th className={cx("assist")}>
                                                 Assist
-                                            </td>
-                                            <td className={cx("yc")}>
+                                            </th>
+                                            <th className={cx("yc")}>
                                                 YellowCard
-                                            </td>
-                                            <td className={cx("rc")}>
+                                            </th>
+                                            <th className={cx("rc")}>
                                                 RedCard
-                                            </td>
-                                            <td className={cx("pa")}>PA</td>
-                                            <td className={cx("action")}>
+                                            </th>
+                                            <th className={cx("pa")}>PA</th>
+                                            <th className={cx("action")}>
                                                 Action
-                                            </td>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -158,7 +162,7 @@ export default function ManageStatistical() {
                                                                 "season"
                                                             )}
                                                         >
-                                                            {item.Season.name}
+                                                            {item.Season?.name}
                                                         </td>
                                                         <td
                                                             className={cx(
@@ -199,6 +203,11 @@ export default function ManageStatistical() {
                                                                     "btn",
                                                                     "btn-warning"
                                                                 )}
+                                                                onClick={() =>
+                                                                    handleUpdate(
+                                                                        item
+                                                                    )
+                                                                }
                                                             >
                                                                 edit
                                                             </button>

@@ -7,3 +7,7 @@ export const getStatisticService = (id) => {
 export const createStatisticService = (data) => {
     return axios.post("/create-statistic", data);
 };
+
+export const updateStatisticService = (data) => {
+    return axios.put("/update-statistic", data);
+};

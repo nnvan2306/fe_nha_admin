@@ -1,19 +1,22 @@
 import classNames from "classnames/bind";
 import styles from "./CreateStatistical.module.scss";
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../../../utils/constants";
 import { useEffect, useState } from "react";
 import { getAllSeasonService } from "../../../../service/seasonService";
 import { RouterDTO } from "../../../../utils/routes.dto";
 import Swal from "sweetalert2";
-import { createStatisticService } from "../../../../service/statisticService";
+import {
+    createStatisticService,
+    updateStatisticService,
+} from "../../../../service/statisticService";
 
 const cx = classNames.bind(styles);
 
 export default function CreateStatistical() {
-    // const [playerId, setPlayerId] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const [id, setId] = useState(0);
     const [goal, setGoal] = useState(0);
     const [assist, setAssist] = useState(0);
     const [pa, setPa] = useState(0);
@@ -24,6 +27,9 @@ export default function CreateStatistical() {
 
     const { state } = useLocation();
     const location = useLocation().pathname;
+    const navigate = useNavigate();
+
+    console.log(state);
 
     useEffect(() => {
         const fetch = async () => {
@@ -37,9 +43,17 @@ export default function CreateStatistical() {
             }
         };
         fetch();
-    }, []);
 
-    console.log(seasonId);
+        if (location === RouterDTO.statistical.update) {
+            setGoal(state?.goal);
+            setAssist(state?.assist);
+            setYellowCard(state?.yellowCard);
+            setRedCard(state?.redCard);
+            setPa(state?.pA);
+            setSeasonId(state?.seasonId);
+            setId(state?.id);
+        }
+    }, []);
 
     const reSet = () => {
         setGoal(0);
@@ -76,18 +90,34 @@ export default function CreateStatistical() {
             pA: pa,
             yellowCard: yellowCard,
             redCard: redCard,
-            playerId: state.id,
+            playerId:
+                location === RouterDTO.statistical.create
+                    ? state.id
+                    : state.playerId,
             seasonId: seasonId,
         };
 
+        if (location === RouterDTO.statistical.update) {
+            dataBuider.id = id;
+        }
+
         try {
-            let res = await createStatisticService(dataBuider);
+            let res =
+                location === RouterDTO.statistical.update
+                    ? await updateStatisticService(dataBuider)
+                    : await createStatisticService(dataBuider);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",
-                    title: "create statistical successfully",
+                    title:
+                        location === RouterDTO.statistical.update
+                            ? "update statistical successfully"
+                            : "create statistical successfully",
                 });
                 reSet();
+                if (location === RouterDTO.statistical.update) {
+                    navigate(RouterDTO.statistical.allStatistical);
+                }
             }
         } catch (err) {
             console.log(err);
@@ -99,8 +129,6 @@ export default function CreateStatistical() {
 
         setIsLoading(false);
     };
-
-    const handleUpdate = () => {};
 
     return (
         <div className={cx("form-create")}>
@@ -207,13 +235,7 @@ export default function CreateStatistical() {
                         ></div>
                     </button>
                 ) : (
-                    <button
-                        onClick={
-                            location === RouterDTO.statistical.create
-                                ? handleCreate
-                                : handleUpdate
-                        }
-                    >
+                    <button onClick={handleCreate}>
                         {location === RouterDTO.statistical.create
                             ? "Create"
                             : "Update"}

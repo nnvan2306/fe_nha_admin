@@ -27,5 +27,6 @@ export const RouterDTO = Object.freeze({
         manageStatistical: "/statistical/*",
         create: "/statistical/create",
         allStatistical: "/statistical/allStatistical",
+        update: "/statistical/update",
     },
 });
