@@ -3,7 +3,7 @@ import styles from "./ManageSeason.module.scss";
 import usePagination from "../../../../hooks/usePagination";
 import {
     deleteSeasonService,
-    getAllSeasonService,
+    getSeasonService,
 } from "../../../../service/seasonService";
 import { Pagination } from "antd";
 import { useState } from "react";
@@ -17,7 +17,7 @@ export default function ManageSeason() {
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [infoSeasonUpdate, setInfoSeasonUpdtae] = useState(null);
     const { data, meta, handleChangePage } = usePagination({
-        api: getAllSeasonService,
+        api: getSeasonService,
         page: 1,
         pageSize: 5,
         is_load_more: false,

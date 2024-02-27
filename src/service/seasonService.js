@@ -4,8 +4,12 @@ export const CreateSeasonService = (data) => {
     return axios.post("/create-season", data);
 };
 
-export const getAllSeasonService = ({ page, pageSize }) => {
+export const getSeasonService = ({ page, pageSize }) => {
     return axios.get(`/get-season?page=${page}&pageSize=${pageSize}`);
+};
+
+export const getAllSeasonService = () => {
+    return axios.get("/get-season");
 };
 
 export const deleteSeasonService = (index) => {

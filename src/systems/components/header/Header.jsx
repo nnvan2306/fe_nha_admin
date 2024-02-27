@@ -94,7 +94,7 @@ export default function Header() {
                                 )}
                                 onClick={() =>
                                     handleNavigate(
-                                        RouterDTO.statistical.manageStatistical
+                                        RouterDTO.statistical.allStatistical
                                     )
                                 }
                             >
