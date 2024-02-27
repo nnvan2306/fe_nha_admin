@@ -7,7 +7,7 @@ import { RouterDTO } from "../../../utils/routes.dto";
 import Team from "../../pages/Team/Team";
 import Player from "../../pages/Player/Player";
 import Statistical from "../../pages/Statistical/Statistical";
-import ManageStatistical from "../../pages/Statistical/ManageStatistical/ManageStatistical";
+import Rating from "../../pages/Rating/Rating";
 
 const cx = classNames.bind(styles);
 
@@ -34,6 +34,10 @@ export default function Home() {
                     <Route
                         path={RouterDTO.statistical.manageStatistical}
                         element={<Statistical />}
+                    ></Route>
+                    <Route
+                        path={RouterDTO.rating.manageRating}
+                        element={<Rating />}
                     ></Route>
                 </Routes>
             </div>

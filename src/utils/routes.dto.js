@@ -29,4 +29,10 @@ export const RouterDTO = Object.freeze({
         allStatistical: "/statistical/allStatistical",
         update: "/statistical/update",
     },
+    rating: {
+        manageRating: "/rating/*",
+        create: "/rating/createRating",
+        allRating: "/rating/allRating",
+        update: "/rating/updateRating",
+    },
 });

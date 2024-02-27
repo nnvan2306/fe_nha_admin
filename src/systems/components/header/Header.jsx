@@ -110,11 +110,24 @@ export default function Header() {
                         <li>
                             <button
                                 className={cx(
-                                    loction === "/wait" ? "active" : ""
+                                    loction === RouterDTO.rating.manageRating
+                                        ? "active"
+                                        : ""
                                 )}
-                                onClick={() => handleNavigate("/wait")}
+                                onClick={() =>
+                                    handleNavigate(
+                                        RouterDTO.rating.manageRating
+                                    )
+                                }
                             >
-                                <p>Wait</p>
+                                <p>
+                                    {" "}
+                                    <i
+                                        className="bi bi-bar-chart"
+                                        style={{ padding: "10px" }}
+                                    ></i>
+                                    Rating
+                                </p>
                             </button>
                         </li>
                     </ul>
