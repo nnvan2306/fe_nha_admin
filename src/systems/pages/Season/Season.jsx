@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../utils/routes.dto";
 import ManageSeason from "./ManageSeason/ManageSeason";
 import CreateSeason from "./CreateSeason/CreateSeason";
+import { BASE_URL } from "../../../utils/constants";
 
 const cx = classNames.bind(styles);
 
@@ -25,8 +26,14 @@ export default function Season() {
 
     return (
         <div className={cx("form-season")}>
+            {location === "/season" ? (
+                <img src={`${BASE_URL}/images/season.jpg`} alt="" />
+            ) : (
+                <></>
+            )}
+
             <div className={cx("header-season")}>
-                <h4>Premier League</h4>
+                <p>Premier League</p>
                 <div className={cx("button-swap")}>
                     <button onClick={handleNavigate}>
                         {handleCompare()
@@ -36,15 +43,15 @@ export default function Season() {
                 </div>
             </div>
 
-            {location === "/season" ? (
-                <div className={cx("form-text")}>
-                    <h3>Manage Season Premier League</h3>
-                </div>
-            ) : handleCompare() ? (
-                <ManageSeason />
-            ) : (
-                <CreateSeason />
-            )}
+            <div className={cx("form-content")}>
+                {location === "/season" ? (
+                    <></>
+                ) : handleCompare() ? (
+                    <ManageSeason />
+                ) : (
+                    <CreateSeason />
+                )}
+            </div>
         </div>
     );
 }

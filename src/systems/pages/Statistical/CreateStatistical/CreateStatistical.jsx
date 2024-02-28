@@ -23,13 +23,11 @@ export default function CreateStatistical() {
     const [yellowCard, setYellowCard] = useState(0);
     const [redCard, setRedCard] = useState(0);
     const [seasonId, setSeasonId] = useState(0);
+    const [seasonName, setSeasonName] = useState("");
     const [optionSeasons, setOptionSeasons] = useState([]);
-
     const { state } = useLocation();
     const location = useLocation().pathname;
     const navigate = useNavigate();
-
-    console.log(state);
 
     useEffect(() => {
         const fetch = async () => {
@@ -50,6 +48,7 @@ export default function CreateStatistical() {
             setYellowCard(state?.yellowCard);
             setRedCard(state?.redCard);
             setPa(state?.pA);
+            setSeasonName(state?.seasonName);
             setSeasonId(state?.seasonId);
             setId(state?.id);
         }
@@ -63,6 +62,16 @@ export default function CreateStatistical() {
         setRedCard(0);
         setSeasonId(0);
     };
+
+    const handleChangeOption = (id) => {
+        setSeasonId(id);
+        let nameSeason = optionSeasons.filter((item) => item.value === +id)[0]
+            .label;
+        setSeasonName(nameSeason);
+    };
+
+    // console.log(seasonId);
+    // console.log(seasonName);
 
     //validate
     const handleValidate = () => {
@@ -90,6 +99,7 @@ export default function CreateStatistical() {
             pA: pa,
             yellowCard: yellowCard,
             redCard: redCard,
+            seasonName: seasonName,
             playerId:
                 location === RouterDTO.statistical.create
                     ? state.id
@@ -205,7 +215,9 @@ export default function CreateStatistical() {
                                 name=""
                                 id=""
                                 value={seasonId}
-                                onChange={(e) => setSeasonId(e.target.value)}
+                                onChange={(e) =>
+                                    handleChangeOption(e.target.value)
+                                }
                             >
                                 <option value={0}>season</option>
                                 {optionSeasons &&
@@ -215,8 +227,9 @@ export default function CreateStatistical() {
                                             <option
                                                 key={index}
                                                 value={item.value}
+                                                label={item.label}
                                             >
-                                                {item.label}
+                                                {/* {item.label} */}
                                             </option>
                                         );
                                     })}

@@ -2,19 +2,26 @@ import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../utils/routes.dto";
+import { linkWhite } from "../../../helps/linkWhite";
 
 const cx = classNames.bind(styles);
 
 export default function Header() {
     const navigate = useNavigate();
     const loction = `${useLocation().pathname}/*`;
+    const path = useLocation().pathname;
 
     const handleNavigate = (link) => {
         navigate(link.split("/*")[0]);
     };
     return (
         <>
-            <div className={cx("form-header")}>
+            <div
+                className={cx(
+                    "form-header",
+                    linkWhite.includes(path) ? "bg-white" : ""
+                )}
+            >
                 <div className={cx("form-nav", "container")}>
                     <div className={cx("icon-menu")}>
                         <i className={cx("bi", " bi-list")}></i>

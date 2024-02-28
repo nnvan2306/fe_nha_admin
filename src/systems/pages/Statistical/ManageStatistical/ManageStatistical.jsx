@@ -162,7 +162,7 @@ export default function ManageStatistical() {
                                                                 "season"
                                                             )}
                                                         >
-                                                            {item.Season?.name}
+                                                            {item.seasonName}
                                                         </td>
                                                         <td
                                                             className={cx(
