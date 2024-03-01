@@ -11,3 +11,7 @@ export const createStatisticService = (data) => {
 export const updateStatisticService = (data) => {
     return axios.put("/update-statistic", data);
 };
+
+export const deleteStatisticService = (id) => {
+    return axios.delete(`/delete-statistic?id=${id}`);
+};

@@ -137,9 +137,30 @@ export default function Header() {
                                 </p>
                             </button>
                         </li>
+                        <li>
+                            <button
+                                className={cx(
+                                    loction === RouterDTO.match.manageMatch
+                                        ? "active"
+                                        : ""
+                                )}
+                                onClick={() =>
+                                    handleNavigate(RouterDTO.match.manageMatch)
+                                }
+                            >
+                                <p>
+                                    {" "}
+                                    <i
+                                        className="bi bi-tv"
+                                        style={{ padding: "10px" }}
+                                    ></i>
+                                    Match
+                                </p>
+                            </button>
+                        </li>
                     </ul>
                 </div>
-                <div className=""></div>
+                {/* <div className=""></div> */}
             </div>
         </>
     );

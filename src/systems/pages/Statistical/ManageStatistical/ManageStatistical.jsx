@@ -4,10 +4,14 @@ import { useEffect, useState } from "react";
 import moment from "moment";
 import { useDebounce } from "../../../../hooks/useDebounce";
 import { searchPlayerService } from "../../../../service/playerService";
-import { getStatisticService } from "../../../../service/statisticService";
+import {
+    deleteStatisticService,
+    getStatisticService,
+} from "../../../../service/statisticService";
 import { BASE_URL } from "../../../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
+import Swal from "sweetalert2";
 const cx = classNames.bind(styles);
 
 export default function ManageStatistical() {
@@ -49,8 +53,37 @@ export default function ManageStatistical() {
     };
 
     const handleUpdate = (data) => {
-        navigate(RouterDTO.statistical.update, { state: data });
+        let dataBuider = { ...data, avatar_url: playerView?.avatar_url };
+        navigate(RouterDTO.statistical.update, { state: dataBuider });
     };
+
+    const handleDelete = async (data) => {
+        Swal.fire({
+            title: `Do you want to delete statistic ${data.name} ?`,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const _fetch = async () => {
+                    let Res = await deleteStatisticService(data.id);
+                    if (Res.errorCode === 0) {
+                        Swal.fire({
+                            icon: "success",
+                            title: `delete ${data.name} successfully`,
+                        });
+                        handleView(playerView);
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: `delete ${data.name} failure !`,
+                        });
+                    }
+                };
+                _fetch();
+            }
+        });
+    };
+
     return (
         <div className={cx("form-statistical")}>
             <h4>Manage Statistical</h4>
@@ -216,6 +249,11 @@ export default function ManageStatistical() {
                                                                     "btn",
                                                                     "btn-danger"
                                                                 )}
+                                                                onClick={() =>
+                                                                    handleDelete(
+                                                                        item
+                                                                    )
+                                                                }
                                                             >
                                                                 delete
                                                             </button>

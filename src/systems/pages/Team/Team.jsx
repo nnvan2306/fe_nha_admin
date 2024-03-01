@@ -5,6 +5,7 @@ import { RouterDTO } from "../../../utils/routes.dto";
 import ManageTeam from "./ManageTeam/ManageTeam";
 import CreateTeam from "./CreateTeam/CreateTeam";
 import ManagePlayerOfTeam from "./ManagePlayerTeam/ManagePlayerTeam";
+import { BASE_URL } from "../../../utils/constants";
 
 const cx = classNames.bind(styles);
 
@@ -28,8 +29,17 @@ export default function Team() {
 
     return (
         <div className={cx("form-team")}>
+            {location === "/team" ? (
+                <img
+                    src={`${BASE_URL}/images/team.jpg`}
+                    alt=""
+                    className={cx("img-thumbnail")}
+                />
+            ) : (
+                <></>
+            )}
             <div className={cx("header-team")}>
-                <h4>Premier League</h4>
+                <p>Premier League</p>
                 <div className={cx("button-swap")}>
                     <button onClick={handleNavigate}>
                         {handleCompareWithPathManage() ? (
@@ -45,7 +55,7 @@ export default function Team() {
                 </div>
             </div>
 
-            <>
+            <div className={cx("form-content")}>
                 <Routes>
                     <Route path="/create" element={<CreateTeam />}></Route>
                     <Route path={"/all"} element={<ManageTeam />}></Route>
@@ -55,7 +65,7 @@ export default function Team() {
                     ></Route>
                     <Route path="/update" element={<CreateTeam />}></Route>
                 </Routes>
-            </>
+            </div>
         </div>
     );
 }

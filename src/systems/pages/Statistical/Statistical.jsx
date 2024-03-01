@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 
 export default function Statistical() {
     return (
-        <div className={cx("statistical")}>
+        <div className={cx("form-statistical")}>
             <Routes>
                 <Route
                     path={"/allStatistical"}

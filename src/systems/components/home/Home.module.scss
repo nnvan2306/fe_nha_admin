@@ -1,16 +1,12 @@
 .main {
-    height     : 100vh;
-    width      : 100vw;
-    // position: relative;
-
-
+    height: 100vh;
+    width : 100vw;
 
     .form-img {
         width     : 100%;
         min-height: 100%;
         animation : show-form 0.8s ease-in-out forwards;
         position  : relative;
-
 
         img {
             width     : 100% !important;

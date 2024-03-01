@@ -1,9 +1,31 @@
 .form-player {
     margin-top: 10px;
+    width     : 100%;
+    height    : 100%;
 
-    .header-player {
+    .image-thumbnail {
+        width     : 100%;
+        height    : 100%;
+        object-fit: contain;
+        animation : show-form 1s ease-in-out forwards;
+        position  : relative;
+
+    }
+
+    .form-header {
         display        : flex;
         justify-content: space-around;
+        position       : absolute;
+        z-index        : 2;
+        width          : 100%;
+        height         : 100%;
+        margin-top     : 80px;
+
+        p {
+            font-size  : 30px;
+            font-weight: 500;
+            color      : #fff;
+        }
 
         .button-swap {
 
@@ -19,4 +41,26 @@
         }
     }
 
+    .form-content {
+        width     : 100%;
+        position  : absolute;
+        z-index   : 2;
+        margin-top: 130px;
+    }
+
+}
+
+
+@keyframes show-form {
+    0% {
+        top    : 0;
+        right  : 100%;
+        opacity: 0;
+    }
+
+    100% {
+        top    : 0;
+        right  : 0;
+        opacity: 1;
+    }
 }

@@ -101,7 +101,9 @@ export default function ManageTeam() {
                                                 alt=""
                                             />
                                         </td>
+
                                         <td>{item.name}</td>
+
                                         <td className={cx("td-des")}>
                                             <div
                                                 className={cx("text-des")}
@@ -110,6 +112,7 @@ export default function ManageTeam() {
                                                 }}
                                             ></div>
                                         </td>
+
                                         <td className={cx("td-manage-player")}>
                                             <div>
                                                 <button
@@ -121,6 +124,7 @@ export default function ManageTeam() {
                                                 </button>
                                             </div>
                                         </td>
+
                                         <td>
                                             <div className={cx("form-active")}>
                                                 <button
@@ -153,10 +157,10 @@ export default function ManageTeam() {
             </div>
             {meta && meta.currentPage <= meta.totalPages && (
                 <Pagination
+                    className={cx("form-pagination")}
                     defaultCurrent={1}
                     total={meta.totalIteams}
                     pageSize={5}
-                    className={cx("form-pagination")}
                     onChange={handleChangePagination}
                 />
             )}

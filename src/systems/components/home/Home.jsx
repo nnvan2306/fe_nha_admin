@@ -9,6 +9,7 @@ import Player from "../../pages/Player/Player";
 import Statistical from "../../pages/Statistical/Statistical";
 import Rating from "../../pages/Rating/Rating";
 import { BASE_URL } from "../../../utils/constants";
+import Match from "../../pages/Match/Match";
 
 const cx = classNames.bind(styles);
 
@@ -51,6 +52,10 @@ export default function Home() {
                         <Route
                             path={RouterDTO.rating.manageRating}
                             element={<Rating />}
+                        ></Route>
+                        <Route
+                            path={RouterDTO.match.manageMatch}
+                            element={<Match />}
                         ></Route>
                     </Routes>
                 </div>

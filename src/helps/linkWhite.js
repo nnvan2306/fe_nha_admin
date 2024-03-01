@@ -5,4 +5,5 @@ export const linkWhite = [
     "/player",
     "/rating",
     "/statistic",
+    "/match",
 ];

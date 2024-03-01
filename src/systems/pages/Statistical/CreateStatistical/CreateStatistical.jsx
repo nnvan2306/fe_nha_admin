@@ -142,15 +142,16 @@ export default function CreateStatistical() {
 
     return (
         <div className={cx("form-create")}>
-            <h4 style={{ textAlign: "center" }}>
-                Create Statistical{" "}
-                <span style={{ color: "var(--color-button-primary)" }}>
-                    {state.name}
-                </span>
-                <span>
-                    <img src={`${BASE_URL}${state.avatar_url}`} alt="" />
-                </span>
-            </h4>
+            <div className={cx("form-header")} style={{ textAlign: "center" }}>
+                <div>
+                    Create Statistical{" "}
+                    <span style={{ color: "var(--color-button-primary)" }}>
+                        {" "}
+                        {state.name}
+                    </span>
+                </div>
+                <img src={`${BASE_URL}${state.avatar_url}`} alt="" />
+            </div>
 
             <div className={cx("control-input", "container")}>
                 <div className={cx("row")}>

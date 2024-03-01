@@ -160,10 +160,10 @@ export default function ManagePlayer() {
             </div>
             {meta && meta.currentPage <= meta.totalPages && (
                 <Pagination
+                    className={cx("form-pagination")}
                     defaultCurrent={1}
                     total={meta.totalIteams}
                     pageSize={5}
-                    className={cx("form-pagination")}
                     onChange={handleChangePagination}
                 />
             )}
