@@ -4,7 +4,6 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../utils/routes.dto";
 import ManagePlayer from "./ManagePlayer/ManagePlayer";
 import CreatePlayer from "./CreatePlayer/CreatePlayer";
-import { BASE_URL } from "../../../utils/constants";
 
 const cx = classNames.bind(styles);
 export default function Player() {
@@ -25,18 +24,6 @@ export default function Player() {
 
     return (
         <div className={cx("form-player")}>
-            {location === "/player" ? (
-                // <div className={cx("image-thumbnail")}>
-                // </div>
-                <img
-                    src={`${BASE_URL}/images/player.jpg`}
-                    alt=""
-                    className={cx("image-thumbnail")}
-                />
-            ) : (
-                <></>
-            )}
-
             <div className={cx("form-header")}>
                 <p>Premier League</p>
                 <div className={cx("button-swap")}>

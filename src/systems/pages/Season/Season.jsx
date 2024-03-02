@@ -26,11 +26,11 @@ export default function Season() {
 
     return (
         <div className={cx("form-season")}>
-            {location === "/season" ? (
+            {/* {location === "/season" ? (
                 <img src={`${BASE_URL}/images/season.jpg`} alt="" />
             ) : (
                 <></>
-            )}
+            )} */}
 
             <div className={cx("header-season")}>
                 <p>Premier League</p>

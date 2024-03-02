@@ -8,3 +8,12 @@ export const getMatchService = () => {
         },
     });
 };
+
+export const createMatchService = (data) => {
+    return axios.post("/create-match", data, {
+        withCredentials: true,
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+};

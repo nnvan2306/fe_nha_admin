@@ -38,6 +38,6 @@ export const RouterDTO = Object.freeze({
     match: {
         manageMatch: "/match/*",
         create: "/match/create",
-        allMatch: "mactch/all",
+        allMatch: "/match/all",
     },
 });

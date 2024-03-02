@@ -3,14 +3,6 @@
     width     : 100%;
     height    : 100%;
 
-    .image-thumbnail {
-        width     : 100%;
-        height    : 100%;
-        object-fit: contain;
-        animation : show-form 1s ease-in-out forwards;
-        position  : relative;
-
-    }
 
     .form-header {
         display        : flex;
@@ -48,19 +40,4 @@
         margin-top: 130px;
     }
 
-}
-
-
-@keyframes show-form {
-    0% {
-        top    : 0;
-        right  : 100%;
-        opacity: 0;
-    }
-
-    100% {
-        top    : 0;
-        right  : 0;
-        opacity: 1;
-    }
 }

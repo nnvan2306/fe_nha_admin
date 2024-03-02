@@ -5,7 +5,6 @@ import { RouterDTO } from "../../../utils/routes.dto";
 import ManageTeam from "./ManageTeam/ManageTeam";
 import CreateTeam from "./CreateTeam/CreateTeam";
 import ManagePlayerOfTeam from "./ManagePlayerTeam/ManagePlayerTeam";
-import { BASE_URL } from "../../../utils/constants";
 
 const cx = classNames.bind(styles);
 
@@ -29,15 +28,6 @@ export default function Team() {
 
     return (
         <div className={cx("form-team")}>
-            {location === "/team" ? (
-                <img
-                    src={`${BASE_URL}/images/team.jpg`}
-                    alt=""
-                    className={cx("img-thumbnail")}
-                />
-            ) : (
-                <></>
-            )}
             <div className={cx("header-team")}>
                 <p>Premier League</p>
                 <div className={cx("button-swap")}>
