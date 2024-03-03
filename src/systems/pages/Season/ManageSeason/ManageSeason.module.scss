@@ -9,15 +9,16 @@
     position           : relative;
 
     .form-table {
-        width     : 100%;
-        max-height: 500px;
-        overflow  : hidden;
-        overflow-y: auto;
+        width              : 100%;
+        max-height         : 500px;
+        overflow           : hidden;
+        overflow-y         : auto;
+        // border-radius   : 10px;
+        // overflow     : hidden;
 
         table {
-            width        : 100%;
-            border       : 1px solid #000;
-            border-radius: 10px;
+            width    : 100%;
+            // border: 1px solid #000;
 
             thead {
 

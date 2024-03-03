@@ -1,0 +1,40 @@
+.form-manage {
+    width      : 80%;
+    margin-left: 50%;
+    transform  : translateX(-50%);
+
+    .input-select {
+        width: 20%;
+
+        select {
+            width        : 100%;
+            padding      : 10px;
+            border       : 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow   : rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+    }
+
+    .form-ttable {
+        width     : 100%;
+        margin-top: 50px;
+
+        table {
+            width : 100%;
+            border: 1px solid #000;
+
+            th {
+                text-align  : center;
+                border-right: 1px solid #000;
+                padding     : 10px;
+                font-size   : 20px;
+            }
+
+            .th-score {
+                width: 10%;
+            }
+
+
+        }
+    }
+}

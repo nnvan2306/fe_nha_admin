@@ -1,13 +1,13 @@
 import axios from "../axios";
 
-export const getMatchService = () => {
-    return axios.get("/get-match", {
-        withCredentials: true,
-        headers: {
-            "Content-Type": "multipart/form-data",
-        },
-    });
-};
+// export const getMatchService = () => {
+//     return axios.get("/get-match", {
+//         withCredentials: true,
+//         headers: {
+//             "Content-Type": "multipart/form-data",
+//         },
+//     });
+// };
 
 export const createMatchService = (data) => {
     return axios.post("/create-match", data, {
@@ -16,4 +16,8 @@ export const createMatchService = (data) => {
             "Content-Type": "multipart/form-data",
         },
     });
+};
+
+export const getMatchService = (id) => {
+    return axios.get(`/get-match?q=${id}`);
 };

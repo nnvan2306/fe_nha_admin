@@ -40,7 +40,7 @@ export default function CreateMatch() {
         _fetch();
     }, []);
 
-    const handleChangeFile = (e) => {
+    const handleChangeFile = () => {
         const input = refInputVideo.current;
         if (input) {
             input.click();
