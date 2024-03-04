@@ -20,6 +20,7 @@ export default function ManageTeam() {
         api: getTeamservice,
         page: 1,
         pageSize: 5,
+        q: null,
         is_load_more: false,
         is_reload: isReload,
     });

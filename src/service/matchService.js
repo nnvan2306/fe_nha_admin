@@ -18,6 +18,6 @@ export const createMatchService = (data) => {
     });
 };
 
-export const getMatchService = (id) => {
-    return axios.get(`/get-match?q=${id}`);
+export const getMatchService = ({ page, pageSize, q = 0 }) => {
+    return axios.get(`/get-match?page=${page}&pageSize=${pageSize}&q=${q}`);
 };
