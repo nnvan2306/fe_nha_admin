@@ -5,11 +5,18 @@ import { getAllTeam } from "../../../../service/teamService";
 import { getAllSeasonService } from "../../../../service/seasonService";
 import Swal from "sweetalert2";
 import handleValidateVideo from "../../../../helps/handleValidateVideo";
-import { createMatchService } from "../../../../service/matchService";
+import {
+    createMatchService,
+    updateMatchService,
+} from "../../../../service/matchService";
+import { useLocation } from "react-router-dom";
+import { BASE_URL } from "../../../../utils/constants";
+import { RouterDTO } from "../../../../utils/routes.dto";
 
 const cx = classNames.bind(styles);
 
 export default function CreateMatch() {
+    const [id, setId] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [title, setTitle] = useState("");
     const [meta, setMeta] = useState("");
@@ -24,8 +31,13 @@ export default function CreateMatch() {
     const [listTeam, setListTeam] = useState([]);
     const [listSeason, setListSeason] = useState([]);
     const [previewVideo, setPreviewVideo] = useState("");
+    const [isChangeFile, setIsChangeFile] = useState(false);
+    const [urlDelete, setUrlDelete] = useState("");
 
     const refInputVideo = useRef(null);
+    const location = useLocation().pathname;
+    const { state } = useLocation();
+    console.log(state);
 
     useEffect(() => {
         const _fetch = async () => {
@@ -38,6 +50,21 @@ export default function CreateMatch() {
             }
         };
         _fetch();
+
+        if (location === RouterDTO.match.updateMatch) {
+            setId(state.id);
+            setTitle(state.title);
+            setMeta(state.meta);
+            setSeasonId(state.seasonId);
+            setHostId(state.hostId);
+            setGuestId(state.guestId);
+            setHostGoal(state.hostGoal);
+            setGuestGoal(state.guestGoal);
+            setDate(state.date);
+            setHour(state.hour);
+            setPreviewVideo(`${BASE_URL}${state.match_url}`);
+            setUrlDelete(`${BASE_URL}${state.match_url}`);
+        }
     }, []);
 
     const handleChangeFile = () => {
@@ -52,6 +79,9 @@ export default function CreateMatch() {
         if (handleValidateVideo(file)) {
             setPreviewVideo(URL.createObjectURL(file));
             setVideo(file);
+            if (location === RouterDTO.match.updateMatch) {
+                setIsChangeFile(true);
+            }
         }
     };
 
@@ -78,14 +108,23 @@ export default function CreateMatch() {
             !guestId ||
             !seasonId ||
             !date ||
-            !hour ||
-            !video
+            !hour
         ) {
             Swal.fire({
                 icon: "warning",
                 title: "Please enter complete information !",
             });
             return false;
+        }
+
+        if (location !== RouterDTO.match.updateMatch) {
+            if (!video) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Please enter complete information !",
+                });
+                return false;
+            }
         }
         return true;
     };
@@ -105,14 +144,23 @@ export default function CreateMatch() {
             hour: hour,
             hostGoal: hostGoal,
             guestGoal: guestGoal,
-            file: video,
             hostId: hostId,
             guestId: guestId,
             seasonId: seasonId,
         };
+        if (location === RouterDTO.match.updateMatch) {
+            dataBuider.id = id;
+            dataBuider.isChangeFile = isChangeFile;
+            dataBuider.match_url = urlDelete;
+        }
+        if (location !== RouterDTO.match.updateMatch || isChangeFile) {
+            dataBuider.file = video;
+        }
         try {
-            let res = await createMatchService(dataBuider);
-            console.log(res);
+            let res =
+                location === RouterDTO.match.updateMatch
+                    ? await updateMatchService(dataBuider)
+                    : await createMatchService(dataBuider);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",
@@ -130,8 +178,6 @@ export default function CreateMatch() {
 
         setIsLoading(false);
     };
-
-    console.log(previewVideo);
 
     return (
         <div className={cx("form-create", "container")}>
@@ -343,7 +389,11 @@ export default function CreateMatch() {
                         ></div>
                     </button>
                 ) : (
-                    <button onClick={handleCreateMatch}>Create</button>
+                    <button onClick={handleCreateMatch}>
+                        {location === RouterDTO.match.updateMatch
+                            ? "Update"
+                            : "Create"}
+                    </button>
                 )}
             </div>
         </div>

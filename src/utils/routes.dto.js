@@ -39,5 +39,6 @@ export const RouterDTO = Object.freeze({
         manageMatch: "/match/*",
         create: "/match/create",
         allMatch: "/match/all",
+        updateMatch: "/match/update",
     },
 });

@@ -42,9 +42,28 @@
                     font-size : 20px;
                 }
 
+
+                .th-team {
+                    width: 20%;
+                }
+
                 .th-score {
                     width: 10%;
                 }
+
+                .th-video {
+                    width: 20%;
+                }
+
+                .th-describe {
+                    width: 20%;
+                }
+
+                .th-action {
+                    width: 30%;
+                }
+
+
             }
 
             tbody {
@@ -56,7 +75,7 @@
 
                 .td-team {
                     padding: 20px;
-                    width  : 30% !important;
+                    width  : 20% !important;
 
                     .col-text {
                         display        : flex;
@@ -97,7 +116,7 @@
                 }
 
                 .td-video {
-                    width  : 30%;
+                    width  : 20%;
                     padding: 10px;
 
                     video {
@@ -106,6 +125,21 @@
                         box-shadow   : rgba(0, 0, 0, 0.24) 0px 3px 8px;
                         margin-left  : 50%;
                         transform    : translateX(-50%);
+                    }
+                }
+
+                .td-describe {
+                    width  : 20%;
+                    padding: 0 10px !important;
+
+                    p {
+                        font-size  : 20px;
+                        font-weight: 500;
+
+                        span {
+                            font-size  : 20px;
+                            font-weight: 400;
+                        }
                     }
                 }
 

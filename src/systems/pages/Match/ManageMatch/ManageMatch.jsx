@@ -2,16 +2,24 @@ import classNames from "classnames/bind";
 import styles from "./ManageMatch.module.scss";
 import { useEffect, useState } from "react";
 import { getAllSeasonService } from "../../../../service/seasonService";
-import { getMatchService } from "../../../../service/matchService";
+import {
+    deleteMatchService,
+    getMatchService,
+} from "../../../../service/matchService";
 import usePagination from "../../../../hooks/usePagination";
 import { Pagination } from "antd";
 import { BASE_URL } from "../../../../utils/constants";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { RouterDTO } from "../../../../utils/routes.dto";
 
 const cx = classNames.bind(styles);
 
 export default function ManageMatch() {
     const [listSeason, setListSeason] = useState([]);
-    // const [isReload, setIsReload] = useState(false);
+    const [isReload, setIsReload] = useState(false);
+
+    const navigate = useNavigate();
 
     const { data, meta, handleChangePage, handleChangeValueSearch } =
         usePagination({
@@ -20,11 +28,15 @@ export default function ManageMatch() {
             pageSize: 5,
             q: 0,
             is_load_more: false,
-            is_reload: false,
+            is_reload: isReload,
         });
 
     const handleChangeSeason = (e) => {
         handleChangeValueSearch(+e);
+    };
+
+    const handleReLoad = () => {
+        setIsReload(!isReload);
     };
 
     useEffect(() => {
@@ -48,6 +60,39 @@ export default function ManageMatch() {
 
     const handleChangePagination = (index) => {
         handleChangePage(index);
+    };
+
+    const handleDeleteMatch = async (infoMatch) => {
+        await Swal.fire({
+            title: `Do you want to delete ${infoMatch.title} ?`,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log("ok");
+                const _fetch = async () => {
+                    let Res = await deleteMatchService(infoMatch.id);
+                    console.log(Res);
+                    if (Res.errorCode === 0) {
+                        Swal.fire({
+                            icon: "success",
+                            title: `delete match successfully`,
+                        });
+                        handleReLoad();
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: `delete ${infoMatch.title} failure !`,
+                        });
+                    }
+                };
+                _fetch();
+            }
+        });
+    };
+
+    const handleUpdateMatch = (infoMatch) => {
+        navigate(RouterDTO.match.updateMatch, { state: infoMatch });
     };
 
     return (
@@ -77,6 +122,7 @@ export default function ManageMatch() {
                             <th className={cx("th-team")}>Team</th>
                             <th className={cx("th-score")}>Score</th>
                             <th className={cx("th-video")}>Video</th>
+                            <th className={cx("th-describe")}>Describe</th>
                             <th className={cx("th-action")}>Action</th>
                         </tr>
                     </thead>
@@ -144,14 +190,27 @@ export default function ManageMatch() {
                                             ></video>
                                         </td>
 
+                                        <td className={cx("td-describe")}>
+                                            <p>
+                                                {item.title} |
+                                                <span> {item.meta}</span>
+                                            </p>
+                                        </td>
+
                                         <td className={cx("td-action")}>
                                             <button
                                                 className={cx("btn-update")}
+                                                onClick={() =>
+                                                    handleUpdateMatch(item)
+                                                }
                                             >
                                                 Edit
                                             </button>
                                             <button
                                                 className={cx("btn-delete")}
+                                                onClick={() =>
+                                                    handleDeleteMatch(item)
+                                                }
                                             >
                                                 Delete
                                             </button>

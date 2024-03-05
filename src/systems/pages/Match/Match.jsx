@@ -38,6 +38,7 @@ export default function Match() {
                 <Routes>
                     <Route path="/create" element={<CreateMatch />}></Route>
                     <Route path="/all" element={<ManageMatch />}></Route>
+                    <Route path="/update" element={<CreateMatch />}></Route>
                 </Routes>
             </div>
         </div>
