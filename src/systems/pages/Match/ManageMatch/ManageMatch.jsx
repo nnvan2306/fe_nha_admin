@@ -44,7 +44,11 @@ export default function ManageMatch() {
         };
         _fetch();
     }, []);
-    console.log(data[0]?.Teams);
+    console.log(data[0]);
+
+    const handleChangePagination = (index) => {
+        handleChangePage(index);
+    };
 
     return (
         <div className={cx("form-manage")}>
@@ -128,9 +132,30 @@ export default function ManageMatch() {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className={cx("td-score")}></td>
-                                        <td className={cx("video")}></td>
-                                        <td className={cx("action")}></td>
+
+                                        <td className={cx("td-score")}>
+                                            <p>{`${item.hostGoal} - ${item.guestGoal}`}</p>
+                                        </td>
+
+                                        <td className={cx("td-video")}>
+                                            <video
+                                                src={`${BASE_URL}${item.match_url}`}
+                                                controls
+                                            ></video>
+                                        </td>
+
+                                        <td className={cx("td-action")}>
+                                            <button
+                                                className={cx("btn-update")}
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                className={cx("btn-delete")}
+                                            >
+                                                Delete
+                                            </button>
+                                        </td>
                                     </tr>
                                 );
                             })}
@@ -143,7 +168,7 @@ export default function ManageMatch() {
                     defaultCurrent={1}
                     total={meta.totalIteams}
                     pageSize={5}
-                    // onChange={handleChangePagination}
+                    onChange={handleChangePagination}
                 />
             )}
         </div>
