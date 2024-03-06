@@ -22,7 +22,7 @@ export default function Match() {
     };
     return (
         <div className={cx("form-match")}>
-            <div className={cx("header-match")}>
+            <div className={cx("control-match")}>
                 <p>Premier League</p>
 
                 <div className={cx("button-swap")}>

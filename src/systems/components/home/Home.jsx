@@ -102,6 +102,13 @@ const handleViewThumbnails = (path) => {
                 src={`${BASE_URL}/images/match.jpg`}
             ></img>
         );
+    } else if (rePath === "/rating") {
+        return (
+            <img
+                className={cx("form-img-thumbnails", "animation-top-bottom")}
+                src={`${BASE_URL}/images/rating.jpg`}
+            ></img>
+        );
     } else {
         return <></>;
     }

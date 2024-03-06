@@ -27,5 +27,10 @@ export const deleteMatchService = (id) => {
 };
 
 export const updateMatchService = (data) => {
-    return axios.put("/update-match", data);
+    return axios.put("/update-match", data, {
+        withCredentials: true,
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
 };

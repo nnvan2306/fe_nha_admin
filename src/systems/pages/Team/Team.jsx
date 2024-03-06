@@ -28,7 +28,7 @@ export default function Team() {
 
     return (
         <div className={cx("form-team")}>
-            <div className={cx("header-team")}>
+            <div className={cx("control-team")}>
                 <p>Premier League</p>
                 <div className={cx("button-swap")}>
                     <button onClick={handleNavigate}>

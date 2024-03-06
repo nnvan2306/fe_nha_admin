@@ -31,9 +31,9 @@ export const RouterDTO = Object.freeze({
     },
     rating: {
         manageRating: "/rating/*",
-        create: "/rating/createRating",
-        allRating: "/rating/allRating",
-        update: "/rating/updateRating",
+        create: "/rating/create",
+        allRating: "/rating/all",
+        update: "/rating/update",
     },
     match: {
         manageMatch: "/match/*",

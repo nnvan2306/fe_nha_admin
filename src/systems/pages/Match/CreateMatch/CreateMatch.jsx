@@ -9,7 +9,7 @@ import {
     createMatchService,
     updateMatchService,
 } from "../../../../service/matchService";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../../../utils/constants";
 import { RouterDTO } from "../../../../utils/routes.dto";
 
@@ -37,7 +37,7 @@ export default function CreateMatch() {
     const refInputVideo = useRef(null);
     const location = useLocation().pathname;
     const { state } = useLocation();
-    console.log(state);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const _fetch = async () => {
@@ -129,6 +129,7 @@ export default function CreateMatch() {
         return true;
     };
 
+    console.log(video);
     const handleCreateMatch = async () => {
         setIsLoading(true);
         let check = handleValidate();
@@ -147,15 +148,14 @@ export default function CreateMatch() {
             hostId: hostId,
             guestId: guestId,
             seasonId: seasonId,
+            file: video,
         };
         if (location === RouterDTO.match.updateMatch) {
             dataBuider.id = id;
             dataBuider.isChangeFile = isChangeFile;
             dataBuider.match_url = urlDelete;
         }
-        if (location !== RouterDTO.match.updateMatch || isChangeFile) {
-            dataBuider.file = video;
-        }
+
         try {
             let res =
                 location === RouterDTO.match.updateMatch
@@ -166,7 +166,11 @@ export default function CreateMatch() {
                     icon: "success",
                     title: "create match successfully",
                 });
-                reSet();
+                if (location === RouterDTO.match.updateMatch) {
+                    navigate(RouterDTO.match.allMatch);
+                } else {
+                    reSet();
+                }
             }
         } catch (err) {
             console.log(err);

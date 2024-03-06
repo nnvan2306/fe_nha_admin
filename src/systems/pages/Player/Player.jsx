@@ -24,7 +24,7 @@ export default function Player() {
 
     return (
         <div className={cx("form-player")}>
-            <div className={cx("form-header")}>
+            <div className={cx("control-player")}>
                 <p>Premier League</p>
                 <div className={cx("button-swap")}>
                     <button onClick={handleNavigate}>
