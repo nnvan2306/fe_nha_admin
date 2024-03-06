@@ -1,0 +1,43 @@
+.form-create {
+    width      : 80%;
+    margin-left: 50%;
+    transform  : translateX(-50%);
+
+    .control-input {
+        width: 100%;
+
+        .form-input {
+            width      : 80%;
+            margin-left: 50%;
+            transform  : translateX(-50%);
+
+            label {
+                font-size    : 20px;
+                font-weight  : 500;
+                margin-bottom: 10px;
+
+            }
+
+            input,
+            select {
+                margin-bottom: 20px;
+                width        : 100%;
+                padding      : 10px;
+                border       : 1px solid #ccc;
+                border-radius: 10px;
+                box-shadow   : rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+            }
+
+            button {
+                float           : right;
+                margin-top      : 40px;
+                padding         : 15px 40px;
+                border          : none;
+                border-radius   : 10px;
+                background-color: var(--color-button-primary);
+                color           : #fff;
+            }
+        }
+    }
+}
