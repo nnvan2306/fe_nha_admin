@@ -24,7 +24,7 @@
                 padding      : 10px 15px;
                 border       : 1px solid #ccc;
                 border-radius: 10px;
-                box-shadow   : rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                box-shadow   : var(--box-shadow-div);
             }
 
             .box-choose-file {
@@ -35,7 +35,7 @@
                 margin-bottom: 2px;
                 border-radius: 10px;
                 border       : 1px solid #ccc;
-                box-shadow   : rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                box-shadow   : var(--box-shadow-div);
 
                 p {
                     text-align : center;

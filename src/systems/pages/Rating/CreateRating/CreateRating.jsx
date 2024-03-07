@@ -1,7 +1,11 @@
 import classNames from "classnames/bind";
 import styles from "./CreateRating.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RouterDTO } from "../../../../utils/routes.dto";
+import { getAllSeasonService } from "../../../../service/seasonService";
+import { getAllTeam } from "../../../../service/teamService";
+import Swal from "sweetalert2";
+import { createRatingService } from "../../../../service/ratingService";
 
 const cx = classNames.bind(styles);
 
@@ -14,9 +18,92 @@ export default function CreateRating() {
     const [totalLostGoal, setTotalLostGoal] = useState(0);
     const [seasonId, setSeasonId] = useState(0);
     const [teamId, setTeamId] = useState(0);
+    const [listSeasons, setListSeasons] = useState([]);
+    const [listTeams, setListTeams] = useState([]);
 
-    const handleCreateRating = () => {
+    useEffect(() => {
+        const fetch = async () => {
+            const seasons = await getAllSeasonService();
+            const teams = await getAllTeam();
+
+            if (seasons.errorCode === 0 && teams.errorCode === 0) {
+                setListSeasons(
+                    seasons.data.map((item) => {
+                        return {
+                            value: item.id,
+                            label: item.name,
+                        };
+                    })
+                );
+                setListTeams(
+                    teams.data.map((item) => {
+                        return {
+                            value: item.id,
+                            label: item.name,
+                        };
+                    })
+                );
+            }
+        };
+        fetch();
+    }, []);
+
+    const reSet = () => {
+        setSeasonId(0);
+        setTeamId(0);
+        setTotalGoal(0);
+        setTotalLostGoal(0);
+        setWin(0);
+        setLose(0);
+        setDraw(0);
+    };
+
+    const handleValidate = () => {
+        if (!seasonId || !teamId) {
+            Swal.fire({
+                icon: "warning",
+                title: "please select team and season !",
+            });
+            return false;
+        }
+        return true;
+    };
+
+    const handleCreateRating = async () => {
         setIsLoading(true);
+        let check = handleValidate();
+        if (!check) {
+            setIsLoading(false);
+            return;
+        }
+
+        let dataBuider = {
+            seasonId: seasonId,
+            teamId: teamId,
+            win: win,
+            lose: lose,
+            draw: draw,
+            totalGoal: totalGoal,
+            totalLostGoal: totalLostGoal,
+        };
+
+        try {
+            let res = await createRatingService(dataBuider);
+            if (res.errorCode === 0) {
+                Swal.fire({
+                    icon: "success",
+                    title: "create rating successfully",
+                });
+                reSet();
+            }
+        } catch (err) {
+            console.log(err);
+            Swal.fire({
+                icon: "error",
+                title: err.response.data.message,
+            });
+        }
+        setIsLoading(false);
     };
 
     return (
@@ -34,6 +121,18 @@ export default function CreateRating() {
                                 onChange={(e) => setSeasonId(e.target.value)}
                             >
                                 <option value="">choose season</option>
+                                {listSeasons &&
+                                    listSeasons.length > 0 &&
+                                    listSeasons.map((item, index) => {
+                                        return (
+                                            <option
+                                                key={index}
+                                                value={item.value}
+                                            >
+                                                {item.label}
+                                            </option>
+                                        );
+                                    })}
                             </select>
                         </div>
 
@@ -47,6 +146,18 @@ export default function CreateRating() {
                                 onChange={(e) => setTeamId(e.target.value)}
                             >
                                 <option value="">choose team</option>
+                                {listTeams &&
+                                    listTeams.length > 0 &&
+                                    listTeams.map((item, index) => {
+                                        return (
+                                            <option
+                                                key={index}
+                                                value={item.value}
+                                            >
+                                                {item.label}
+                                            </option>
+                                        );
+                                    })}
                             </select>
                         </div>
 

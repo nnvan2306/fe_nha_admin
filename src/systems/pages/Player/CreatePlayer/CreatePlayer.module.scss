@@ -19,7 +19,7 @@
             padding      : 10px 15px;
             border       : 1px solid #ccc;
             border-radius: 10px;
-            box-shadow   : rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            box-shadow   : var(--box-shadow-div);
         }
     }
 
@@ -100,7 +100,7 @@
             padding      : 10px 15px;
             border       : 1px solid #ccc;
             border-radius: 10px;
-            box-shadow   : rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            box-shadow   : var(--box-shadow-div);
         }
     }
 
