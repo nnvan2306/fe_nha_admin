@@ -48,6 +48,18 @@
                 .th-w-l-d {
                     width: 20%;
 
+                    .span-win {
+                        color: green;
+                    }
+
+                    .span-lose {
+                        color: red;
+                    }
+
+                    .span-draw {
+                        color: orange;
+                    }
+
                 }
 
                 .th-total-goal {
@@ -103,18 +115,68 @@
 
                     .td-w-l-d {
                         width: 20%;
+
+                        span {
+                            font-size  : 25px;
+                            font-weight: 500;
+                        }
+
+                        .span-win {
+                            color: green;
+                        }
+
+                        .span-lose {
+                            color: red;
+                        }
+
+                        .span-draw {
+                            color: orange;
+                        }
                     }
 
                     .td-total-goal {
                         width: 10%;
+
+                        p {
+                            font-size: 20px;
+                        }
                     }
 
                     .td-total-lost-goal {
                         width: 10%;
+
+                        p {
+                            font-size: 20px;
+                        }
                     }
 
                     .td-action {
                         width: 30%;
+
+                        button {
+                            margin       : 0 10px;
+                            padding      : 8px;
+                            width        : 30%;
+                            border       : none;
+                            border-radius: 10px;
+                            color        : #fff;
+                            font-size    : 18px;
+
+                            &:hover {
+                                cursor : pointer;
+                                opacity: 0.5;
+                            }
+                        }
+
+
+
+                        .btn-update {
+                            background-color: orange;
+                        }
+
+                        .btn-delete {
+                            background-color: red;
+                        }
                     }
                 }
             }

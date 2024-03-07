@@ -7,3 +7,7 @@ export const createRatingService = (data) => {
 export const getRatingService = (id) => {
     return axios.get(`/get-rating?seasonId=${id}`);
 };
+
+export const deleteRatingService = (id) => {
+    return axios.delete(`/delete-rating?id=${id}`);
+};

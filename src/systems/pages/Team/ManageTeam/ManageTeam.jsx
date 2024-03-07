@@ -40,7 +40,6 @@ export default function ManageTeam() {
     };
 
     const handleDelete = (data) => {
-        console.log(data);
         Swal.fire({
             title: `Do you want to delete ${data.name} ?`,
             showCancelButton: true,
