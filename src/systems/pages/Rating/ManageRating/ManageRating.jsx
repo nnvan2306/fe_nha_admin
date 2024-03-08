@@ -8,12 +8,15 @@ import {
 } from "../../../../service/ratingService";
 import Swal from "sweetalert2";
 import { BASE_URL } from "../../../../utils/constants";
+import { useNavigate } from "react-router-dom";
+import { RouterDTO } from "../../../../utils/routes.dto";
 
 const cx = classNames.bind(styles);
 
 export default function ManageRating() {
     const [listSeasons, setListSeasons] = useState([]);
     const [listRating, setListRating] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetch = async () => {
@@ -75,6 +78,10 @@ export default function ManageRating() {
                 _fetch();
             }
         });
+    };
+
+    const handleUpdateRating = (infoRating) => {
+        navigate(RouterDTO.rating.update, { state: infoRating });
     };
 
     return (
@@ -151,6 +158,9 @@ export default function ManageRating() {
                                         <td className={cx("td-action")}>
                                             <button
                                                 className={cx("btn-update")}
+                                                onClick={() =>
+                                                    handleUpdateRating(item)
+                                                }
                                             >
                                                 Edit
                                             </button>

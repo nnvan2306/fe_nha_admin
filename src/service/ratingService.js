@@ -11,3 +11,7 @@ export const getRatingService = (id) => {
 export const deleteRatingService = (id) => {
     return axios.delete(`/delete-rating?id=${id}`);
 };
+
+export const updateRatingService = (data) => {
+    return axios.put("/update-rating", data);
+};

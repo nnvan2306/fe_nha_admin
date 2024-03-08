@@ -5,12 +5,17 @@ import { RouterDTO } from "../../../../utils/routes.dto";
 import { getAllSeasonService } from "../../../../service/seasonService";
 import { getAllTeam } from "../../../../service/teamService";
 import Swal from "sweetalert2";
-import { createRatingService } from "../../../../service/ratingService";
+import {
+    createRatingService,
+    updateRatingService,
+} from "../../../../service/ratingService";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
 export default function CreateRating() {
     const [isLoading, setIsLoading] = useState(false);
+    const [id, setId] = useState(0);
     const [win, setWin] = useState(0);
     const [lose, setLose] = useState(0);
     const [draw, setDraw] = useState(0);
@@ -20,6 +25,12 @@ export default function CreateRating() {
     const [teamId, setTeamId] = useState(0);
     const [listSeasons, setListSeasons] = useState([]);
     const [listTeams, setListTeams] = useState([]);
+
+    const navigate = useNavigate();
+    const location = useLocation().pathname;
+    const { state } = useLocation();
+
+    console.log(state);
 
     useEffect(() => {
         const fetch = async () => {
@@ -43,6 +54,17 @@ export default function CreateRating() {
                         };
                     })
                 );
+
+                if (location === RouterDTO.rating.update) {
+                    setId(state.id);
+                    setSeasonId(state.seasonId);
+                    setTeamId(state.teamId);
+                    setTotalGoal(state.totalGoal);
+                    setTotalLostGoal(state.totalLostGoal);
+                    setWin(state.win);
+                    setDraw(state.draw);
+                    setLose(state.lose);
+                }
             }
         };
         fetch();
@@ -87,20 +109,35 @@ export default function CreateRating() {
             totalLostGoal: totalLostGoal,
         };
 
+        if (location === RouterDTO.rating.update) {
+            dataBuider.id = id;
+        }
+
         try {
-            let res = await createRatingService(dataBuider);
+            let res =
+                location === RouterDTO.rating.update
+                    ? await updateRatingService(dataBuider)
+                    : await createRatingService(dataBuider);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",
-                    title: "create rating successfully",
+                    title: `${
+                        location === RouterDTO.rating.update
+                            ? "update"
+                            : "create"
+                    } rating successfully`,
                 });
-                reSet();
+                if (location === RouterDTO.rating.update) {
+                    navigate(RouterDTO.rating.allRating);
+                } else {
+                    reSet();
+                }
             }
         } catch (err) {
             console.log(err);
             Swal.fire({
                 icon: "error",
-                title: err.response.data.message,
+                title: err?.response?.data?.message,
             });
         }
         setIsLoading(false);
