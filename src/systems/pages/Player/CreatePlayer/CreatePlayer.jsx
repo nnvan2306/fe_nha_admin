@@ -30,6 +30,7 @@ export default function CreatePlayer() {
     const [avatar, setAvatar] = useState(null);
     const [avatarPreview, setAvatarPreview] = useState("");
     const [avatarUrlOld, setAvatarUrlOld] = useState("");
+    const [isActive, setIsActive] = useState(0);
     const [teamId, setTeamId] = useState(0);
     const [isChangeFileUpdate, setIsChangeFileUpdate] = useState(false);
     const [markdown, setMarkdown] = useState({
@@ -95,6 +96,7 @@ export default function CreatePlayer() {
         setTeamId(0);
         setAvatar(null);
         setAvatarPreview("");
+        setIsActive(0);
         setMarkdown({
             text: "",
             html: "",
@@ -161,6 +163,7 @@ export default function CreatePlayer() {
             weight: weight,
             birthday: birthday,
             teamId: teamId,
+            isActive: isActive ? true : false,
             file: avatar,
             description: markdown.html,
             des_text: markdown.text,
@@ -224,6 +227,7 @@ export default function CreatePlayer() {
             height: height,
             weight: weight,
             birthday: birthday,
+            isActive: isActive ? true : false,
             teamId: teamId,
             avatar_url: avatarUrlOld,
             isChangeFile: isChangeFileUpdate,
@@ -293,32 +297,30 @@ export default function CreatePlayer() {
                         />
                     </div>
 
-                    <div className={cx("row", "form-hei-wei")}>
-                        <div className={cx("form-input", "col-6")}>
-                            <label htmlFor="height">
-                                height <span>(m)</span>
-                            </label>
-                            <br />
-                            <input
-                                type="text"
-                                id="height"
-                                value={height}
-                                onChange={(e) => setHeight(e.target.value)}
-                            />
-                        </div>
+                    <div className={cx("form-input", "col-3")}>
+                        <label htmlFor="height">
+                            height <span>(m)</span>
+                        </label>
+                        <br />
+                        <input
+                            type="text"
+                            id="height"
+                            value={height}
+                            onChange={(e) => setHeight(e.target.value)}
+                        />
+                    </div>
 
-                        <div className={cx("form-input", "col-6")}>
-                            <label htmlFor="weight">
-                                weight <span>(kg)</span>
-                            </label>
-                            <br />
-                            <input
-                                type="text"
-                                id="weight"
-                                value={weight}
-                                onChange={(e) => setWeight(e.target.value)}
-                            />
-                        </div>
+                    <div className={cx("form-input", "col-3")}>
+                        <label htmlFor="weight">
+                            weight <span>(kg)</span>
+                        </label>
+                        <br />
+                        <input
+                            type="text"
+                            id="weight"
+                            value={weight}
+                            onChange={(e) => setWeight(e.target.value)}
+                        />
                     </div>
                 </div>
                 <div className={cx("col-12", "col-md-6")}>
@@ -363,6 +365,17 @@ export default function CreatePlayer() {
                                         </option>
                                     );
                                 })}
+                        </select>
+                    </div>
+
+                    <div className={cx("form-select")}>
+                        <label htmlFor="isActive">Active</label> <br />
+                        <select
+                            value={isActive}
+                            onChange={(e) => setIsActive(e.target.value)}
+                        >
+                            <option value={0}>false</option>
+                            <option value={1}>true</option>
                         </select>
                     </div>
                 </div>

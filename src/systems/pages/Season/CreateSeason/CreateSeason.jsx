@@ -6,6 +6,7 @@ import "react-markdown-editor-lite/lib/index.css";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { CreateSeasonService } from "../../../../service/seasonService";
+import { handleApi } from "../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
 const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -54,7 +55,8 @@ export default function CreateSeason() {
             des_text: markdown.text,
         };
         try {
-            let res = await CreateSeasonService(dataBuider);
+            // let res = await CreateSeasonService(dataBuider);
+            let res = await handleApi(CreateSeasonService, dataBuider);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",

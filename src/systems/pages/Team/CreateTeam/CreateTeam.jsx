@@ -13,6 +13,7 @@ import handleValidateImage from "../../../../helps/handleValidate";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
 import { BASE_URL } from "../../../../utils/constants";
+import { handleApi } from "../../../../service/handleApi";
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 const cx = classNames.bind(styles);
@@ -124,7 +125,8 @@ export default function CreateTeam() {
             des_text: markdown.text,
         };
         try {
-            let res = await createTeamService(dataBuider);
+            // let res = await createTeamService(dataBuider);
+            let res = await handleApi(createTeamService, dataBuider);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",

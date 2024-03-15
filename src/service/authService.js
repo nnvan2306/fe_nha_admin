@@ -9,3 +9,9 @@ export const handleLoginService = (data) => {
         withCredentials: true,
     });
 };
+
+export const refreshTokenService = () => {
+    return axios.get("/refresh-token", {
+        withCredentials: true,
+    });
+};
