@@ -33,6 +33,7 @@ export default function CreatePlayer() {
     const [isActive, setIsActive] = useState(0);
     const [teamId, setTeamId] = useState(0);
     const [isChangeFileUpdate, setIsChangeFileUpdate] = useState(false);
+    const [locationPlayer, setLocationPlayer] = useState(0);
     const [markdown, setMarkdown] = useState({
         text: "",
         html: "",
@@ -55,6 +56,8 @@ export default function CreatePlayer() {
             setWeight(state.weight);
             setAvatarPreview(`${BASE_URL}${state.avatar_url}`);
             setTeamId(state.teamId);
+            setIsActive(state.isActive ? 1 : 0);
+            setLocationPlayer(state.location);
             setMarkdown({
                 text: state.des_text,
                 html: state.description,
@@ -97,6 +100,7 @@ export default function CreatePlayer() {
         setAvatar(null);
         setAvatarPreview("");
         setIsActive(0);
+        setLocationPlayer(0);
         setMarkdown({
             text: "",
             html: "",
@@ -135,7 +139,8 @@ export default function CreatePlayer() {
             !weight ||
             !birthday ||
             !teamId ||
-            !avatar
+            !avatar ||
+            !locationPlayer
         ) {
             Swal.fire({
                 icon: "warning",
@@ -159,6 +164,7 @@ export default function CreatePlayer() {
             code: code,
             name: name,
             nationality: nationality,
+            location: locationPlayer,
             height: height,
             weight: weight,
             birthday: birthday,
@@ -198,7 +204,8 @@ export default function CreatePlayer() {
             !height ||
             !weight ||
             !birthday ||
-            !teamId
+            !teamId ||
+            !locationPlayer
         ) {
             Swal.fire({
                 icon: "warning",
@@ -223,6 +230,7 @@ export default function CreatePlayer() {
             name: name,
             description: markdown.html,
             des_text: markdown.text,
+            location: locationPlayer,
             nationality: nationality,
             height: height,
             weight: weight,
@@ -365,6 +373,21 @@ export default function CreatePlayer() {
                                         </option>
                                     );
                                 })}
+                        </select>
+                    </div>
+
+                    <div className={cx("form-select")}>
+                        <label htmlFor="location">Location</label> <br />
+                        <select
+                            value={locationPlayer}
+                            onChange={(e) => setLocationPlayer(e.target.value)}
+                        >
+                            <option value={0}>choose location</option>
+                            <option value={1}>thủ môn</option>
+                            <option value={2}>trung vệ</option>
+                            <option value={3}>hậu vệ</option>
+                            <option value={4}>tiền vệ</option>
+                            <option value={5}>tiền đạo</option>
                         </select>
                     </div>
 
