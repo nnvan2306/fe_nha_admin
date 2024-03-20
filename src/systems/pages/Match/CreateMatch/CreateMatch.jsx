@@ -33,6 +33,19 @@ export default function CreateMatch() {
     const [previewVideo, setPreviewVideo] = useState("");
     const [isChangeFile, setIsChangeFile] = useState(false);
     const [urlDelete, setUrlDelete] = useState("");
+    const [isPlayded, setIsPlayded] = useState(0);
+    const [hostShoot, setHostShoot] = useState(0);
+    const [guestShoot, setGuestShoot] = useState(0);
+    const [hostTarget, setHostTarget] = useState(0);
+    const [guestTarget, setGuestTarget] = useState(0);
+    const [hostBallControl, setHostBallControl] = useState(0);
+    const [hostConnerKick, setHostConnerKick] = useState(0);
+    const [guestConnerKick, setGuestConnerKick] = useState(0);
+
+    const [hostRedCard, setHostRedCard] = useState(0);
+    const [guestRedCard, setGuestRedCard] = useState(0);
+    const [hostYellowCard, setHostYellowCard] = useState(0);
+    const [guestYellowCard, setGuestYellowCard] = useState(0);
 
     const refInputVideo = useRef(null);
     const location = useLocation().pathname;
@@ -64,6 +77,18 @@ export default function CreateMatch() {
             setHour(state.hour);
             setPreviewVideo(`${BASE_URL}${state.match_url}`);
             setUrlDelete(`${BASE_URL}${state.match_url}`);
+            setIsPlayded(state.isPlayded);
+            setHostShoot(state.hostShoot);
+            setGuestShoot(state.guestShoot);
+            setHostTarget(state.target);
+            setGuestTarget(state.guestTarget);
+            setHostBallControl(state.hostBallControl);
+            setHostConnerKick(state.hostConnerKick);
+            setGuestConnerKick(state.guestConnerKick);
+            setHostRedCard(state.hostRedCard);
+            setGuestRedCard(state.guestRedCard);
+            setHostYellowCard(state.hostYellowCard);
+            setGuestYellowCard(state.guestYellowCard);
         }
     }, []);
 
@@ -98,6 +123,18 @@ export default function CreateMatch() {
         setVideo(null);
         setPreviewVideo("");
         refInputVideo.current.value = null;
+        setIsPlayded(0);
+        setHostShoot(0);
+        setGuestShoot(0);
+        setHostTarget(0);
+        setGuestTarget(0);
+        setHostBallControl(0);
+        setHostConnerKick(0);
+        setGuestConnerKick(0);
+        setHostRedCard(0);
+        setGuestRedCard(0);
+        setHostYellowCard(0);
+        setGuestYellowCard(0);
     };
 
     const handleValidate = () => {
@@ -118,7 +155,10 @@ export default function CreateMatch() {
         }
 
         if (location !== RouterDTO.match.updateMatch) {
-            if (!video) {
+            if (isPlayded) {
+                console.log("true");
+            }
+            if (isPlayded && !video) {
                 Swal.fire({
                     icon: "warning",
                     title: "Please enter complete information !",
@@ -129,7 +169,6 @@ export default function CreateMatch() {
         return true;
     };
 
-    console.log(video);
     const handleCreateMatch = async () => {
         setIsLoading(true);
         let check = handleValidate();
@@ -149,6 +188,18 @@ export default function CreateMatch() {
             guestId: guestId,
             seasonId: seasonId,
             file: video,
+            isPlayded: isPlayded ? true : false,
+            hostShoot: hostShoot,
+            guestShoot: guestShoot,
+            hostTarget: hostTarget,
+            guestTarget: guestTarget,
+            hostBallControl: hostBallControl,
+            hostConnerKick: hostConnerKick,
+            guestConnerKick: guestConnerKick,
+            hostRedCard: hostRedCard,
+            guestRedCard: guestRedCard,
+            hostYellowCard: hostYellowCard,
+            guestYellowCard: guestYellowCard,
         };
         if (location === RouterDTO.match.updateMatch) {
             dataBuider.id = id;
@@ -161,6 +212,7 @@ export default function CreateMatch() {
                 location === RouterDTO.match.updateMatch
                     ? await updateMatchService(dataBuider)
                     : await createMatchService(dataBuider);
+            console.log(res);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",
@@ -228,6 +280,31 @@ export default function CreateMatch() {
                                     );
                                 })}
                         </select>
+                    </div>
+                    <div className={cx("form-input")}>
+                        <label htmlFor="isPlayded">Is Playded</label>
+                        <br />
+
+                        <select
+                            value={isPlayded}
+                            onChange={(e) => setIsPlayded(e.target.value)}
+                        >
+                            <option value={0}>false</option>
+                            <option value={1}>true</option>
+                        </select>
+                    </div>
+
+                    <div className={cx("form-input")}>
+                        <label htmlFor="hostBallControl">
+                            Host Ball Control
+                        </label>
+                        <br />
+
+                        <input
+                            type="number"
+                            value={hostBallControl}
+                            onChange={(e) => setHostBallControl(e.target.value)}
+                        />
                     </div>
 
                     <div className={cx("form-input")}>
@@ -378,6 +455,175 @@ export default function CreateMatch() {
                                     id="hour"
                                     value={hour}
                                     onChange={(e) => setHour(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={cx("row")}>
+                        <div className={cx("col-6")}>
+                            <div className={cx("form-input")}>
+                                <label htmlFor="hostShoot">Host Shoot</label>
+                                <br />
+                                <input
+                                    type="number"
+                                    id="hostShoot"
+                                    value={hostShoot}
+                                    onChange={(e) =>
+                                        setHostShoot(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className={cx("col-6")}>
+                            <div className={cx("form-input")}>
+                                <label htmlFor="guestShoot">Guest Shoot</label>
+                                <br />
+                                <input
+                                    type="number"
+                                    id="guestShoot"
+                                    value={guestShoot}
+                                    onChange={(e) =>
+                                        setGuestShoot(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={cx("row")}>
+                        <div className={cx("col-6")}>
+                            <div className={cx("form-input")}>
+                                <label htmlFor="hostTarget">Host Target</label>
+                                <br />
+                                <input
+                                    type="number"
+                                    id="hostTarget"
+                                    value={hostTarget}
+                                    onChange={(e) =>
+                                        setHostTarget(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className={cx("col-6")}>
+                            <div className={cx("form-input")}>
+                                <label htmlFor="guestTarget">
+                                    Guest Target
+                                </label>
+                                <br />
+                                <input
+                                    type="number"
+                                    id="guestTarget"
+                                    value={guestTarget}
+                                    onChange={(e) =>
+                                        setGuestTarget(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={cx("row")}>
+                        <div className={cx("col-6")}>
+                            <div className={cx("form-input")}>
+                                <label htmlFor="hostConnerKick">
+                                    Host Conner kick
+                                </label>
+                                <br />
+                                <input
+                                    type="number"
+                                    id="hostConnerKick"
+                                    value={hostConnerKick}
+                                    onChange={(e) =>
+                                        setHostConnerKick(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className={cx("col-6")}>
+                            <div className={cx("form-input")}>
+                                <label htmlFor="guestConnerKick">
+                                    Guest Conner Kick
+                                </label>
+                                <br />
+                                <input
+                                    type="number"
+                                    id="guestConnerKick"
+                                    value={guestConnerKick}
+                                    onChange={(e) =>
+                                        setGuestConnerKick(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={cx("row")}>
+                        <div className={cx("col-6")}>
+                            <div className={cx("form-input")}>
+                                <label htmlFor="hostRedCard">
+                                    Host Red Card
+                                </label>
+                                <br />
+                                <input
+                                    type="number"
+                                    id="hostRedCard"
+                                    value={hostRedCard}
+                                    onChange={(e) =>
+                                        setHostRedCard(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className={cx("col-6")}>
+                            <div className={cx("form-input")}>
+                                <label htmlFor="guestRedCard">
+                                    Guest Red Card
+                                </label>
+                                <br />
+                                <input
+                                    type="number"
+                                    id="guestRedCard"
+                                    value={guestRedCard}
+                                    onChange={(e) =>
+                                        setGuestRedCard(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={cx("row")}>
+                        <div className={cx("col-6")}>
+                            <div className={cx("form-input")}>
+                                <label htmlFor="hostYellowCard">
+                                    Host Yellow Card
+                                </label>
+                                <br />
+                                <input
+                                    type="number"
+                                    id="hostYellowCard"
+                                    value={hostYellowCard}
+                                    onChange={(e) =>
+                                        setHostYellowCard(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className={cx("col-6")}>
+                            <div className={cx("form-input")}>
+                                <label htmlFor="guestYellowCard">
+                                    Guest Yellow Card
+                                </label>
+                                <br />
+                                <input
+                                    type="number"
+                                    id="guestYellowCard"
+                                    value={guestYellowCard}
+                                    onChange={(e) =>
+                                        setGuestYellowCard(e.target.value)
+                                    }
                                 />
                             </div>
                         </div>

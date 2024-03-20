@@ -3,9 +3,9 @@ import axios from "../axios";
 export const CreateSeasonService = (data) => {
     return axios.post("/create-season", data, {
         withCredentials: true,
-        headers: {
-            "Content-Type": "multipart/form-data",
-        },
+        // headers: {
+        //     "Content-Type": "multipart/form-data",
+        // },
     });
 };
 

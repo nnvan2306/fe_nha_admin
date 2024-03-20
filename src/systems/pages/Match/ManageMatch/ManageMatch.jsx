@@ -12,12 +12,16 @@ import { BASE_URL } from "../../../../utils/constants";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
+import { Button, Modal } from "antd";
+import { handleGetScored } from "../../../../service/scoredService";
 
 const cx = classNames.bind(styles);
 
 export default function ManageMatch() {
     const [listSeason, setListSeason] = useState([]);
     const [isReload, setIsReload] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [listScored, setListScored] = useState([]);
 
     const navigate = useNavigate();
 
@@ -40,7 +44,6 @@ export default function ManageMatch() {
     };
 
     useEffect(() => {
-        console.log("a");
         const _fetch = async () => {
             let res = await getAllSeasonService();
             if (res.errorCode === 0) {
@@ -56,7 +59,6 @@ export default function ManageMatch() {
         };
         _fetch();
     }, []);
-    console.log(data[0]);
 
     const handleChangePagination = (index) => {
         handleChangePage(index);
@@ -69,10 +71,8 @@ export default function ManageMatch() {
             confirmButtonText: "Yes",
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("ok");
                 const _fetch = async () => {
                     let Res = await deleteMatchService(infoMatch.id);
-                    console.log(Res);
                     if (Res.errorCode === 0) {
                         Swal.fire({
                             icon: "success",
@@ -93,6 +93,20 @@ export default function ManageMatch() {
 
     const handleUpdateMatch = (infoMatch) => {
         navigate(RouterDTO.match.updateMatch, { state: infoMatch });
+    };
+
+    const showModal = async (data) => {
+        setIsModalOpen(true);
+        const res = await handleGetScored(data.id);
+        if (res.errorCode === 0) {
+            setListScored(res.data);
+        }
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
     };
 
     return (
@@ -123,6 +137,7 @@ export default function ManageMatch() {
                             <th className={cx("th-score")}>Score</th>
                             <th className={cx("th-video")}>Video</th>
                             <th className={cx("th-describe")}>Describe</th>
+                            <th className={cx("th-addScored")}>Scored</th>
                             <th className={cx("th-action")}>Action</th>
                         </tr>
                     </thead>
@@ -197,6 +212,16 @@ export default function ManageMatch() {
                                             </p>
                                         </td>
 
+                                        <td className={cx("td-addScored")}>
+                                            <Button
+                                                className={cx("button-add")}
+                                                type="primary"
+                                                onClick={() => showModal(item)}
+                                            >
+                                                Add
+                                            </Button>
+                                        </td>
+
                                         <td className={cx("td-action")}>
                                             <button
                                                 className={cx("btn-update")}
@@ -230,6 +255,14 @@ export default function ManageMatch() {
                     onChange={handleChangePagination}
                 />
             )}
+            <Modal
+                title="Basic Modal"
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+            >
+                <p>Some contents...</p>
+            </Modal>
         </div>
     );
 }

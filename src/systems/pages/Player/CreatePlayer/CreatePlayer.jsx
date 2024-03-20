@@ -49,9 +49,7 @@ export default function CreatePlayer() {
             setCode(state.code);
             setName(state.name);
             setNationality(state.nationality);
-            //"2024-02-26T03:32:26.000Z"
             setBirthday(state.birthday.split("T")[0]);
-            // setBirthday(new Date(state.birthday).toLocaleDateString());
             setHeight(state.height);
             setWeight(state.weight);
             setAvatarPreview(`${BASE_URL}${state.avatar_url}`);
