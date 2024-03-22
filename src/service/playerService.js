@@ -29,3 +29,7 @@ export const updatePlayerService = (data) => {
 export const searchPlayerService = (q) => {
     return axios.get(`/search-player?q=${q}`);
 };
+
+export const getPlayerDetailSeasonService = (hostId, guestId) => {
+    return axios.get(`/get-player-season?hostId=${hostId}&guestId=${guestId}`);
+};

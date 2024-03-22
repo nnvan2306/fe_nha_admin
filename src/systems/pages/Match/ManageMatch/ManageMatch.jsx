@@ -7,13 +7,16 @@ import {
     getMatchService,
 } from "../../../../service/matchService";
 import usePagination from "../../../../hooks/usePagination";
-import { Pagination } from "antd";
+import { Pagination, Modal, Button, Row, Col } from "antd";
 import { BASE_URL } from "../../../../utils/constants";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
-import { Button, Modal } from "antd";
-import { handleGetScored } from "../../../../service/scoredService";
+import {
+    handleCreateScoredService,
+    handleGetScored,
+} from "../../../../service/scoredService";
+import { getPlayerDetailSeasonService } from "../../../../service/playerService";
 
 const cx = classNames.bind(styles);
 
@@ -22,6 +25,12 @@ export default function ManageMatch() {
     const [isReload, setIsReload] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [listScored, setListScored] = useState([]);
+    const [listPlayer, setListPlayer] = useState([]);
+    const [infoMatch, setInfoMatch] = useState(null);
+    const [namePlayer, setNamePLayer] = useState("");
+    const [minute, setMinute] = useState(0);
+    const [isPen, setISPen] = useState(0);
+    const [teamId, setTeamId] = useState(0);
 
     const navigate = useNavigate();
 
@@ -95,11 +104,25 @@ export default function ManageMatch() {
         navigate(RouterDTO.match.updateMatch, { state: infoMatch });
     };
 
+    const handleGetScored = async () => {
+        const fetch = await handleGetScored(data.id);
+        if (fetch.errorCode === 0) {
+            setListScored(fetch.data);
+        }
+    };
+
     const showModal = async (data) => {
         setIsModalOpen(true);
-        const res = await handleGetScored(data.id);
-        if (res.errorCode === 0) {
-            setListScored(res.data);
+        handleGetScored();
+        // const res = await handleGetScored(data.id);
+        const players = await getPlayerDetailSeasonService(
+            data.hostId,
+            data.guestId
+        );
+        if (players.errorCode === 0) {
+            // setListScored(res.data);
+            setListPlayer(players.data);
+            setInfoMatch(data);
         }
     };
     const handleOk = () => {
@@ -108,6 +131,45 @@ export default function ManageMatch() {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+
+    const handleValidate = () => {
+        if (!namePlayer || !minute || !teamId) {
+            Swal.fire({
+                icon: "warning",
+                title: "Please enter complete information !",
+            });
+            return false;
+        }
+        return true;
+    };
+    const handleCreateScored = async () => {
+        let check = handleValidate();
+        if (!check) {
+            return;
+        }
+
+        let dataBuider = {
+            namePlayer: namePlayer,
+            minuteGoal: minute,
+            isPenalty: isPen ? true : false,
+            matchId: infoMatch.id,
+            teamId: teamId,
+        };
+
+        const fetch = await handleCreateScoredService(dataBuider);
+        if (fetch.errorCode === 0) {
+            Swal.fire({
+                icon: "success",
+                title: "Create scored succesfully",
+            });
+            setNamePLayer("");
+            setMinute(0);
+            setISPen(0);
+            setTeamId(0);
+        }
+    };
+
+    console.log("run");
 
     return (
         <div className={cx("form-manage")}>
@@ -162,7 +224,7 @@ export default function ManageMatch() {
                                                     >
                                                         <img
                                                             src={`${BASE_URL}${item.Teams[0].logo_url}`}
-                                                            alt=""
+                                                            alt="logo"
                                                         />
                                                     </div>
                                                 </div>
@@ -255,13 +317,145 @@ export default function ManageMatch() {
                     onChange={handleChangePagination}
                 />
             )}
+
             <Modal
+                className={cx("form-modal")}
                 title="Basic Modal"
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
+                width={1000}
             >
-                <p>Some contents...</p>
+                <Row>
+                    <Col span={6} className={cx("col-modal")}>
+                        <img
+                            className={cx("modal-img-logo")}
+                            src={`${BASE_URL}${infoMatch?.Teams[0]?.logo_url}`}
+                            alt="logo"
+                        />
+                        <div className={cx("list-scored")}>
+                            {listScored &&
+                                listScored.length > 0 &&
+                                listScored.map((item, index) => {
+                                    return (
+                                        <div className="" key={index}>
+                                            {item.teamId ===
+                                            infoMatch.hostId ? (
+                                                <p className="">
+                                                    {item.namePlayer}{" "}
+                                                    {item.minuteGoal}
+                                                    {"'"}{" "}
+                                                    {item.isPenalty
+                                                        ? "(P)"
+                                                        : ""}{" "}
+                                                    <span>
+                                                        <i className="bi bi-x-circle"></i>{" "}
+                                                    </span>
+                                                </p>
+                                            ) : (
+                                                <></>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                        </div>
+                    </Col>
+
+                    <Col span={12} className={cx("col-modal-center")}>
+                        <p>Create</p>
+                        <div className={cx("form-input-modal")}>
+                            <label htmlFor="name">name</label>
+                            <br />
+                            <input
+                                type="text"
+                                value={namePlayer}
+                                onChange={(e) => setNamePLayer(e.target.value)}
+                            />
+                        </div>
+                        <div className={cx("form-input-modal")}>
+                            <label htmlFor="minute">minute</label>
+                            <br />
+                            <input
+                                type="number"
+                                value={minute}
+                                onChange={(e) => setMinute(e.target.value)}
+                            />
+                        </div>
+                        <div className={cx("form-input-modal")}>
+                            <label htmlFor="minute">isPen</label>
+                            <br />
+                            <select
+                                name=""
+                                id=""
+                                value={isPen}
+                                onChange={(e) => setISPen(e.target.value)}
+                            >
+                                <option value={0}>false</option>
+                                <option value={1}>True</option>
+                            </select>
+                        </div>
+
+                        <div className={cx("form-input-modal")}>
+                            <label htmlFor="minute">team</label>
+                            <br />
+                            <select
+                                name=""
+                                id=""
+                                value={teamId}
+                                onChange={(e) => setTeamId(e.target.value)}
+                            >
+                                <option value={0}>Choose Team</option>
+                                <option value={infoMatch?.Teams[0].id}>
+                                    {infoMatch?.Teams[0].name}{" "}
+                                </option>
+                                <option value={infoMatch?.Teams[1].id}>
+                                    {infoMatch?.Teams[1].name}{" "}
+                                </option>{" "}
+                            </select>
+                        </div>
+
+                        <div
+                            className={cx("button-create")}
+                            onClick={handleCreateScored}
+                        >
+                            create
+                        </div>
+                    </Col>
+
+                    <Col span={6} className={cx("col-modal")}>
+                        <img
+                            className={cx("modal-img-logo")}
+                            src={`${BASE_URL}${infoMatch?.Teams[1]?.logo_url}`}
+                            alt="logo"
+                        />
+                        <div className={cx("list-scored")}>
+                            {listScored &&
+                                listScored.length > 0 &&
+                                listScored.map((item, index) => {
+                                    return (
+                                        <div className="" key={index}>
+                                            {item.teamId ===
+                                            infoMatch.guestId ? (
+                                                <p className="">
+                                                    {item.namePlayer}{" "}
+                                                    {item.minuteGoal}
+                                                    {"'"}{" "}
+                                                    {item.isPenalty
+                                                        ? "(P)"
+                                                        : ""}{" "}
+                                                    <span>
+                                                        <i className="bi bi-x-circle"></i>{" "}
+                                                    </span>
+                                                </p>
+                                            ) : (
+                                                <></>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                        </div>
+                    </Col>
+                </Row>
             </Modal>
         </div>
     );
