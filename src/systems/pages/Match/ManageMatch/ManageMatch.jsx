@@ -14,7 +14,8 @@ import { useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
 import {
     handleCreateScoredService,
-    handleGetScored,
+    handleDeleteScoredService,
+    handleGetScoredService,
 } from "../../../../service/scoredService";
 import { getPlayerDetailSeasonService } from "../../../../service/playerService";
 
@@ -25,7 +26,7 @@ export default function ManageMatch() {
     const [isReload, setIsReload] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [listScored, setListScored] = useState([]);
-    const [listPlayer, setListPlayer] = useState([]);
+    // const [listPlayer, setListPlayer] = useState([]);
     const [infoMatch, setInfoMatch] = useState(null);
     const [namePlayer, setNamePLayer] = useState("");
     const [minute, setMinute] = useState(0);
@@ -104,30 +105,29 @@ export default function ManageMatch() {
         navigate(RouterDTO.match.updateMatch, { state: infoMatch });
     };
 
-    const handleGetScored = async () => {
-        const fetch = await handleGetScored(data.id);
-        if (fetch.errorCode === 0) {
-            setListScored(fetch.data);
-        }
+    const handleGetScored = async (data) => {
+        const fetch = await handleGetScoredService(data.id);
+        return fetch;
     };
 
     const showModal = async (data) => {
         setIsModalOpen(true);
-        handleGetScored();
-        // const res = await handleGetScored(data.id);
+        let scored = await handleGetScored(data);
         const players = await getPlayerDetailSeasonService(
             data.hostId,
             data.guestId
         );
-        if (players.errorCode === 0) {
-            // setListScored(res.data);
-            setListPlayer(players.data);
+        if (players.errorCode === 0 && scored.errorCode === 0) {
+            setListScored(scored.data);
+            // setListPlayer(players.data);
             setInfoMatch(data);
         }
     };
+
     const handleOk = () => {
         setIsModalOpen(false);
     };
+
     const handleCancel = () => {
         setIsModalOpen(false);
     };
@@ -166,10 +166,42 @@ export default function ManageMatch() {
             setMinute(0);
             setISPen(0);
             setTeamId(0);
+            let scored = await handleGetScored(infoMatch);
+            if (scored.errorCode === 0) {
+                setListScored(scored.data);
+            }
         }
     };
 
-    console.log("run");
+    const handleDeleteScored = async (infoScored) => {
+        await Swal.fire({
+            title: `Do you want to delete ${infoScored.namePlayer} ?`,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const _fetch = async () => {
+                    let Res = await handleDeleteScoredService(infoScored.id);
+                    if (Res.errorCode === 0) {
+                        Swal.fire({
+                            icon: "success",
+                            title: `delete scored successfully`,
+                        });
+                        let scored = await handleGetScored(infoMatch);
+                        if (scored.errorCode === 0) {
+                            setListScored(scored.data);
+                        }
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: `delete ${infoScored.namePlayer} failure !`,
+                        });
+                    }
+                };
+                _fetch();
+            }
+        });
+    };
 
     return (
         <div className={cx("form-manage")}>
@@ -340,7 +372,7 @@ export default function ManageMatch() {
                                     return (
                                         <div className="" key={index}>
                                             {item.teamId ===
-                                            infoMatch.hostId ? (
+                                            infoMatch?.hostId ? (
                                                 <p className="">
                                                     {item.namePlayer}{" "}
                                                     {item.minuteGoal}
@@ -349,7 +381,14 @@ export default function ManageMatch() {
                                                         ? "(P)"
                                                         : ""}{" "}
                                                     <span>
-                                                        <i className="bi bi-x-circle"></i>{" "}
+                                                        <i
+                                                            className="bi bi-x-circle"
+                                                            onClick={() =>
+                                                                handleDeleteScored(
+                                                                    item
+                                                                )
+                                                            }
+                                                        ></i>{" "}
                                                     </span>
                                                 </p>
                                             ) : (
@@ -435,7 +474,7 @@ export default function ManageMatch() {
                                     return (
                                         <div className="" key={index}>
                                             {item.teamId ===
-                                            infoMatch.guestId ? (
+                                            infoMatch?.guestId ? (
                                                 <p className="">
                                                     {item.namePlayer}{" "}
                                                     {item.minuteGoal}
@@ -444,7 +483,14 @@ export default function ManageMatch() {
                                                         ? "(P)"
                                                         : ""}{" "}
                                                     <span>
-                                                        <i className="bi bi-x-circle"></i>{" "}
+                                                        <i
+                                                            className="bi bi-x-circle"
+                                                            onClick={() =>
+                                                                handleDeleteScored(
+                                                                    item
+                                                                )
+                                                            }
+                                                        ></i>{" "}
                                                     </span>
                                                 </p>
                                             ) : (
