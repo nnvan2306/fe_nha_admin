@@ -10,59 +10,10 @@ import Statistical from "../../pages/Statistical/Statistical";
 import Rating from "../../pages/Rating/Rating";
 import { BASE_URL } from "../../../utils/constants";
 import Match from "../../pages/Match/Match";
+import Stadium from "../../pages/Stadium/Stadium";
+import Calendar from "../../pages/Calendar/Calendar";
 
 const cx = classNames.bind(styles);
-
-// export default function Home() {
-//     const location = useLocation().pathname;
-//     return (
-//         <div className={cx("main")}>
-//             <div className={cx("form-header")}>
-//                 <Header />
-//             </div>
-//             <div className={cx("form-img")}>
-//                 {location === "/" ? (
-//                     <img
-//                         src={`${BASE_URL}/images/nha2.jpg`}
-//                         alt=""
-//                         style={{ width: "200px", height: "200px" }}
-//                     />
-//                 ) : (
-//                     <></>
-//                 )}
-
-//                 <div className={cx("form-content")}>
-//                     <Routes>
-//                         <Route
-//                             path={RouterDTO.season.manageSeason}
-//                             element={<Season />}
-//                         ></Route>
-//                         <Route
-//                             path={RouterDTO.team.manageTeam}
-//                             element={<Team />}
-//                         ></Route>
-//                         <Route
-//                             path={RouterDTO.player.managePlayer}
-//                             element={<Player />}
-//                         ></Route>
-//                         <Route
-//                             path={RouterDTO.statistical.manageStatistical}
-//                             element={<Statistical />}
-//                         ></Route>
-//                         <Route
-//                             path={RouterDTO.rating.manageRating}
-//                             element={<Rating />}
-//                         ></Route>
-//                         <Route
-//                             path={RouterDTO.match.manageMatch}
-//                             element={<Match />}
-//                         ></Route>
-//                     </Routes>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
 
 const handleViewThumbnails = (path) => {
     if (path === "/") {
@@ -109,6 +60,13 @@ const handleViewThumbnails = (path) => {
                 src={`${BASE_URL}/images/rating.jpg`}
             ></img>
         );
+    } else if (rePath === "/stadium") {
+        return (
+            <img
+                className={cx("form-img-thumbnails", "animation-top-bottom")}
+                src={`${BASE_URL}/images/stadium.jpg`}
+            ></img>
+        );
     } else {
         return <></>;
     }
@@ -130,27 +88,36 @@ export default function Home() {
                     <Route
                         path={RouterDTO.season.manageSeason}
                         element={<Season />}
-                    ></Route>
+                    />
                     <Route
                         path={RouterDTO.team.manageTeam}
                         element={<Team />}
-                    ></Route>
+                    />
                     <Route
                         path={RouterDTO.player.managePlayer}
                         element={<Player />}
-                    ></Route>
+                    />
                     <Route
                         path={RouterDTO.statistical.manageStatistical}
                         element={<Statistical />}
-                    ></Route>
+                    />
                     <Route
                         path={RouterDTO.rating.manageRating}
                         element={<Rating />}
-                    ></Route>
+                    />
                     <Route
                         path={RouterDTO.match.manageMatch}
                         element={<Match />}
-                    ></Route>
+                    />
+                    <Route
+                        path={RouterDTO.stadium.manageStadium}
+                        element={<Stadium />}
+                    />
+
+                    <Route
+                        path={RouterDTO.calendar.manageCalendar}
+                        element={<Calendar />}
+                    />
                 </Routes>
             </div>
         </div>

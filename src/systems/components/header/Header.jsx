@@ -158,6 +158,53 @@ export default function Header() {
                                 </p>
                             </button>
                         </li>
+                        <li>
+                            <button
+                                className={cx(
+                                    loction === RouterDTO.stadium.manageStadium
+                                        ? "active"
+                                        : ""
+                                )}
+                                onClick={() =>
+                                    handleNavigate(
+                                        RouterDTO.stadium.manageStadium
+                                    )
+                                }
+                            >
+                                <p>
+                                    {" "}
+                                    <i
+                                        className="bi bi-tv"
+                                        style={{ padding: "10px" }}
+                                    ></i>
+                                    Stadium
+                                </p>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                className={cx(
+                                    loction ===
+                                        RouterDTO.calendar.manageCalendar
+                                        ? "active"
+                                        : ""
+                                )}
+                                onClick={() =>
+                                    handleNavigate(
+                                        RouterDTO.calendar.manageCalendar
+                                    )
+                                }
+                            >
+                                <p>
+                                    {" "}
+                                    <i
+                                        className="bi bi-tv"
+                                        style={{ padding: "10px" }}
+                                    ></i>
+                                    Calendar
+                                </p>
+                            </button>
+                        </li>
                     </ul>
                 </div>
                 {/* <div className=""></div> */}

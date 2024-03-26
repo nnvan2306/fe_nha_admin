@@ -6,4 +6,5 @@ export const linkWhite = [
     "/rating",
     "/statistic",
     "/match",
+    "/stadium",
 ];
