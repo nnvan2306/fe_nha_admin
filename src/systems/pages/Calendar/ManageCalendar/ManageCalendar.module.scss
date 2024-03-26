@@ -1,0 +1,45 @@
+.from-manage {
+    margin-top : 20px;
+    width      : 70%;
+    margin-left: 50%;
+    transform  : translateX(-50%);
+
+    .form-search {
+        display        : flex;
+        align-items    : center;
+        justify-content: space-around;
+
+        select {
+            width        : 20%;
+            padding      : 8px 20px;
+            border-radius: 10px;
+            border       : 1px solid #ccc;
+        }
+
+        button {
+            width           : 20%;
+            padding         : 8px 10px;
+            border          : none;
+            border-radius   : 10px;
+            background-color: blue;
+            color           : #fff;
+        }
+    }
+
+    table {
+        width     : 100%;
+        margin-top: 20px;
+
+        thead {
+            td {
+                border : 1px solid #000;
+                padding: 10px;
+                width  : 12%;
+            }
+
+            .td-action {
+                width: 35%;
+            }
+        }
+    }
+}

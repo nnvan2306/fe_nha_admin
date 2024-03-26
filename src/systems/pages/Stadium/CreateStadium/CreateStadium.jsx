@@ -105,7 +105,7 @@ export default function CreateStadium() {
     return (
         <div className={cx("form-create", "container")}>
             <div className={cx("row")}>
-                <div className={cx("col-6", "col-md-6")}>
+                <div className={cx("col-12", "col-md-6")}>
                     <div className={cx("form-input")}>
                         <label htmlFor="name">Name</label> <br />
                         <input
@@ -116,7 +116,7 @@ export default function CreateStadium() {
                         />
                     </div>
                 </div>
-                <div className={cx("col-6", "col-md-6")}>
+                <div className={cx("col-12", "col-md-6")}>
                     <div className={cx("button-Create")}>
                         {isLoading ? (
                             <button disabled className={cx("button-disabled")}>

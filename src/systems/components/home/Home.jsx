@@ -67,6 +67,13 @@ const handleViewThumbnails = (path) => {
                 src={`${BASE_URL}/images/stadium.jpg`}
             ></img>
         );
+    } else if (rePath === "/calendar") {
+        return (
+            <img
+                className={cx("form-img-thumbnails", "animation-top-bottom")}
+                src={`${BASE_URL}/images/calendar.png`}
+            ></img>
+        );
     } else {
         return <></>;
     }
