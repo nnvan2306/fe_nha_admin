@@ -5,7 +5,11 @@ import { RouterDTO } from "../../../../utils/routes.dto";
 import { getStadiumService } from "../../../../service/stadiumService";
 import { getAllTeam } from "../../../../service/teamService";
 import Swal from "sweetalert2";
-import { createCalendarService } from "../../../../service/calendarService";
+import {
+    createCalendarService,
+    updateCalendarService,
+} from "../../../../service/calendarService";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -18,6 +22,11 @@ export default function CreateCalendar() {
     const [stadiumId, setStadiumId] = useState(0);
     const [date, setDate] = useState("");
     const [hour, setHour] = useState("");
+    const [id, setId] = useState(0);
+
+    const location = useLocation().pathname;
+    const { state } = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetch = async () => {
@@ -44,6 +53,16 @@ export default function CreateCalendar() {
             }
         };
         fetch();
+
+        if (location === RouterDTO.calendar.update) {
+            setHostId(state.hostId);
+            setGuestId(state.guestId);
+            setStadiumId(state.stadiumId);
+            setDate(state.date);
+            setHour(state.hour);
+            setId(state.id);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleValidate = () => {
@@ -60,6 +79,12 @@ export default function CreateCalendar() {
                 title: "host Team and guest tem mustn't same !",
             });
             return false;
+        }
+
+        if (location === RouterDTO.calendar.update) {
+            if (!id) {
+                return false;
+            }
         }
         return true;
     };
@@ -103,7 +128,40 @@ export default function CreateCalendar() {
         setIsLoading(false);
     };
 
-    const handleUpdate = () => {};
+    const handleUpdate = async () => {
+        setIsLoading(true);
+        let check = handleValidate();
+        if (!check) {
+            setIsLoading(false);
+            return;
+        }
+
+        let dataBuider = {
+            id: id,
+            hostId: hostId,
+            guestId: guestId,
+            date: date,
+            hour: hour,
+            stadiumId: stadiumId,
+        };
+        try {
+            let res = await updateCalendarService(dataBuider);
+            if (res.errorCode === 0) {
+                Swal.fire({
+                    icon: "success",
+                    title: "update successfully",
+                });
+                navigate(RouterDTO.calendar.allCalendar);
+            }
+        } catch (err) {
+            console.log(err);
+            Swal.fire({
+                icon: "error",
+                title: "error from server please try again !",
+            });
+        }
+        setIsLoading(false);
+    };
 
     return (
         <div className={cx("form-create", "container")}>

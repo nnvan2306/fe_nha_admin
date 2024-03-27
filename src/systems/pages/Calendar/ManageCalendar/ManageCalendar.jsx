@@ -3,7 +3,13 @@ import styles from "./ManageCalendar.module.scss";
 import { useEffect, useState } from "react";
 import { getAllTeam } from "../../../../service/teamService";
 import Swal from "sweetalert2";
-import { getCalendarService } from "../../../../service/calendarService";
+import {
+    deleteCalendarService,
+    getCalendarService,
+} from "../../../../service/calendarService";
+import { BASE_URL } from "../../../../utils/constants";
+import { useNavigate } from "react-router-dom";
+import { RouterDTO } from "../../../../utils/routes.dto";
 
 const cx = classNames.bind(styles);
 
@@ -12,6 +18,8 @@ export default function ManageCalendar() {
     const [hostId, setHostId] = useState(0);
     const [guestId, setGuestId] = useState(0);
     const [listCalendar, setListCalendar] = useState([]);
+
+    const navigate = useNavigate();
 
     const handleGetCalendar = async () => {
         try {
@@ -44,6 +52,37 @@ export default function ManageCalendar() {
         };
         fetch();
     }, []);
+
+    const handleDelete = (data) => {
+        Swal.fire({
+            title: `Do you want to delete calendar ${data.Teams[0].name} vs ${data.Teams[1].name} ?`,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const _fetch = async () => {
+                    let Res = await deleteCalendarService(data.id);
+                    if (Res.errorCode === 0) {
+                        Swal.fire({
+                            icon: "success",
+                            title: `delete successfully`,
+                        });
+                        handleGetCalendar();
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: `delete failure !`,
+                        });
+                    }
+                };
+                _fetch();
+            }
+        });
+    };
+
+    const handleUpdate = (data) => {
+        navigate(RouterDTO.calendar.update, { state: data });
+    };
 
     return (
         <div className={cx("from-manage")}>
@@ -102,12 +141,53 @@ export default function ManageCalendar() {
                         listCalendar.map((item, index) => {
                             return (
                                 <tr key={index}>
-                                    <td>{}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td className={cx("td-team")}>
+                                        <img
+                                            src={`${BASE_URL}${
+                                                item.hostId === item.Teams[0].id
+                                                    ? item.Teams[0].logo_url
+                                                    : item.Teams[1].logo_url
+                                            }`}
+                                            alt="logo"
+                                        />
+                                        <p>
+                                            {item.hostId === item.Teams[0].id
+                                                ? item.Teams[0].name
+                                                : item.Teams[1].name}
+                                        </p>
+                                    </td>
+                                    <td className={cx("td-team")}>
+                                        <img
+                                            src={`${BASE_URL}${
+                                                item.guestId ===
+                                                item.Teams[0].id
+                                                    ? item.Teams[0].logo_url
+                                                    : item.Teams[1].logo_url
+                                            }`}
+                                            alt="logo"
+                                        />
+                                        <p>
+                                            {item.guestId === item.Teams[0].id
+                                                ? item.Teams[0].name
+                                                : item.Teams[1].name}
+                                        </p>
+                                    </td>
+                                    <td>{item.Stadium.name}</td>
+                                    <td>{item.date}</td>
+                                    <td>{item.hour}</td>
+                                    <td className={cx("td-action")}>
+                                        <button
+                                            onClick={() => handleDelete(item)}
+                                        >
+                                            Delete
+                                        </button>
+                                        <button
+                                            onClick={() => handleUpdate(item)}
+                                        >
+                                            Edit
+                                        </button>
+                                        <button>ticket</button>
+                                    </td>
                                 </tr>
                             );
                         })}

@@ -5,5 +5,13 @@ export const createCalendarService = (data) => {
 };
 
 export const getCalendarService = (hostId, guestId) => {
-    return axios.get(`/get-calendar?hostId=${hostId}&guestId=${guestId}`);
+    return axios.get(`/get-calender?hostId=${hostId}&guestId=${guestId}`);
+};
+
+export const deleteCalendarService = (id) => {
+    return axios.delete(`/delete-calendar?id=${id}`);
+};
+
+export const updateCalendarService = (data) => {
+    return axios.put("/update-calendar", data);
 };
