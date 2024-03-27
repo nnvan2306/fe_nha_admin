@@ -10,6 +10,7 @@ import {
 import { BASE_URL } from "../../../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
+import ModalTicket from "./ModalTicket/ModalTicket";
 
 const cx = classNames.bind(styles);
 
@@ -186,7 +187,10 @@ export default function ManageCalendar() {
                                         >
                                             Edit
                                         </button>
-                                        <button>ticket</button>
+
+                                        <div className={cx("form-modal")}>
+                                            <ModalTicket info={item} />
+                                        </div>
                                     </td>
                                 </tr>
                             );

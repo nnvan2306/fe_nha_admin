@@ -70,25 +70,36 @@
             }
 
             .td-action {
+                display        : flex;
+                justify-content: space-around;
+                align-items    : center;
+                height         : 120px;
+
+
                 button {
-                    width           : 20%;
-                    margin          : 0 5%;
-                    padding         : 8px 10px;
-                    border          : none;
-                    border-radius   : 10px;
-                    color           : #fff;
-                    background-color: orange;
+                    width              : 20%;
+                    // height          : 50px;
+                    padding            : 10px;
+                    border             : none;
+                    border-radius      : 10px;
+                    color              : #fff;
+                    background-color   : orange;
 
 
                     &:first-child {
                         background-color: red;
                     }
 
-                    &:last-child {
-                        background-color: green;
-                    }
+
 
                 }
+
+                .form-modal {
+                    width   : 20%;
+                    // float: right;
+                }
+
+
 
 
             }

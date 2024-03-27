@@ -1,0 +1,20 @@
+.form-modal-ticket {
+    width: 100%;
+
+    button {
+        width           : 100% !important;
+        background-color: green !important;
+        margin          : 0 !important;
+    }
+
+
+
+    .form-conten-modal {
+        min-height: 2000px !important;
+
+        .btn-create-ticket {
+            border : none;
+            padding: 20px !important;
+        }
+    }
+}
