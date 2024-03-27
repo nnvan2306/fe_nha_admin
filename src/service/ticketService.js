@@ -7,3 +7,11 @@ export const getTicketService = (id) => {
 export const createTicketService = (data) => {
     return axios.post("/create-ticket", data);
 };
+
+export const deleteTicketService = (id) => {
+    return axios.delete(`/delete-ticket?id=${id}`);
+};
+
+export const bookingTicketService = (data) => {
+    return axios.patch("/update-ticket", data);
+};
