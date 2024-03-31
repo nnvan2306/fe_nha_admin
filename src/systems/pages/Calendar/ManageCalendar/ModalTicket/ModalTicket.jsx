@@ -17,6 +17,11 @@ export default function ModalTicket({ info }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [infoCalendar, setInfoCalendar] = useState(null);
     const [listTicket, setListTicket] = useState([]);
+    const [name, setName] = useState("");
+    const [firstIndex, setFirstIndex] = useState(0);
+    const [lastIndex, setLastIndex] = useState(0);
+    const [isVip, setIsVip] = useState(0);
+    const [price, setPrice] = useState(0);
 
     const showModal = async () => {
         setIsModalOpen(true);
@@ -38,10 +43,30 @@ export default function ModalTicket({ info }) {
         }
     };
 
+    const handleValidate = () => {
+        if (!name || !firstIndex || !lastIndex || !price) {
+            Swal.fire({
+                icon: "warning",
+                title: "please enter infomation",
+            });
+            return false;
+        }
+        return true;
+    };
+
     const handleCreateTicket = async () => {
+        let check = handleValidate();
+        if (!check) {
+            return;
+        }
         try {
             let dataBuider = {
-                id: infoCalendar.id,
+                name: name,
+                firstIndex: firstIndex,
+                lastIndex: lastIndex,
+                isVip: isVip === 0 ? false : true,
+                price: price,
+                calendarId: infoCalendar.id,
             };
             let res = await createTicketService(dataBuider);
             if (res.errorCode === 0) {
@@ -116,10 +141,98 @@ export default function ModalTicket({ info }) {
                 className={cx("modal-ticket")}
             >
                 <div
-                    className={cx("form-conten-modal")}
+                    className={cx("form-content-modal")}
                     style={{ maxHeight: "450px", overflow: "auto" }}
                 >
-                    {listTicket.length > 0 ? (
+                    <div
+                        className={cx(
+                            "form-create-ticket d-flex justify-content-around align-items-center "
+                        )}
+                    >
+                        <div className={cx("form-input")}>
+                            <label htmlFor="name" className="mb-2">
+                                Name
+                            </label>
+                            <br />
+                            <input
+                                type="text"
+                                id="name"
+                                className="p-1 border border-1 rounded shadow-sm"
+                                value={name}
+                                onChange={(e) =>
+                                    setName(e.target.value.toLocaleUpperCase())
+                                }
+                            />
+                        </div>
+
+                        <div className={cx("form-input")}>
+                            <label htmlFor="firstIndex" className="mb-2">
+                                First Index
+                            </label>
+                            <br />
+                            <input
+                                type="number"
+                                id="firstIndex"
+                                className="p-1 border border-1 rounded shadow-sm"
+                                value={firstIndex}
+                                onChange={(e) => setFirstIndex(e.target.value)}
+                            />
+                        </div>
+
+                        <div className={cx("form-input")}>
+                            <label htmlFor="lastIndex" className="mb-2">
+                                Last Index
+                            </label>
+                            <br />
+                            <input
+                                type="number"
+                                id="lastIndex"
+                                className="p-1 border border-1 rounded shadow-sm"
+                                value={lastIndex}
+                                onChange={(e) => setLastIndex(e.target.value)}
+                            />
+                        </div>
+
+                        <div className={cx("form-input")}>
+                            <label htmlFor="isVip" className="mb-2">
+                                Vip ?
+                            </label>
+                            <br />
+                            <select
+                                name=""
+                                id=""
+                                className="p-1 border border-1 rounded shadow-sm"
+                                value={isVip}
+                                onChange={(e) => setIsVip(e.target.value)}
+                            >
+                                <option value={0}>false</option>
+                                <option value={1}>true</option>
+                            </select>
+                        </div>
+
+                        <div className={cx("form-input")}>
+                            <label htmlFor="price" className="mb-2">
+                                Price ($)
+                            </label>
+                            <br />
+                            <input
+                                type="number"
+                                id="price"
+                                className="p-1 border border-1 rounded shadow-sm"
+                                value={price}
+                                onChange={(e) => setPrice(e.target.value)}
+                            />
+                        </div>
+
+                        <button
+                            className={cx("btn btn-success mt-5 ")}
+                            onClick={handleCreateTicket}
+                        >
+                            Create Ticket
+                        </button>
+                    </div>
+
+                    {listTicket && listTicket.length > 0 && (
                         <div className="container">
                             <div className="row row-cols-3">
                                 {listTicket.map((item, index) => {
@@ -183,16 +296,6 @@ export default function ModalTicket({ info }) {
                                 })}
                             </div>
                         </div>
-                    ) : (
-                        <button
-                            className={cx(
-                                "btn-create-ticket",
-                                "btn btn-success mt-5 mx-auto w-25 "
-                            )}
-                            onClick={handleCreateTicket}
-                        >
-                            Create Ticket
-                        </button>
                     )}
                 </div>
             </Modal>

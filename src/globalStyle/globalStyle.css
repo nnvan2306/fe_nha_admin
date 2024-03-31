@@ -11,5 +11,8 @@
 :root{
     --color-button-primary:rgb(51, 144, 236);
     --box-shadow-div:  rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
 
+.btn-success {
+    margin-top: 30px !important;
 }
