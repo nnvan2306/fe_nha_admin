@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import styles from "./ModalTicket.module.scss";
-import { Modal } from "antd";
+import { Divider, Modal } from "antd";
 import { useState } from "react";
 import {
     bookingTicketService,
@@ -22,6 +22,7 @@ export default function ModalTicket({ info }) {
     const [lastIndex, setLastIndex] = useState(0);
     const [isVip, setIsVip] = useState(0);
     const [price, setPrice] = useState(0);
+    const [listTicketDelete, setListTicketDelete] = useState([]);
 
     const showModal = async () => {
         setIsModalOpen(true);
@@ -61,7 +62,7 @@ export default function ModalTicket({ info }) {
         }
         try {
             let dataBuider = {
-                name: name,
+                name: name.toLocaleUpperCase(),
                 firstIndex: firstIndex,
                 lastIndex: lastIndex,
                 isVip: isVip === 0 ? false : true,
@@ -80,7 +81,7 @@ export default function ModalTicket({ info }) {
             console.log(err);
             Swal.fire({
                 icon: "error",
-                title: "error from server please try again !",
+                title: err.response.data.message,
             });
         }
     };
@@ -128,6 +129,22 @@ export default function ModalTicket({ info }) {
             }
         });
     };
+
+    const handlePushTicketDelete = (id) => {
+        if (listTicketDelete.length === 0) {
+            setListTicketDelete([...listTicketDelete, id]);
+        } else {
+            let check = listTicketDelete.includes(id);
+            if (check) {
+                let arrDelete = listTicketDelete.filter((item) => item !== id);
+                setListTicketDelete(arrDelete);
+            } else {
+                setListTicketDelete([...listTicketDelete, id]);
+            }
+        }
+    };
+
+    const handleDeleteMultiple = () => {};
 
     return (
         <div className={cx("form-modal-ticket")}>
@@ -232,16 +249,38 @@ export default function ModalTicket({ info }) {
                         </button>
                     </div>
 
+                    <Divider />
+
+                    <div className="w-100 d-flex justify-content-end">
+                        <button
+                            className="w-20 border border-1 rounded shadow-sm p-2 mb-2 bg-danger text-white"
+                            onClick={handleDeleteMultiple}
+                        >
+                            <i className="bi bi-trash3 p-2"></i>Delete More
+                        </button>
+                    </div>
+
                     {listTicket && listTicket.length > 0 && (
                         <div className="container">
                             <div className="row row-cols-3">
                                 {listTicket.map((item, index) => {
                                     return (
                                         <div className="col my-2" key={index}>
-                                            <div className="row">
+                                            <div className="row  border-r-1">
+                                                <div className="col-1 d-flex">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="p-5"
+                                                        onChange={() =>
+                                                            handlePushTicketDelete(
+                                                                +item.id
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
                                                 <div className="col-3">
                                                     {item.isBooking ? (
-                                                        <div className="w-20 h-100 rounded-circle bg-success text-center p-2 text-white">
+                                                        <div className="w-20 h-100 rounded-circle bg-warning text-center p-2 text-white">
                                                             {item.name}
                                                         </div>
                                                     ) : (
@@ -250,6 +289,13 @@ export default function ModalTicket({ info }) {
                                                         </div>
                                                     )}
                                                 </div>
+                                                <div className="col-1 d-flex justify-content-center align-items-center">
+                                                    <p className="mb-0 mr-2">
+                                                        ({item.price}
+                                                        <span>$</span>)
+                                                    </p>
+                                                </div>
+
                                                 <div className="col-3">
                                                     <button
                                                         className="rounded mx-4 p-2 bg-danger text-white border border-white"

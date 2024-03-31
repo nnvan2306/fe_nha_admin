@@ -13,5 +13,9 @@ export const deleteTicketService = (id) => {
 };
 
 export const bookingTicketService = (data) => {
-    return axios.patch("/update-ticket", data);
+    return axios.patch("/update-booking-ticket", data);
+};
+
+export const deleteMultipleTicketService = (data) => {
+    return axios.delete("/delete-multiple-ticket", data);
 };
