@@ -5,6 +5,8 @@ import { useState } from "react";
 import {
     bookingTicketService,
     createTicketService,
+    deleteAllTicketService,
+    deleteMultipleTicketService,
     deleteTicketService,
     getTicketService,
 } from "../../../../../service/ticketService";
@@ -40,7 +42,12 @@ export default function ModalTicket({ info }) {
     const handleGetTicket = async (id) => {
         const res = await getTicketService(+id);
         if (res.errorCode === 0) {
-            setListTicket(res.data);
+            let arrSort = res.data.sort((itemOne, itemTwo) => {
+                let indexOne = +itemOne.name.slice(1);
+                let indexTwo = +itemTwo.name.slice(1);
+                return indexOne - indexTwo;
+            });
+            setListTicket(arrSort);
         }
     };
 
@@ -75,6 +82,11 @@ export default function ModalTicket({ info }) {
                     icon: "success",
                     title: "create success",
                 });
+                setName("");
+                setFirstIndex(0);
+                setLastIndex(0);
+                setIsVip(0);
+                setPrice(0);
                 handleGetTicket(infoCalendar.id);
             }
         } catch (err) {
@@ -144,7 +156,71 @@ export default function ModalTicket({ info }) {
         }
     };
 
-    const handleDeleteMultiple = () => {};
+    const handleDeleteMultiple = async () => {
+        let dataBuider = {
+            listTicket: listTicketDelete,
+        };
+
+        Swal.fire({
+            title: `Do you want delete tickets checked ?`,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const _fetch = async () => {
+                    let Res = await deleteMultipleTicketService(dataBuider);
+                    try {
+                        if (Res.errorCode === 0) {
+                            Swal.fire({
+                                icon: "success",
+                                title: `delete successfully`,
+                            });
+                            setListTicketDelete([]);
+                            await handleGetTicket(infoCalendar.id);
+                        }
+                    } catch (err) {
+                        console.log(err);
+                        Swal.fire({
+                            icon: "error",
+                            title: err.response.data.message,
+                        });
+                    }
+                };
+                _fetch();
+            }
+        });
+    };
+
+    const handleDeleteAll = async () => {
+        Swal.fire({
+            title: `Do you want delete all tickets ?`,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const _fetch = async () => {
+                    let Res = await deleteAllTicketService(infoCalendar.id);
+                    try {
+                        if (Res.errorCode === 0) {
+                            Swal.fire({
+                                icon: "success",
+                                title: `delete successfully`,
+                            });
+                            setListTicketDelete([]);
+                            await handleGetTicket(infoCalendar.id);
+                        }
+                    } catch (err) {
+                        console.log(err);
+                        Swal.fire({
+                            icon: "error",
+                            title: err.response.data.message,
+                        });
+                    }
+                };
+                _fetch();
+            }
+        });
+    };
 
     return (
         <div className={cx("form-modal-ticket")}>
@@ -254,6 +330,14 @@ export default function ModalTicket({ info }) {
                     <div className="w-100 d-flex justify-content-end">
                         <button
                             className="w-20 border border-1 rounded shadow-sm p-2 mb-2 bg-danger text-white"
+                            style={{ marginRight: "10px" }}
+                            onClick={handleDeleteAll}
+                        >
+                            <i className="bi bi-trash3 p-2"></i>
+                            Delete All
+                        </button>
+                        <button
+                            className="w-20 border border-1 rounded shadow-sm p-2 mb-2 bg-danger text-white"
                             onClick={handleDeleteMultiple}
                         >
                             <i className="bi bi-trash3 p-2"></i>Delete More
@@ -261,44 +345,125 @@ export default function ModalTicket({ info }) {
                     </div>
 
                     {listTicket && listTicket.length > 0 && (
-                        <div className="container">
-                            <div className="row row-cols-3">
+                        <div className="container ">
+                            <div className="row row-cols-2 gx-2">
                                 {listTicket.map((item, index) => {
                                     return (
-                                        <div className="col my-2" key={index}>
-                                            <div className="row  border-r-1">
+                                        <div
+                                            className="col my-2"
+                                            key={index}
+                                            style={{
+                                                border: "1px solid #ccc",
+                                                padding: "10px",
+                                            }}
+                                        >
+                                            <div className="row">
                                                 <div className="col-1 d-flex">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="p-5"
-                                                        onChange={() =>
-                                                            handlePushTicketDelete(
-                                                                +item.id
-                                                            )
-                                                        }
-                                                    />
+                                                    {listTicketDelete.includes(
+                                                        item.id
+                                                    ) ? (
+                                                        <input
+                                                            checked
+                                                            type="checkbox"
+                                                            onChange={() =>
+                                                                handlePushTicketDelete(
+                                                                    +item.id
+                                                                )
+                                                            }
+                                                        />
+                                                    ) : (
+                                                        <input
+                                                            type="checkbox"
+                                                            onChange={() =>
+                                                                handlePushTicketDelete(
+                                                                    +item.id
+                                                                )
+                                                            }
+                                                        />
+                                                    )}
                                                 </div>
-                                                <div className="col-3">
+                                                <div className="col-3 ">
                                                     {item.isBooking ? (
-                                                        <div className="w-20 h-100 rounded-circle bg-warning text-center p-2 text-white">
+                                                        <div
+                                                            className=" bg-warning text-center p-2 text-white "
+                                                            style={{
+                                                                width: "50px",
+                                                                height: "50px",
+                                                                borderRadius:
+                                                                    "100%",
+                                                            }}
+                                                        >
                                                             {item.name}
                                                         </div>
                                                     ) : (
-                                                        <div className="w-20 h-100 rounded-circle bg-success text-center p-2 text-white ">
-                                                            {item.name}
+                                                        <div
+                                                            className=" bg-success text-center p-2 text-white "
+                                                            style={{
+                                                                width: "50px",
+                                                                height: "50px",
+                                                                borderRadius:
+                                                                    "100%",
+                                                            }}
+                                                        >
+                                                            <p
+                                                                style={{
+                                                                    textAlign:
+                                                                        "center",
+                                                                    marginBottom:
+                                                                        "0",
+                                                                }}
+                                                            >
+                                                                {item.name}
+                                                            </p>
                                                         </div>
                                                     )}
                                                 </div>
-                                                <div className="col-1 d-flex justify-content-center align-items-center">
-                                                    <p className="mb-0 mr-2">
+                                                <div
+                                                    className="col-2"
+                                                    style={{
+                                                        padding: "1px",
+                                                        border: "1px solid #ccc",
+                                                        borderRadius: "5px",
+                                                    }}
+                                                >
+                                                    <p
+                                                        className="mb-0"
+                                                        style={{
+                                                            textAlign: "center",
+                                                        }}
+                                                    >
                                                         ({item.price}
                                                         <span>$</span>)
                                                     </p>
+                                                    {item.isVip ? (
+                                                        <img
+                                                            src="../../../../../../public/vip-card.png"
+                                                            style={{
+                                                                width: "25px",
+                                                                height: "20px",
+                                                                marginLeft:
+                                                                    "50%",
+                                                                transform:
+                                                                    "translateX(-50%",
+                                                            }}
+                                                            alt=""
+                                                        />
+                                                    ) : (
+                                                        <></>
+                                                    )}
                                                 </div>
 
-                                                <div className="col-3">
+                                                <div
+                                                    className="col-5"
+                                                    style={{
+                                                        display: "flex",
+                                                        justifyContent:
+                                                            "center",
+                                                        alignItems: "center",
+                                                    }}
+                                                >
                                                     <button
-                                                        className="rounded mx-4 p-2 bg-danger text-white border border-white"
+                                                        className="rounded p-2 bg-danger text-white border border-white"
                                                         onClick={() =>
                                                             handleAction(
                                                                 item,
@@ -308,8 +473,7 @@ export default function ModalTicket({ info }) {
                                                     >
                                                         delete
                                                     </button>
-                                                </div>
-                                                <div className="col-3">
+
                                                     {item.isBooking ? (
                                                         <button
                                                             className="rounded p-2 text-white border border-white bg-warning"

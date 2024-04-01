@@ -17,5 +17,9 @@ export const bookingTicketService = (data) => {
 };
 
 export const deleteMultipleTicketService = (data) => {
-    return axios.delete("/delete-multiple-ticket", data);
+    return axios.delete("/delete-multiple-ticket", { data });
+};
+
+export const deleteAllTicketService = (calendarId) => {
+    return axios.delete(`/delete-all-ticket?calendarId=${calendarId}`);
 };
