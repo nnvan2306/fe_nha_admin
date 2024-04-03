@@ -24,7 +24,7 @@ export default function Header() {
             >
                 <div className={cx("form-nav", "container")}>
                     <div className={cx("icon-menu")}>
-                        <i className={cx("bi", " bi-list")}></i>
+                        {/* <i className={cx("bi", " bi-list")}></i> */}
                     </div>
                     <ul>
                         <li>
@@ -195,7 +195,7 @@ export default function Header() {
                                 <p>
                                     {" "}
                                     <i
-                                        className="bi bi-tv"
+                                        className="bi bi-binoculars-fill"
                                         style={{ padding: "10px" }}
                                     ></i>
                                     Stand
