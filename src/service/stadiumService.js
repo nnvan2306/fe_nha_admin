@@ -1,7 +1,12 @@
 import axios from "../axios";
 
 export const createStadiumService = (data) => {
-    return axios.post("/create-stadium", data);
+    return axios.post("/create-stadium", data, {
+        withCredentials: true,
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
 };
 
 export const getStadiumService = () => {
@@ -13,5 +18,10 @@ export const deleteStadiumService = (id) => {
 };
 
 export const updateStadiumService = (data) => {
-    return axios.put("/update-stadium", data);
+    return axios.put("/update-stadium", data, {
+        withCredentials: true,
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
 };

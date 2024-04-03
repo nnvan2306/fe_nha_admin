@@ -36,9 +36,9 @@ export default function Match() {
 
             <div className={cx("form-content")}>
                 <Routes>
-                    <Route path="/create" element={<CreateMatch />}></Route>
-                    <Route path="/all" element={<ManageMatch />}></Route>
-                    <Route path="/update" element={<CreateMatch />}></Route>
+                    <Route path="/create" element={<CreateMatch />} />
+                    <Route path="/all" element={<ManageMatch />} />
+                    <Route path="/update" element={<CreateMatch />} />
                 </Routes>
             </div>
         </div>

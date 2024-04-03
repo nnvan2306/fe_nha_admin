@@ -34,6 +34,7 @@ export default function CreatePlayer() {
     const [teamId, setTeamId] = useState(0);
     const [isChangeFileUpdate, setIsChangeFileUpdate] = useState(false);
     const [locationPlayer, setLocationPlayer] = useState(0);
+    const [options, setOptions] = useState([]);
     const [markdown, setMarkdown] = useState({
         text: "",
         html: "",
@@ -42,6 +43,7 @@ export default function CreatePlayer() {
     const location = useLocation().pathname;
     const { state } = useLocation();
     const navigate = useNavigate();
+    const refInputThumbnail = useRef(null);
 
     useEffect(() => {
         if (location === RouterDTO.player.updatePlayer) {
@@ -63,10 +65,6 @@ export default function CreatePlayer() {
             setAvatarUrlOld(state.avatar_url);
         }
     }, [state, location]);
-
-    const [options, setOptions] = useState([]);
-
-    const refInputThumbnail = useRef(null);
 
     function handleEditorChange({ html, text }) {
         setMarkdown({ html: html, text: text });

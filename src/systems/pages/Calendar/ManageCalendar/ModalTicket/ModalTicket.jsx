@@ -223,7 +223,7 @@ export default function ModalTicket({ info }) {
     };
 
     return (
-        <div className={cx("form-modal-ticket")}>
+        <div className={cx("form-modal-ticket", "test-modal")}>
             <button onClick={showModal}>Ticket</button>
             <Modal
                 title="Modal ticket"
@@ -233,6 +233,7 @@ export default function ModalTicket({ info }) {
                 width={1000}
                 className={cx("modal-ticket")}
             >
+                {/* <div className={cx("test")}></div> */}
                 <div
                     className={cx("form-content-modal")}
                     style={{ maxHeight: "450px", overflow: "auto" }}

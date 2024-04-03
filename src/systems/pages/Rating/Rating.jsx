@@ -38,9 +38,9 @@ export default function Rating() {
 
             <div className={cx("form-content")}>
                 <Routes>
-                    <Route path="/create" element={<CreateRating />}></Route>
-                    <Route path="/all" element={<ManageRating />}></Route>
-                    <Route path="/update" element={<CreateRating />}></Route>
+                    <Route path="/create" element={<CreateRating />} />
+                    <Route path="/all" element={<ManageRating />} />
+                    <Route path="/update" element={<CreateRating />} />
                 </Routes>
             </div>
         </div>

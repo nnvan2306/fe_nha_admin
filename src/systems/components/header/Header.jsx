@@ -184,6 +184,27 @@ export default function Header() {
                         <li>
                             <button
                                 className={cx(
+                                    loction === RouterDTO.stand.manageStand
+                                        ? "active"
+                                        : ""
+                                )}
+                                onClick={() =>
+                                    handleNavigate(RouterDTO.stand.manageStand)
+                                }
+                            >
+                                <p>
+                                    {" "}
+                                    <i
+                                        className="bi bi-tv"
+                                        style={{ padding: "10px" }}
+                                    ></i>
+                                    Stand
+                                </p>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                className={cx(
                                     loction ===
                                         RouterDTO.calendar.manageCalendar
                                         ? "active"

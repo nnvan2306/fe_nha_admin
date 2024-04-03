@@ -47,6 +47,12 @@ export const RouterDTO = Object.freeze({
         allStadium: "/stadium/all",
         update: "/stadium/update",
     },
+    stand: {
+        manageStand: "/stand/*",
+        create: "/stand/create",
+        allStand: "/stand/all",
+        update: "/stand/update",
+    },
     calendar: {
         manageCalendar: "/calendar/*",
         create: "/calendar/create",

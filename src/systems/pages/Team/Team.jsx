@@ -47,13 +47,13 @@ export default function Team() {
 
             <div className={cx("form-content")}>
                 <Routes>
-                    <Route path="/create" element={<CreateTeam />}></Route>
-                    <Route path={"/all"} element={<ManageTeam />}></Route>
+                    <Route path="/create" element={<CreateTeam />} />
+                    <Route path={"/all"} element={<ManageTeam />} />
                     <Route
                         path={"/managePlayer"}
                         element={<ManagePlayerOfTeam />}
-                    ></Route>
-                    <Route path="/update" element={<CreateTeam />}></Route>
+                    />
+                    <Route path="/update" element={<CreateTeam />} />
                 </Routes>
             </div>
         </div>

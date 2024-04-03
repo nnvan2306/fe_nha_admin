@@ -12,6 +12,7 @@ import { BASE_URL } from "../../../utils/constants";
 import Match from "../../pages/Match/Match";
 import Stadium from "../../pages/Stadium/Stadium";
 import Calendar from "../../pages/Calendar/Calendar";
+import Stand from "../../pages/Stand/Stand";
 
 const cx = classNames.bind(styles);
 
@@ -67,6 +68,13 @@ const handleViewThumbnails = (path) => {
                 src={`${BASE_URL}/images/stadium.jpg`}
             ></img>
         );
+    } else if (rePath === "/stand") {
+        return (
+            <img
+                className={cx("form-img-thumbnails", "animation-top-bottom")}
+                src={`${BASE_URL}/images/stand.png`}
+            ></img>
+        );
     } else if (rePath === "/calendar") {
         return (
             <img
@@ -119,6 +127,10 @@ export default function Home() {
                     <Route
                         path={RouterDTO.stadium.manageStadium}
                         element={<Stadium />}
+                    />
+                    <Route
+                        path={RouterDTO.stand.manageStand}
+                        element={<Stand />}
                     />
 
                     <Route

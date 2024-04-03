@@ -6,7 +6,7 @@
     transform  : translateX(-50%);
 
     table {
-        width      : 60%;
+        width      : 70%;
         margin-left: 50%;
         transform  : translateX(-50%);
 
@@ -26,14 +26,31 @@
                     padding: 10px;
                 }
 
-                .form-action {
-                    display        : flex;
-                    justify-content: space-around;
-                    align-items    : center;
+                .td-name {
+                    width: 20%;
+                }
+
+                .td-location {
+                    width: 25%;
+                }
+
+                .td-image {
+                    width: 20%;
+
+                    img {
+                        width     : 150px;
+                        height    : 100px;
+                        object-fit: cover;
+                    }
+                }
+
+                .td-action {
+                    width: 35%;
 
                     .btn-delete {
                         width           : 30%;
                         padding         : 8px 10px;
+                        margin          : 0 10%;
                         border          : none;
                         border-radius   : 10px;
                         background-color: red;
@@ -43,6 +60,7 @@
                     .btn-edit {
                         width           : 30%;
                         padding         : 8px 10px;
+                        margin          : 0 10%;
                         border          : none;
                         border-radius   : 10px;
                         background-color: orange;

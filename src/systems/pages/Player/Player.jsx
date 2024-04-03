@@ -37,9 +37,9 @@ export default function Player() {
 
             <div className={cx("form-content")}>
                 <Routes>
-                    <Route path="/create" element={<CreatePlayer />}></Route>
-                    <Route path={"/all"} element={<ManagePlayer />}></Route>
-                    <Route path={"/update"} element={<CreatePlayer />}></Route>
+                    <Route path="/create" element={<CreatePlayer />} />
+                    <Route path={"/all"} element={<ManagePlayer />} />
+                    <Route path={"/update"} element={<CreatePlayer />} />
                 </Routes>
             </div>
         </div>

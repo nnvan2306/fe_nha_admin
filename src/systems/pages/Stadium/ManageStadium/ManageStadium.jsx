@@ -8,6 +8,7 @@ import {
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
+import { BASE_URL } from "../../../../utils/constants";
 
 const cx = classNames.bind(styles);
 
@@ -64,6 +65,8 @@ export default function ManageStadium() {
                 <thead>
                     <tr className={cx("tr-head")}>
                         <td>Name</td>
+                        <td>Location</td>
+                        <td>Image</td>
                         <td>Action</td>
                     </tr>
                 </thead>
@@ -73,8 +76,19 @@ export default function ManageStadium() {
                         listStadium.map((item, index) => {
                             return (
                                 <tr key={index}>
-                                    <td>{item.name}</td>
-                                    <td className={cx("form-action")}>
+                                    <td className={cx("td-name")}>
+                                        {item.name}
+                                    </td>
+                                    <td className={cx("td-location")}>
+                                        {item.location}
+                                    </td>
+                                    <td className={cx("td-image")}>
+                                        <img
+                                            src={`${BASE_URL}${item.stadiumImage_url}`}
+                                            alt=""
+                                        />
+                                    </td>
+                                    <td className={cx("td-action")}>
                                         <button
                                             className={cx("btn-delete")}
                                             onClick={() => handleDelete(item)}
