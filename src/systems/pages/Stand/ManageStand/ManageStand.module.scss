@@ -1,0 +1,101 @@
+.form-manage-stand {
+    width      : 80%;
+    margin-left: 50%;
+    transform  : translateX(-50%);
+
+    .form-select-stadium {
+        width: 100%;
+
+        select {
+            width        : 20%;
+            padding      : 10px;
+            margin       : 20px 0;
+            border       : 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow   : var(--box-shadow-div);
+        }
+    }
+
+    .form-table-stand {
+        width: 100%;
+
+        table {
+            width: 100%;
+
+            thead {
+                width: 100%;
+
+                tr {
+                    width: 100%;
+
+                    td {
+                        padding      : 10px;
+                        border       : 1px solid #000;
+                        text-align   : center;
+                        border-radius: 10px !important;
+                        font-size    : 16px;
+                        font-weight  : 500;
+
+                        &:first-child {
+                            border-top-left-radius: 10px !important;
+                        }
+                    }
+
+                    .th-name {
+                        width: 15%;
+                    }
+
+                    .th-isReady {
+                        width: 10%;
+                    }
+
+                    .th-isVip {
+                        width: 10%;
+                    }
+
+                    .th-price {
+                        width: 20%;
+                    }
+
+                    .th-totalTicket {
+                        width: 20%;
+                    }
+                }
+            }
+
+            tbody {
+                tr {
+                    td {
+                        text-align: center;
+                        padding   : 20px;
+                        border    : 1px solid #ccc;
+                    }
+
+                    .td-action {
+                        button {
+                            margin       : 0 10%;
+                            width        : 30%;
+                            padding      : 8px;
+                            border       : none;
+                            border-radius: 10px;
+                            color        : #fff;
+
+                            &:hover {
+                                cursor   : pointer;
+                                transform: scale(1.2);
+                            }
+                        }
+
+                        .btn-delete {
+                            background-color: red;
+                        }
+
+                        .btn-edit {
+                            background-color: orange;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
