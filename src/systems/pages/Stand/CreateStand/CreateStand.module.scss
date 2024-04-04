@@ -19,6 +19,61 @@
             border       : 1px solid #ccc;
             border-radius: 10px;
             box-shadow   : var(--box-shadow-div);
+
+
+
+        }
+
+        .select-stadium {
+            width       : 90% !important;
+            margin-right: 10px;
+        }
+
+        .icon-view-stadium {
+            font-size: 20px;
+        }
+
+
+
+    }
+
+    .form-add {
+
+        width          : 40px;
+        height         : 40px;
+        border-radius  : 100%;
+        display        : flex;
+        justify-content: center;
+        align-items    : center;
+
+        &:hover {
+            cursor : pointer;
+            opacity: 0.5;
+        }
+
+        i {
+            font-size: 40px;
+            color    : #000;
+            opacity  : 0.6;
         }
     }
+
+    .form-action {
+        margin-top     : 40px;
+        width          : 100%;
+        display        : flex;
+        justify-content: center;
+
+        button {
+            width           : 20%;
+            padding         : 12px;
+            border          : none;
+            border-radius   : 10px;
+            font-size       : 16px;
+            color           : #fff;
+            background-color: var(--color-button-primary);
+
+        }
+    }
+
 }

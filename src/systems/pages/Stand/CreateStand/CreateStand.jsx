@@ -1,103 +1,359 @@
 import classNames from "classnames/bind";
 import styles from "./CreateStand.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { RouterDTO } from "../../../../utils/routes.dto";
+import Swal from "sweetalert2";
+import { handleCreateStandService } from "../../../../service/standService";
+import { getStadiumService } from "../../../../service/stadiumService";
+import { Tooltip } from "antd";
+import { BASE_URL } from "../../../../utils/constants";
 
 const cx = classNames.bind(styles);
 
 export default function CreateStand() {
-    const [name, setName] = useState("");
-    const [isReady, setIsReady] = useState(1);
-    const [isVipDefault, setIsVipDefault] = useState(0);
-    const [priceDefault, setPriceDefault] = useState(0);
-    const [totalTicketDefault, setTotalTicketDefault] = useState(0);
-    const [stadiumId, setStadiumId] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const [listStadium, setListStadium] = useState([]);
+    const [listForm, setListForm] = useState([
+        {
+            name: "",
+            isReady: 1,
+            isVipDefault: 0,
+            priceDefault: 0,
+            totalTicketDefault: 0,
+            stadiumId: 0,
+        },
+    ]);
+
+    useEffect(() => {
+        const fetch = async () => {
+            let res = await getStadiumService();
+            if (res.errorCode === 0) {
+                setListStadium(
+                    res.data.map((item) => {
+                        return {
+                            value: item.id,
+                            label: item.name,
+                            stadiumImage_url: item.stadiumImage_url,
+                        };
+                    })
+                );
+            }
+        };
+        fetch();
+    }, []);
+
+    const handleAddForm = (indexChange) => {
+        if (indexChange === listForm.length - 1) {
+            setListForm((prev) => [
+                ...prev,
+                {
+                    name: "",
+                    isReady: 1,
+                    isVipDefault: 0,
+                    priceDefault: 0,
+                    totalTicketDefault: 0,
+                    stadiumId: 0,
+                },
+            ]);
+        } else {
+            let arrClone = listForm.filter(
+                (item, index) => index !== indexChange
+            );
+            setListForm(arrClone);
+        }
+    };
+
+    const handleChangeValue = (indexChange, w, value) => {
+        let listClone = listForm.map((item, index) => {
+            if (index === indexChange) {
+                w === 1
+                    ? (item.name = value.toUpperCase())
+                    : w === 2
+                    ? (item.isReady = value)
+                    : w === 3
+                    ? (item.isVipDefault = value)
+                    : w === 4
+                    ? (item.priceDefault = value)
+                    : w === 5
+                    ? (item.totalTicketDefault = value)
+                    : (item.stadiumId = value);
+            }
+
+            return item;
+        });
+        setListForm(listClone);
+    };
+
+    const handleValidate = () => {
+        listForm.forEach((item) => {
+            if (
+                !item.name ||
+                !item.priceDefault ||
+                !item.totalTicketDefault ||
+                !item.stadiumId
+            ) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "information mustn't empty !",
+                });
+                return false;
+            }
+        });
+        return true;
+    };
+
+    const handleCreateStand = async () => {
+        setIsLoading(true);
+        let check = handleValidate();
+        if (!check) {
+            setIsLoading(false);
+            return;
+        }
+        try {
+            let res = await handleCreateStandService(listForm);
+            if (res.errorCode === 0) {
+                Swal.fire({
+                    icon: "success",
+                    title: "create successfully",
+                });
+                setListForm([
+                    {
+                        name: "",
+                        isReady: 1,
+                        isVipDefault: 0,
+                        priceDefault: 0,
+                        totalTicketDefault: 0,
+                        stadiumId: 0,
+                    },
+                ]);
+            }
+        } catch (err) {
+            console.log(err);
+            Swal.fire({
+                icon: "warning",
+                title: err.response.data.message,
+            });
+        }
+
+        setIsLoading(false);
+    };
 
     return (
         <div className={cx("form-create-stand", "container")}>
-            <div className={cx("row")}>
-                <div className={cx("col-2")}>
-                    <div className={cx("form-input")}>
-                        <label htmlFor="name">Name</label>
-                        <br />
-                        <input
-                            id="name"
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
-                </div>
+            {listForm &&
+                listForm.length > 0 &&
+                listForm.map((item, index) => {
+                    return (
+                        <div className={cx("row")} key={index}>
+                            <div className={cx("col-1")}>
+                                <div className={cx("form-input")}>
+                                    <label htmlFor="name">Name</label>
+                                    <br />
+                                    <input
+                                        id="name"
+                                        type="text"
+                                        value={item.name}
+                                        onChange={(e) =>
+                                            handleChangeValue(
+                                                index,
+                                                1,
+                                                e.target.value.toUpperCase()
+                                            )
+                                        }
+                                    />
+                                </div>
+                            </div>
 
-                <div className={cx("col-1")}>
-                    <div className={cx("form-input")}>
-                        <label htmlFor="isReady">Ready ?</label> <br />
-                        <select
-                            id="isReady"
-                            value={isReady}
-                            onChange={(e) => setIsReady(e.target.value)}
-                        >
-                            <option value={0}>False</option>
-                            <option value={1}>True</option>
-                        </select>
-                    </div>
-                </div>
+                            <div className={cx("col-1")}>
+                                <div className={cx("form-input")}>
+                                    <label htmlFor="isReady">Ready ?</label>{" "}
+                                    <br />
+                                    <select
+                                        id="isReady"
+                                        value={item.isReady}
+                                        onChange={(e) =>
+                                            handleChangeValue(
+                                                index,
+                                                2,
+                                                +e.target.value
+                                            )
+                                        }
+                                    >
+                                        <option value={0}>False</option>
+                                        <option value={1}>True</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                <div className={cx("col-1")}>
-                    <div className={cx("form-input")}>
-                        <label htmlFor="isVip">Vip ?</label> <br />
-                        <select
-                            id="isVip"
-                            value={isVipDefault}
-                            onChange={(e) => setIsVipDefault(e.target.value)}
-                        >
-                            <option value={0}>False</option>
-                            <option value={1}>True</option>
-                        </select>
-                    </div>
-                </div>
+                            <div className={cx("col-1")}>
+                                <div className={cx("form-input")}>
+                                    <label htmlFor="isVip">Vip ?</label> <br />
+                                    <select
+                                        id="isVip"
+                                        value={item.isVipDefault}
+                                        onChange={(e) =>
+                                            handleChangeValue(
+                                                index,
+                                                3,
+                                                +e.target.value
+                                            )
+                                        }
+                                    >
+                                        <option value={0}>False</option>
+                                        <option value={1}>True</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                <div className={cx("col-2")}>
-                    <div className={cx("form-input")}>
-                        <label htmlFor="price">Price (default)</label> <br />
-                        <input
-                            id="price"
-                            type="number"
-                            value={priceDefault}
-                            onChange={(e) => setPriceDefault(e.target.value)}
-                        />
-                    </div>
-                </div>
+                            <div className={cx("col-2")}>
+                                <div className={cx("form-input")}>
+                                    <label htmlFor="price">
+                                        Price (default)
+                                    </label>{" "}
+                                    <br />
+                                    <input
+                                        id="price"
+                                        type="number"
+                                        value={item.priceDefault}
+                                        onChange={(e) =>
+                                            handleChangeValue(
+                                                index,
+                                                4,
+                                                +e.target.value
+                                            )
+                                        }
+                                    />
+                                </div>
+                            </div>
 
-                <div className={cx("col-2")}>
-                    <div className={cx("form-input")}>
-                        <label htmlFor="totalTicket">
-                            Total Ticket (default)
-                        </label>{" "}
-                        <br />
-                        <input
-                            id="totalTicket"
-                            type="number"
-                            value={totalTicketDefault}
-                            onChange={(e) =>
-                                setTotalTicketDefault(e.target.value)
-                            }
-                        />
-                    </div>
-                </div>
+                            <div className={cx("col-2")}>
+                                <div className={cx("form-input")}>
+                                    <label htmlFor="totalTicket">
+                                        Total Ticket (default)
+                                    </label>{" "}
+                                    <br />
+                                    <input
+                                        id="totalTicket"
+                                        type="number"
+                                        value={item.totalTicketDefault}
+                                        onChange={(e) =>
+                                            handleChangeValue(
+                                                index,
+                                                5,
+                                                +e.target.value
+                                            )
+                                        }
+                                    />
+                                </div>
+                            </div>
 
-                <div className={cx("col-4")}>
-                    <div className={cx("form-input")}>
-                        <label htmlFor="stadiumId">stadium</label> <br />
-                        <select
-                            id="stadiumId"
-                            value={stadiumId}
-                            onChange={(e) => setStadiumId(e.target.values)}
-                        >
-                            <option value={0}>choose stadium</option>
-                            <option value=""></option>
-                        </select>
-                    </div>
-                </div>
+                            <div className={cx("col-4")}>
+                                <div className={cx("form-input")}>
+                                    <label htmlFor="stadiumId">stadium</label>{" "}
+                                    <br />
+                                    <select
+                                        className={cx("select-stadium")}
+                                        id="stadiumId"
+                                        value={item.stadiumId}
+                                        onChange={(e) =>
+                                            handleChangeValue(
+                                                index,
+                                                6,
+                                                +e.target.value
+                                            )
+                                        }
+                                    >
+                                        <option value={0}>
+                                            choose stadium
+                                        </option>
+                                        {listStadium &&
+                                            listStadium.length > 0 &&
+                                            listStadium.map((item, index) => {
+                                                return (
+                                                    <option
+                                                        value={item.value}
+                                                        key={index}
+                                                    >
+                                                        {item.label}
+                                                    </option>
+                                                );
+                                            })}
+                                    </select>
+                                    <Tooltip
+                                        title={
+                                            item.stadiumId ? (
+                                                <img
+                                                    src={`${BASE_URL}${
+                                                        listStadium[
+                                                            item.stadiumId
+                                                        ].stadiumImage_url
+                                                    }`}
+                                                    alt="image"
+                                                    style={{
+                                                        width: "500px",
+                                                        height: "350px",
+                                                        objectFit: "cover",
+                                                        borderRadius: "10px",
+                                                    }}
+                                                />
+                                            ) : (
+                                                "please choose stadium !"
+                                            )
+                                        }
+                                        placement="left"
+                                        trigger="click"
+                                        style={{
+                                            width: "1000px",
+                                            height: "500px",
+                                        }}
+                                        width={500}
+                                    >
+                                        <i
+                                            className={cx(
+                                                "bi bi-eye-fill",
+                                                "icon-view-stadium"
+                                            )}
+                                        ></i>
+                                    </Tooltip>
+                                </div>
+                            </div>
+
+                            <div
+                                className={cx(
+                                    "col-1",
+                                    "d-flex justify-content-center align-items-end"
+                                )}
+                            >
+                                <div
+                                    className={cx("form-add")}
+                                    onClick={() => handleAddForm(index)}
+                                >
+                                    {index === listForm.length - 1 ? (
+                                        <i className="bi bi-plus-circle"></i>
+                                    ) : (
+                                        <i className="bi bi-dash-circle"></i>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+
+            <div className={cx("form-action")}>
+                {isLoading ? (
+                    <button disabled className={cx("button-disabled")}>
+                        <div
+                            className="spinner-border text-light"
+                            role="status"
+                        ></div>
+                    </button>
+                ) : (
+                    <button onClick={handleCreateStand}>
+                        {location === RouterDTO.stand.update
+                            ? "Update"
+                            : "Create"}
+                    </button>
+                )}
             </div>
         </div>
     );
