@@ -145,7 +145,8 @@ export default function ManageCalendar() {
                                     <td className={cx("td-team")}>
                                         <img
                                             src={`${BASE_URL}${
-                                                item.hostId === item.Teams[0].id
+                                                item.hostId ===
+                                                item.Teams[0]?.id
                                                     ? item.Teams[0].logo_url
                                                     : item.Teams[1].logo_url
                                             }`}

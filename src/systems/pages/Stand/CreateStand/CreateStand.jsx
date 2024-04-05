@@ -3,10 +3,14 @@ import styles from "./CreateStand.module.scss";
 import { useEffect, useState } from "react";
 import { RouterDTO } from "../../../../utils/routes.dto";
 import Swal from "sweetalert2";
-import { handleCreateStandService } from "../../../../service/standService";
+import {
+    handleCreateStandService,
+    handleUpdateStandService,
+} from "../../../../service/standService";
 import { getStadiumService } from "../../../../service/stadiumService";
 import { Tooltip } from "antd";
 import { BASE_URL } from "../../../../utils/constants";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -24,6 +28,10 @@ export default function CreateStand() {
         },
     ]);
 
+    const location = useLocation().pathname;
+    const { state } = useLocation();
+    const navigate = useNavigate();
+
     useEffect(() => {
         const fetch = async () => {
             let res = await getStadiumService();
@@ -40,6 +48,19 @@ export default function CreateStand() {
             }
         };
         fetch();
+
+        if (location === RouterDTO.stand.update) {
+            setListForm([
+                {
+                    name: state.name,
+                    isReady: state.isReady,
+                    isVipDefault: state.isVipDefault,
+                    priceDefault: state.priceDefault,
+                    totalTicketDefault: state.totalTicketDefault,
+                    stadiumId: state.stadiumId,
+                },
+            ]);
+        }
     }, []);
 
     const handleAddForm = (indexChange) => {
@@ -110,12 +131,23 @@ export default function CreateStand() {
             return;
         }
         try {
-            let res = await handleCreateStandService(listForm);
+            if (location === RouterDTO.stand.update) {
+                listForm[0].id = state.id;
+            }
+            let res =
+                location === RouterDTO.stand.update
+                    ? await handleUpdateStandService(listForm)
+                    : await handleCreateStandService(listForm);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",
                     title: "create successfully",
                 });
+                if (location === RouterDTO.stand.update) {
+                    navigate(RouterDTO.stand.allStand, {
+                        state: state.stadiumId,
+                    });
+                }
                 setListForm([
                     {
                         name: "",
@@ -286,7 +318,7 @@ export default function CreateStand() {
                                                     src={`${BASE_URL}${
                                                         listStadium[
                                                             item.stadiumId
-                                                        ].stadiumImage_url
+                                                        ]?.stadiumImage_url
                                                     }`}
                                                     alt="image"
                                                     style={{
@@ -318,23 +350,27 @@ export default function CreateStand() {
                                 </div>
                             </div>
 
-                            <div
-                                className={cx(
-                                    "col-1",
-                                    "d-flex justify-content-center align-items-end"
-                                )}
-                            >
+                            {location === RouterDTO.stand.update ? (
+                                <></>
+                            ) : (
                                 <div
-                                    className={cx("form-add")}
-                                    onClick={() => handleAddForm(index)}
-                                >
-                                    {index === listForm.length - 1 ? (
-                                        <i className="bi bi-plus-circle"></i>
-                                    ) : (
-                                        <i className="bi bi-dash-circle"></i>
+                                    className={cx(
+                                        "col-1",
+                                        "d-flex justify-content-center align-items-end"
                                     )}
+                                >
+                                    <div
+                                        className={cx("form-add")}
+                                        onClick={() => handleAddForm(index)}
+                                    >
+                                        {index === listForm.length - 1 ? (
+                                            <i className="bi bi-plus-circle"></i>
+                                        ) : (
+                                            <i className="bi bi-dash-circle"></i>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     );
                 })}

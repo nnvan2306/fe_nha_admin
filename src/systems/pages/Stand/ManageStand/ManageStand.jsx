@@ -7,6 +7,8 @@ import {
     handleDeleteStandService,
     handleGetStandService,
 } from "../../../../service/standService";
+import { RouterDTO } from "../../../../utils/routes.dto";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -14,6 +16,10 @@ export default function ManageStand() {
     const [listStadium, setListStadium] = useState([]);
     const [listStand, setListStand] = useState([]);
     const [stadiumId, setStadiumId] = useState(0);
+
+    const navigate = useNavigate();
+    // const location = useLocation().pathname;
+    const { state } = useLocation();
 
     useEffect(() => {
         const fetch = async () => {
@@ -30,6 +36,10 @@ export default function ManageStand() {
             }
         };
         fetch();
+
+        if (state) {
+            handleGetStand(state);
+        }
     }, []);
 
     const handleGetStand = async (stadiumId) => {
@@ -48,7 +58,40 @@ export default function ManageStand() {
         }
     };
 
-    const handleDeleteStand = async (standId) => {};
+    const handleDeleteStand = async (standId) => {
+        await Swal.fire({
+            title: `Do you want to delete stand checked ?`,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const _fetch = async () => {
+                    let dataBuider = [{ id: +standId }];
+                    try {
+                        let Res = await handleDeleteStandService(dataBuider);
+                        if (Res.errorCode === 0) {
+                            Swal.fire({
+                                icon: "success",
+                                title: `delete scored successfully`,
+                            });
+                        }
+                        handleGetStand(stadiumId);
+                    } catch (err) {
+                        console.log(err);
+                        Swal.fire({
+                            icon: "error",
+                            title: err.response.data.message,
+                        });
+                    }
+                };
+                _fetch();
+            }
+        });
+    };
+
+    const handleToEdit = (infoStand) => {
+        navigate(RouterDTO.stand.update, { state: infoStand });
+    };
 
     return (
         <div className={cx("form-manage-stand")}>
@@ -130,7 +173,12 @@ export default function ManageStand() {
                                             >
                                                 Delete
                                             </button>
-                                            <button className={cx("btn-edit")}>
+                                            <button
+                                                className={cx("btn-edit")}
+                                                onClick={() =>
+                                                    handleToEdit(item)
+                                                }
+                                            >
                                                 Edit
                                             </button>
                                         </td>
