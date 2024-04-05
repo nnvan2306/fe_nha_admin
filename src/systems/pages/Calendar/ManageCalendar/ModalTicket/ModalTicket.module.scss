@@ -6,14 +6,56 @@
         background-color: green !important;
         margin          : 0 !important;
     }
-
 }
 
 .modal-ticket {
+    .form-content-modal {
+        .form-input {
+            .name-ticket {
+                width           : 40px;
+                height          : 40px;
+                background-color: green;
+                border-radius   : 100%;
+                display         : flex;
+                justify-content : center;
+                align-items     : center;
 
-    .test {
-        width     : 100px;
-        height    : 200px;
-        background: #ccc;
+                p {
+                    color        : #fff;
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .form-checkbox {
+            margin-top: 30px;
+            width     : 20px;
+            height    : 20px;
+
+            input {
+                width : 100%;
+                height: 100%;
+            }
+        }
+
+        .form-list-stand {
+            width: 100%;
+
+            .stand-item {
+                width          : 100%;
+                display        : flex;
+                justify-content: space-around;
+                align-items    : center;
+
+
+                .form-checkbox {
+                    i {
+                        font-size: 25px;
+                    }
+                }
+
+
+            }
+        }
     }
 }

@@ -147,31 +147,31 @@ export default function ManageCalendar() {
                                             src={`${BASE_URL}${
                                                 item.hostId ===
                                                 item.Teams[0]?.id
-                                                    ? item.Teams[0].logo_url
-                                                    : item.Teams[1].logo_url
+                                                    ? item.Teams[0]?.logo_url
+                                                    : item.Teams[1]?.logo_url
                                             }`}
                                             alt="logo"
                                         />
                                         <p>
-                                            {item.hostId === item.Teams[0].id
-                                                ? item.Teams[0].name
-                                                : item.Teams[1].name}
+                                            {item.hostId === item.Teams[0]?.id
+                                                ? item.Teams[0]?.name
+                                                : item.Teams[1]?.name}
                                         </p>
                                     </td>
                                     <td className={cx("td-team")}>
                                         <img
                                             src={`${BASE_URL}${
                                                 item.guestId ===
-                                                item.Teams[0].id
-                                                    ? item.Teams[0].logo_url
-                                                    : item.Teams[1].logo_url
+                                                item.Teams[0]?.id
+                                                    ? item.Teams[0]?.logo_url
+                                                    : item.Teams[1]?.logo_url
                                             }`}
                                             alt="logo"
                                         />
                                         <p>
-                                            {item.guestId === item.Teams[0].id
-                                                ? item.Teams[0].name
-                                                : item.Teams[1].name}
+                                            {item.guestId === item.Teams[0]?.id
+                                                ? item.Teams[0]?.name
+                                                : item.Teams[1]?.name}
                                         </p>
                                     </td>
                                     <td>{item.Stadium.name}</td>
