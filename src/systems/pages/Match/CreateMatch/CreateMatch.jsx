@@ -33,7 +33,6 @@ export default function CreateMatch() {
     const [previewVideo, setPreviewVideo] = useState("");
     const [isChangeFile, setIsChangeFile] = useState(false);
     const [urlDelete, setUrlDelete] = useState("");
-    const [isPlayded, setIsPlayded] = useState(0);
     const [hostShoot, setHostShoot] = useState(0);
     const [guestShoot, setGuestShoot] = useState(0);
     const [hostTarget, setHostTarget] = useState(0);
@@ -41,7 +40,6 @@ export default function CreateMatch() {
     const [hostBallControl, setHostBallControl] = useState(0);
     const [hostConnerKick, setHostConnerKick] = useState(0);
     const [guestConnerKick, setGuestConnerKick] = useState(0);
-
     const [hostRedCard, setHostRedCard] = useState(0);
     const [guestRedCard, setGuestRedCard] = useState(0);
     const [hostYellowCard, setHostYellowCard] = useState(0);
@@ -77,7 +75,6 @@ export default function CreateMatch() {
             setHour(state.hour);
             setPreviewVideo(`${BASE_URL}${state.match_url}`);
             setUrlDelete(`${BASE_URL}${state.match_url}`);
-            setIsPlayded(state.isPlayded);
             setHostShoot(state.hostShoot);
             setGuestShoot(state.guestShoot);
             setHostTarget(state.target);
@@ -123,7 +120,6 @@ export default function CreateMatch() {
         setVideo(null);
         setPreviewVideo("");
         refInputVideo.current.value = null;
-        setIsPlayded(0);
         setHostShoot(0);
         setGuestShoot(0);
         setHostTarget(0);
@@ -145,7 +141,8 @@ export default function CreateMatch() {
             !guestId ||
             !seasonId ||
             !date ||
-            !hour
+            !hour ||
+            !video
         ) {
             Swal.fire({
                 icon: "warning",
@@ -154,18 +151,6 @@ export default function CreateMatch() {
             return false;
         }
 
-        if (location !== RouterDTO.match.updateMatch) {
-            if (isPlayded) {
-                console.log("true");
-            }
-            if (isPlayded && !video) {
-                Swal.fire({
-                    icon: "warning",
-                    title: "Please enter complete information !",
-                });
-                return false;
-            }
-        }
         return true;
     };
 
@@ -188,7 +173,6 @@ export default function CreateMatch() {
             guestId: guestId,
             seasonId: seasonId,
             file: video,
-            isPlayded: isPlayded ? true : false,
             hostShoot: hostShoot,
             guestShoot: guestShoot,
             hostTarget: hostTarget,
@@ -279,18 +263,6 @@ export default function CreateMatch() {
                                         </option>
                                     );
                                 })}
-                        </select>
-                    </div>
-                    <div className={cx("form-input")}>
-                        <label htmlFor="isPlayded">Is Playded</label>
-                        <br />
-
-                        <select
-                            value={isPlayded}
-                            onChange={(e) => setIsPlayded(e.target.value)}
-                        >
-                            <option value={0}>false</option>
-                            <option value={1}>true</option>
                         </select>
                     </div>
 

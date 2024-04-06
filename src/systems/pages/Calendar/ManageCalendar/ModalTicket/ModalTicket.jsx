@@ -296,7 +296,6 @@ const ModalTicket = memo(function ModalTicket({ info }) {
             }
         });
     };
-    console.log(listTicket);
 
     return (
         <div className={cx("form-modal-ticket", "test-modal")}>
@@ -306,7 +305,7 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
-                width={1000}
+                width={1200}
                 className={cx("modal-ticket")}
             >
                 <div
