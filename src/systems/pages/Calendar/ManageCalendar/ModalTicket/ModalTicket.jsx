@@ -3,8 +3,11 @@ import styles from "./ModalTicket.module.scss";
 import { Divider, Modal } from "antd";
 import { memo, useState } from "react";
 import {
+    createTicketService,
     deleteAllTicketService,
+    deleteTicketService,
     getTicketService,
+    handleUpdateTicketService,
 } from "../../../../../service/ticketService";
 import Swal from "sweetalert2";
 import { handleGetStandService } from "../../../../../service/standService";
@@ -13,6 +16,7 @@ const cx = classNames.bind(styles);
 
 // eslint-disable-next-line react/prop-types
 const ModalTicket = memo(function ModalTicket({ info }) {
+    const [isLoading, setIsLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [infoCalendar, setInfoCalendar] = useState(null);
     const [listTicket, setListTicket] = useState([]);
@@ -95,13 +99,12 @@ const ModalTicket = memo(function ModalTicket({ info }) {
 
             return item;
         });
-        setListTicket(listClone);
+        setListStand(listClone);
     };
 
-    const handleChecked = (index, w) => {
-        console.log("a");
+    const handleChecked = (index, isCreate) => {
         let listNew;
-        if (w) {
+        if (isCreate) {
             if (!listCheckCreate.includes(index)) {
                 listNew = [...listCheckCreate, index];
                 setListCheckCreate(listNew);
@@ -121,24 +124,130 @@ const ModalTicket = memo(function ModalTicket({ info }) {
         setListCheckDelete(listNew);
     };
 
-    const handleCreateTicket = async () => {};
+    const handleValidateCreate = (isCreateAll) => {
+        if (isCreateAll) {
+            listStand.forEach((item) => {
+                if (
+                    item.isReady &&
+                    (!item.priceDefault || !item.totalTicketDefault)
+                ) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Please enter complete information for the selected fields",
+                    });
+                    return false;
+                }
+            });
+            return true;
+        }
 
-    const handleDeleteAll = async () => {
+        if (!listCheckCreate.length) {
+            Swal.fire({
+                icon: "warning",
+                title: "please checked stand !",
+            });
+            return false;
+        }
+
+        listCheckCreate.forEach((item) => {
+            if (
+                !listStand[item].priceDefault ||
+                !listStand[item].totalTicketDefault
+            ) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Please enter complete information for the selected fields",
+                });
+                return false;
+            }
+        });
+        return true;
+    };
+
+    const handleCreateTicket = async (isCreateAll) => {
+        setIsLoading(true);
+        let check = handleValidateCreate(isCreateAll);
+        if (!check) {
+            setIsLoading(false);
+            return;
+        }
+
+        let dataBuider = isCreateAll
+            ? listStand
+                  .filter((item) => item.isReady)
+                  .map((item) => {
+                      return {
+                          name: item.name,
+                          price: item.priceDefault,
+                          totalTicket: item.totalTicketDefault,
+                          calendarId: infoCalendar.id,
+                          isVip: item.isVipDefault,
+                      };
+                  })
+            : listStand
+                  .filter((item, index) => listCheckCreate.includes(index))
+                  .map((item) => {
+                      return {
+                          name: item.name,
+                          price: item.priceDefault,
+                          totalTicket: item.totalTicketDefault,
+                          calendarId: infoCalendar.id,
+                          isVip: item.isVipDefault,
+                      };
+                  });
+
+        try {
+            let res = await createTicketService(dataBuider);
+            if (res.errorCode === 0) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Create successfully",
+                });
+                setListCheckCreate([]);
+                await handleGetTicketAndStand();
+            }
+        } catch (err) {
+            console.log(err);
+            Swal.fire({
+                icon: "warning",
+                title: err.response.data.message,
+            });
+        }
+        setIsLoading(false);
+    };
+
+    const handleDelete = async (isDeleteAll) => {
         Swal.fire({
-            title: `Do you want delete all tickets ?`,
+            title: `Do you want delete ${isDeleteAll ? "all" : ""} tickets ?`,
             showCancelButton: true,
             confirmButtonText: "Yes",
         }).then((result) => {
             if (result.isConfirmed) {
                 const _fetch = async () => {
-                    let Res = await deleteAllTicketService(infoCalendar.id);
+                    let dataBuider;
+
+                    if (!isDeleteAll) {
+                        dataBuider = listTicket
+                            .filter((item, index) =>
+                                listCheckDelete.includes(index)
+                            )
+                            .map((item) => {
+                                return { id: item.id };
+                            });
+                    }
+
+                    let Res = isDeleteAll
+                        ? await deleteAllTicketService(infoCalendar.id)
+                        : await deleteTicketService(dataBuider);
+
                     try {
                         if (Res.errorCode === 0) {
                             Swal.fire({
                                 icon: "success",
                                 title: `delete successfully`,
                             });
-                            // setListTicketDelete([]);
+
+                            setListCheckDelete([]);
                             await handleGetTicketAndStand(infoCalendar.id);
                         }
                     } catch (err) {
@@ -153,6 +262,41 @@ const ModalTicket = memo(function ModalTicket({ info }) {
             }
         });
     };
+
+    const handleUpdateTicket = async (index) => {
+        Swal.fire({
+            title: `Do you want update ${listTicket[index].name} ?`,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const _fetch = async () => {
+                    let dataBuider = listTicket[index];
+
+                    let Res = await handleUpdateTicketService(dataBuider);
+
+                    try {
+                        if (Res.errorCode === 0) {
+                            Swal.fire({
+                                icon: "success",
+                                title: `delete successfully`,
+                            });
+
+                            await handleGetTicketAndStand(infoCalendar.id);
+                        }
+                    } catch (err) {
+                        console.log(err);
+                        Swal.fire({
+                            icon: "error",
+                            title: err.response.data.message,
+                        });
+                    }
+                };
+                _fetch();
+            }
+        });
+    };
+    console.log(listTicket);
 
     return (
         <div className={cx("form-modal-ticket", "test-modal")}>
@@ -177,12 +321,16 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                         <button
                             className="w-20 border border-1 rounded shadow-sm p-2 mb-2 bg-danger text-white"
                             style={{ marginRight: "10px" }}
-                            onClick={handleDeleteAll}
+                            onClick={() => handleDelete(1)}
                         >
                             <i className="bi bi-trash3 p-2"></i>
                             Delete All
                         </button>
-                        <button className="w-20 border border-1 rounded shadow-sm p-2 mb-2 bg-danger text-white">
+
+                        <button
+                            className="w-20 border border-1 rounded shadow-sm p-2 mb-2 bg-danger text-white"
+                            onClick={() => handleDelete(0)}
+                        >
                             <i className="bi bi-trash3 p-2"></i>Delete More
                         </button>
                     </div>
@@ -200,12 +348,22 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                                     key={index}
                                 >
                                     <div className={cx("form-checkbox")}>
-                                        <input
-                                            type="checkbox"
-                                            onChange={() =>
-                                                handleChecked(index, 0)
-                                            }
-                                        />
+                                        {listCheckDelete.includes(index) ? (
+                                            <input
+                                                checked
+                                                type="checkbox"
+                                                onChange={() =>
+                                                    handleChecked(index, 0)
+                                                }
+                                            />
+                                        ) : (
+                                            <input
+                                                type="checkbox"
+                                                onChange={() =>
+                                                    handleChecked(index, 0)
+                                                }
+                                            />
+                                        )}
                                     </div>
 
                                     <div className={cx("form-input")}>
@@ -286,6 +444,9 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                                         className={cx(
                                             "btn btn-warning text-white mt-4"
                                         )}
+                                        onClick={() =>
+                                            handleUpdateTicket(index)
+                                        }
                                     >
                                         Update
                                     </button>
@@ -297,12 +458,30 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                     <div className={cx("form-list-stand")}>
                         <div className="w-100 d-flex justify-content-end">
                             <button
-                                className="w-25 border border-1 rounded shadow-sm p-2 mb-2 bg-success text-white"
+                                className="w-25 border border-1 rounded shadow-sm p-3 mb-2 bg-success text-white"
                                 style={{ marginRight: "10px" }}
-                                onClick={handleDeleteAll}
+                                onClick={() => handleCreateTicket(true)}
                             >
-                                Create
+                                Create All
                             </button>
+                            {isLoading ? (
+                                <button
+                                    disabled
+                                    className={cx(
+                                        "button-disabled w-25  bg-success text-white p-2 rounded mb-2 border-0"
+                                    )}
+                                >
+                                    <div className="spinner-border text-light"></div>
+                                </button>
+                            ) : (
+                                <button
+                                    className="w-25 border border-1 rounded shadow-sm p-3 mb-2 bg-success text-white"
+                                    style={{ marginRight: "10px" }}
+                                    onClick={() => handleCreateTicket(false)}
+                                >
+                                    Create
+                                </button>
+                            )}
                         </div>
                         <p
                             className={cx("text-center fs-3 fw-bold")}
@@ -320,12 +499,30 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                                     >
                                         <div className={cx("form-checkbox")}>
                                             {item.isReady ? (
-                                                <input
-                                                    type="checkbox"
-                                                    onChange={() =>
-                                                        handleChecked(index, 1)
-                                                    }
-                                                />
+                                                listCheckCreate.includes(
+                                                    index
+                                                ) ? (
+                                                    <input
+                                                        checked
+                                                        type="checkbox"
+                                                        onChange={() =>
+                                                            handleChecked(
+                                                                index,
+                                                                1
+                                                            )
+                                                        }
+                                                    />
+                                                ) : (
+                                                    <input
+                                                        type="checkbox"
+                                                        onChange={() =>
+                                                            handleChecked(
+                                                                index,
+                                                                1
+                                                            )
+                                                        }
+                                                    />
+                                                )
                                             ) : (
                                                 <i className="bi bi-exclamation-triangle-fill text-danger"></i>
                                             )}

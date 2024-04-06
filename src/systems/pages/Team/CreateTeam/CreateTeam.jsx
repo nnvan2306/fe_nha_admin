@@ -258,7 +258,7 @@ export default function CreateTeam() {
                 {isLoading ? (
                     <button disabled className={cx("button-disabled")}>
                         <div
-                            className="spinner-border text-light"
+                            className="spinner-border text-white"
                             role="status"
                         ></div>
                     </button>
