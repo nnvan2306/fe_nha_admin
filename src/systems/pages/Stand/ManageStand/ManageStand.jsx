@@ -60,7 +60,7 @@ export default function ManageStand() {
 
     const handleDeleteStand = async (standId) => {
         await Swal.fire({
-            title: `Do you want to delete stand checked ?`,
+            title: `Do you want to delete stand ?`,
             showCancelButton: true,
             confirmButtonText: "Yes",
         }).then((result) => {

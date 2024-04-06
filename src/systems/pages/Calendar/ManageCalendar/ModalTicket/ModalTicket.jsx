@@ -16,14 +16,26 @@ const ModalTicket = memo(function ModalTicket({ info }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [infoCalendar, setInfoCalendar] = useState(null);
     const [listTicket, setListTicket] = useState([]);
-    // const [listTicketDelete, setListTicketDelete] = useState([]);
+    const [listCheckCreate, setListCheckCreate] = useState([]);
+    const [listCheckDelete, setListCheckDelete] = useState([]);
 
     const [listStand, setListStand] = useState([]);
 
     const showModal = async () => {
         setIsModalOpen(true);
         setInfoCalendar(info);
-        // await handleGetTicket(info.id);
+        await handleGetTicketAndStand();
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleGetTicketAndStand = async () => {
         // eslint-disable-next-line react/prop-types
         const res = await getTicketService(+info?.id);
 
@@ -52,36 +64,14 @@ const ModalTicket = memo(function ModalTicket({ info }) {
         }
     };
 
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleGetTicket = async (id) => {
-        const res = await getTicketService(+id);
-        if (res.errorCode === 0) {
-            let arrSort = res.data.sort((itemOne, itemTwo) => {
-                let indexOne = +itemOne.name.slice(1);
-                let indexTwo = +itemTwo.name.slice(1);
-                return indexOne - indexTwo;
-            });
-            setListTicket(arrSort);
-        }
-    };
-
     const handleChangeValueTicket = (indexChange, w, value) => {
         let listClone = listTicket.map((item, index) => {
             if (index === indexChange) {
                 w === 1
-                    ? (item.name = value.toUpperCase())
-                    : w === 2
                     ? value === "true"
                         ? (item.isVip = true)
                         : false
-                    : w === 3
+                    : w === 2
                     ? (item.price = value)
                     : (item.totalTicket = value);
             }
@@ -90,6 +80,48 @@ const ModalTicket = memo(function ModalTicket({ info }) {
         });
         setListTicket(listClone);
     };
+
+    const handleChangeValueStand = (indexChange, w, value) => {
+        let listClone = listStand.map((item, index) => {
+            if (index === indexChange) {
+                w === 1
+                    ? value === "true"
+                        ? (item.isVipDefault = true)
+                        : false
+                    : w === 2
+                    ? (item.priceDefault = value)
+                    : (item.totalTicketDefault = value);
+            }
+
+            return item;
+        });
+        setListTicket(listClone);
+    };
+
+    const handleChecked = (index, w) => {
+        console.log("a");
+        let listNew;
+        if (w) {
+            if (!listCheckCreate.includes(index)) {
+                listNew = [...listCheckCreate, index];
+                setListCheckCreate(listNew);
+                return;
+            }
+            listNew = listCheckCreate.filter((item) => item !== index);
+            setListCheckCreate(listNew);
+            return;
+        }
+
+        if (!listCheckDelete.includes(index)) {
+            listNew = [...listCheckDelete, index];
+            setListCheckDelete(listNew);
+            return;
+        }
+        listNew = listCheckDelete.filter((item) => item !== index);
+        setListCheckDelete(listNew);
+    };
+
+    const handleCreateTicket = async () => {};
 
     const handleDeleteAll = async () => {
         Swal.fire({
@@ -107,7 +139,7 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                                 title: `delete successfully`,
                             });
                             // setListTicketDelete([]);
-                            await handleGetTicket(infoCalendar.id);
+                            await handleGetTicketAndStand(infoCalendar.id);
                         }
                     } catch (err) {
                         console.log(err);
@@ -121,8 +153,6 @@ const ModalTicket = memo(function ModalTicket({ info }) {
             }
         });
     };
-
-    console.log(listStand);
 
     return (
         <div className={cx("form-modal-ticket", "test-modal")}>
@@ -152,10 +182,7 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                             <i className="bi bi-trash3 p-2"></i>
                             Delete All
                         </button>
-                        <button
-                            className="w-20 border border-1 rounded shadow-sm p-2 mb-2 bg-danger text-white"
-                            // onClick={handleDeleteMultiple}
-                        >
+                        <button className="w-20 border border-1 rounded shadow-sm p-2 mb-2 bg-danger text-white">
                             <i className="bi bi-trash3 p-2"></i>Delete More
                         </button>
                     </div>
@@ -173,7 +200,12 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                                     key={index}
                                 >
                                     <div className={cx("form-checkbox")}>
-                                        <input type="checkbox" />
+                                        <input
+                                            type="checkbox"
+                                            onChange={() =>
+                                                handleChecked(index, 0)
+                                            }
+                                        />
                                     </div>
 
                                     <div className={cx("form-input")}>
@@ -197,7 +229,7 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                                             onChange={(e) =>
                                                 handleChangeValueTicket(
                                                     index,
-                                                    2,
+                                                    1,
                                                     e.target.value
                                                 )
                                             }
@@ -220,7 +252,7 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                                             onChange={(e) =>
                                                 handleChangeValueTicket(
                                                     index,
-                                                    3,
+                                                    2,
                                                     +e.target.value
                                                 )
                                             }
@@ -243,7 +275,7 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                                             onChange={(e) =>
                                                 handleChangeValueTicket(
                                                     index,
-                                                    4,
+                                                    3,
                                                     +e.target.value
                                                 )
                                             }
@@ -254,7 +286,6 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                                         className={cx(
                                             "btn btn-warning text-white mt-4"
                                         )}
-                                        // onClick={handleCreateTicket}
                                     >
                                         Update
                                     </button>
@@ -273,7 +304,10 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                                 Create
                             </button>
                         </div>
-                        <p className={cx("text-center fs-3 fw-bold")}>
+                        <p
+                            className={cx("text-center fs-3 fw-bold")}
+                            onClick={handleCreateTicket}
+                        >
                             Create Ticket
                         </p>
                         {listStand &&
@@ -286,7 +320,12 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                                     >
                                         <div className={cx("form-checkbox")}>
                                             {item.isReady ? (
-                                                <input type="checkbox" />
+                                                <input
+                                                    type="checkbox"
+                                                    onChange={() =>
+                                                        handleChecked(index, 1)
+                                                    }
+                                                />
                                             ) : (
                                                 <i className="bi bi-exclamation-triangle-fill text-danger"></i>
                                             )}
@@ -315,11 +354,11 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                                             <br />
                                             <select
                                                 className="p-1 border border-1 rounded shadow-sm"
-                                                value={item.isVip}
+                                                value={item.isVipDefault}
                                                 onChange={(e) =>
-                                                    handleChangeValueTicket(
+                                                    handleChangeValueStand(
                                                         index,
-                                                        2,
+                                                        1,
                                                         e.target.value
                                                     )
                                                 }
@@ -345,11 +384,11 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                                                 type="number"
                                                 id="price"
                                                 className="p-1 border border-1 rounded shadow-sm"
-                                                value={item.price}
+                                                value={item.priceDefault}
                                                 onChange={(e) =>
-                                                    handleChangeValueTicket(
+                                                    handleChangeValueStand(
                                                         index,
-                                                        3,
+                                                        2,
                                                         +e.target.value
                                                     )
                                                 }
@@ -368,11 +407,11 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                                                 type="number"
                                                 id="totalTicket"
                                                 className="p-1 border border-1 rounded shadow-sm"
-                                                value={item.totalTicket}
+                                                value={item.totalTicketDefault}
                                                 onChange={(e) =>
-                                                    handleChangeValueTicket(
+                                                    handleChangeValueStand(
                                                         index,
-                                                        4,
+                                                        3,
                                                         +e.target.value
                                                     )
                                                 }
