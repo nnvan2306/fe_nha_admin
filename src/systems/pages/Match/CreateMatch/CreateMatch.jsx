@@ -87,6 +87,7 @@ export default function CreateMatch() {
             setHostYellowCard(state.hostYellowCard);
             setGuestYellowCard(state.guestYellowCard);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleChangeFile = () => {
