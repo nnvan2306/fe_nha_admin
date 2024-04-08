@@ -16,9 +16,19 @@ export const authSlice = createSlice({
 
             stateClone.isLogin = true;
             stateClone.token = action.payload.token;
+
             return stateClone;
         },
-        // logoutAction(state) {},
+        logoutAction(state) {
+            const stateClone = {
+                ...state,
+            };
+
+            stateClone.isLogin = false;
+            stateClone.token = null;
+
+            return stateClone;
+        },
     },
 });
 

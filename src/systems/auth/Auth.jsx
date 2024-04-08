@@ -4,24 +4,28 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Register from "./register/Register";
 import { useSelector } from "react-redux";
+import { BASE_URL } from "../../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
 export default function Auth() {
     const isLogin = useSelector((state) => state.authSlice.isLogin);
-    const token = useSelector((state) => state.authSlice.token);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        console.log("isLogin:", isLogin);
-        console.log("token:", token);
-    }, [isLogin, token]);
+        if (isLogin) {
+            navigate("/");
+        }
+    }, [isLogin]);
 
     const location = useLocation().pathname;
 
     return (
         <div className={cx("form-home")}>
             <img
-                src="https://baokhanhhoa.vn/file/e7837c02857c8ca30185a8c39b582c03/112023/cang-thang-cuoc-dua-top-4-1_20231120021400.gif"
+                // src="https://baokhanhhoa.vn/file/e7837c02857c8ca30185a8c39b582c03/112023/cang-thang-cuoc-dua-top-4-1_20231120021400.gif"
+                src={`${BASE_URL}/images/thumbnailAuth.png`}
                 alt=""
             />
             <div className={cx("form-control")}>

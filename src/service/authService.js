@@ -15,3 +15,15 @@ export const refreshTokenService = () => {
         withCredentials: true,
     });
 };
+
+export const handleLogoutService = () => {
+    return axios.post("/logout", {
+        withCredentials: true,
+    });
+};
+
+export const handleCheckRoleService = () => {
+    return axios.post("/check-role-admin", {
+        withCredentials: true,
+    });
+};

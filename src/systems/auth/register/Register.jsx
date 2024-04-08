@@ -93,6 +93,10 @@ export default function Register() {
             }
         } catch (err) {
             console.log(err);
+            Swal.fire({
+                icon: "error",
+                title: err.response.data.message,
+            });
         }
     };
 
@@ -132,11 +136,15 @@ export default function Register() {
             let fetch = await handleLoginService(dataBuider);
             if (fetch?.errorCode === 0) {
                 reSetValue();
-                dispatch(loginSuccess(fetch?.data?.access_token));
+                dispatch(loginSuccess(fetch?.data));
                 navigate("/");
             }
         } catch (err) {
             console.log(err);
+            Swal.fire({
+                icon: "error",
+                title: err.response.data.message,
+            });
         }
     };
 
