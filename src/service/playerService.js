@@ -13,8 +13,18 @@ export const getPlayerService = ({ page, pageSize }) => {
     return axios.get(`/get-player?page=${page}&pageSize=${pageSize}`);
 };
 
+export const searchPlayerService = (q) => {
+    return axios.get(`/search-player?q=${q}`);
+};
+
+export const getPlayerDetailSeasonService = (hostId, guestId) => {
+    return axios.get(`/get-player-season?hostId=${hostId}&guestId=${guestId}`);
+};
+
 export const deletePlayerService = (code) => {
-    return axios.delete(`/delete-player?code=${code}`);
+    return axios.delete(`/delete-player?code=${code}`, {
+        withCredentials: true,
+    });
 };
 
 export const updatePlayerService = (data) => {
@@ -24,12 +34,4 @@ export const updatePlayerService = (data) => {
             "Content-Type": "multipart/form-data",
         },
     });
-};
-
-export const searchPlayerService = (q) => {
-    return axios.get(`/search-player?q=${q}`);
-};
-
-export const getPlayerDetailSeasonService = (hostId, guestId) => {
-    return axios.get(`/get-player-season?hostId=${hostId}&guestId=${guestId}`);
 };

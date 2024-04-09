@@ -1,8 +1,7 @@
 import axios from "../axios";
 
 export const handleCreateStandService = (listStand) => {
-    console.log(listStand);
-    return axios.post("/create-stand", listStand);
+    return axios.post("/create-stand", listStand, { withCredentials: true });
 };
 
 export const handleGetStandService = (stadiumId) => {
@@ -10,9 +9,13 @@ export const handleGetStandService = (stadiumId) => {
 };
 
 export const handleDeleteStandService = (stands) => {
-    return axios.delete(`/delete-stand`, { data: stands });
+    return axios.delete(
+        `/delete-stand`,
+        { data: stands },
+        { withCredentials: true }
+    );
 };
 
 export const handleUpdateStandService = (stand) => {
-    return axios.put("/update-stand", stand);
+    return axios.put("/update-stand", stand, { withCredentials: true });
 };

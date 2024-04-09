@@ -168,7 +168,7 @@ export default function CreateTeam() {
         }
 
         try {
-            let res = await updateTeamService(dataBuider);
+            let res = await handleApi(updateTeamService, dataBuider);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",

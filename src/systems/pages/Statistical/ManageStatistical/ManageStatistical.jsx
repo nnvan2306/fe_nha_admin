@@ -12,6 +12,7 @@ import { BASE_URL } from "../../../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
 import Swal from "sweetalert2";
+import { handleApi } from "../../../../service/handleApi";
 const cx = classNames.bind(styles);
 
 export default function ManageStatistical() {
@@ -65,7 +66,7 @@ export default function ManageStatistical() {
         }).then((result) => {
             if (result.isConfirmed) {
                 const _fetch = async () => {
-                    let Res = await deleteStatisticService(data.id);
+                    let Res = await handleApi(deleteStatisticService, data.id);
                     if (Res.errorCode === 0) {
                         Swal.fire({
                             icon: "success",

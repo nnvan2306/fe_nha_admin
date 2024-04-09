@@ -10,6 +10,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import handleValidateImage from "../../../../helps/handleValidate";
 import { BASE_URL } from "../../../../utils/constants";
+import { handleApi } from "../../../../service/handleApi";
 const cx = classNames.bind(styles);
 
 export default function CreateStadium() {
@@ -92,7 +93,7 @@ export default function CreateStadium() {
         };
 
         try {
-            let res = await createStadiumService(dataBuider);
+            let res = await handleApi(createStadiumService, dataBuider);
 
             if (res.errorCode === 0) {
                 Swal.fire({
@@ -137,7 +138,7 @@ export default function CreateStadium() {
         }
 
         try {
-            let res = await updateStadiumService(dataBuider);
+            let res = await handleApi(updateStadiumService, dataBuider);
             if (res.errorCode === 0) {
                 setIsLoading(false);
                 Swal.fire({

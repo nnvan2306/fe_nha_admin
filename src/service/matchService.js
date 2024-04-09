@@ -1,14 +1,5 @@
 import axios from "../axios";
 
-// export const getMatchService = () => {
-//     return axios.get("/get-match", {
-//         withCredentials: true,
-//         headers: {
-//             "Content-Type": "multipart/form-data",
-//         },
-//     });
-// };
-
 export const createMatchService = (data) => {
     return axios.post("/create-match", data, {
         withCredentials: true,
@@ -23,7 +14,7 @@ export const getMatchService = ({ page, pageSize, q = 0 }) => {
 };
 
 export const deleteMatchService = (id) => {
-    return axios.delete(`/delete-match?id=${id}`);
+    return axios.delete(`/delete-match?id=${id}`, { withCredentials: true });
 };
 
 export const updateMatchService = (data) => {

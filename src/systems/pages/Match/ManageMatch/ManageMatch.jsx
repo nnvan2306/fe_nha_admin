@@ -18,6 +18,7 @@ import {
     handleGetScoredService,
 } from "../../../../service/scoredService";
 import { getPlayerDetailSeasonService } from "../../../../service/playerService";
+import { handleApi } from "../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
 
@@ -82,7 +83,7 @@ export default function ManageMatch() {
         }).then((result) => {
             if (result.isConfirmed) {
                 const _fetch = async () => {
-                    let Res = await deleteMatchService(infoMatch.id);
+                    let Res = await handleApi(deleteMatchService, infoMatch.id);
                     if (Res.errorCode === 0) {
                         Swal.fire({
                             icon: "success",
@@ -156,7 +157,7 @@ export default function ManageMatch() {
             teamId: teamId,
         };
 
-        const fetch = await handleCreateScoredService(dataBuider);
+        const fetch = await handleApi(handleCreateScoredService, dataBuider);
         if (fetch.errorCode === 0) {
             Swal.fire({
                 icon: "success",
@@ -181,7 +182,10 @@ export default function ManageMatch() {
         }).then((result) => {
             if (result.isConfirmed) {
                 const _fetch = async () => {
-                    let Res = await handleDeleteScoredService(infoScored.id);
+                    let Res = await handleApi(
+                        handleDeleteScoredService,
+                        infoScored.id
+                    );
                     if (Res.errorCode === 0) {
                         Swal.fire({
                             icon: "success",

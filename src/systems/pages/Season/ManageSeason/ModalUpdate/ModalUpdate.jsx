@@ -7,6 +7,7 @@ import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import Swal from "sweetalert2";
 import { updateSeasonService } from "../../../../../service/seasonService";
+import { handleApi } from "../../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
 const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -62,7 +63,7 @@ const ModalUpdate = memo(function ModalUpdate({
         };
 
         try {
-            let res = await updateSeasonService(dataBuider);
+            let res = await handleApi(updateSeasonService, dataBuider);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",

@@ -11,6 +11,7 @@ import { BASE_URL } from "../../../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
 import ModalTicket from "./ModalTicket/ModalTicket";
+import { handleApi } from "../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
 
@@ -62,7 +63,7 @@ export default function ManageCalendar() {
         }).then((result) => {
             if (result.isConfirmed) {
                 const _fetch = async () => {
-                    let Res = await deleteCalendarService(data.id);
+                    let Res = await handleApi(deleteCalendarService, data.id);
                     if (Res.errorCode === 0) {
                         Swal.fire({
                             icon: "success",

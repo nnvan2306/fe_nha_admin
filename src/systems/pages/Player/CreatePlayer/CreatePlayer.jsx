@@ -14,6 +14,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
 import { BASE_URL } from "../../../../utils/constants";
+import { handleApi } from "../../../../service/handleApi";
 // import moment from "moment";
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -171,7 +172,7 @@ export default function CreatePlayer() {
             des_text: markdown.text,
         };
         try {
-            let res = await createPlayerService(dataBuider);
+            let res = await handleApi(createPlayerService, dataBuider);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",
@@ -240,7 +241,7 @@ export default function CreatePlayer() {
             dataBuider.file = avatar;
         }
         try {
-            let res = await updatePlayerService(dataBuider);
+            let res = await handleApi(updatePlayerService, dataBuider);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",

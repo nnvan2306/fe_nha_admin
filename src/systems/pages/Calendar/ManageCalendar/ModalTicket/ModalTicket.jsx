@@ -11,6 +11,7 @@ import {
 } from "../../../../../service/ticketService";
 import Swal from "sweetalert2";
 import { handleGetStandService } from "../../../../../service/standService";
+import { handleApi } from "../../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
 
@@ -197,7 +198,7 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                   });
 
         try {
-            let res = await createTicketService(dataBuider);
+            let res = await handleApi(createTicketService, dataBuider);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",
@@ -237,8 +238,11 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                     }
 
                     let Res = isDeleteAll
-                        ? await deleteAllTicketService(infoCalendar.id)
-                        : await deleteTicketService(dataBuider);
+                        ? await handleApi(
+                              deleteAllTicketService,
+                              infoCalendar.id
+                          )
+                        : await handleApi(deleteTicketService, dataBuider);
 
                     try {
                         if (Res.errorCode === 0) {
@@ -273,7 +277,10 @@ const ModalTicket = memo(function ModalTicket({ info }) {
                 const _fetch = async () => {
                     let dataBuider = listTicket[index];
 
-                    let Res = await handleUpdateTicketService(dataBuider);
+                    let Res = await handleApi(
+                        handleUpdateTicketService,
+                        dataBuider
+                    );
 
                     try {
                         if (Res.errorCode === 0) {

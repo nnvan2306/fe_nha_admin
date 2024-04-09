@@ -11,6 +11,7 @@ import {
     createStatisticService,
     updateStatisticService,
 } from "../../../../service/statisticService";
+import { handleApi } from "../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
 
@@ -52,6 +53,7 @@ export default function CreateStatistical() {
             setSeasonId(state?.seasonId);
             setId(state?.id);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const reSet = () => {
@@ -69,9 +71,6 @@ export default function CreateStatistical() {
             .label;
         setSeasonName(nameSeason);
     };
-
-    // console.log(seasonId);
-    // console.log(seasonName);
 
     //validate
     const handleValidate = () => {
@@ -114,8 +113,8 @@ export default function CreateStatistical() {
         try {
             let res =
                 location === RouterDTO.statistical.update
-                    ? await updateStatisticService(dataBuider)
-                    : await createStatisticService(dataBuider);
+                    ? await handleApi(updateStatisticService, dataBuider)
+                    : await handleApi(createStatisticService, dataBuider);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",

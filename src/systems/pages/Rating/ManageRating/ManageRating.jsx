@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { BASE_URL } from "../../../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
+import { handleApi } from "../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
 
@@ -59,13 +60,15 @@ export default function ManageRating() {
             if (result.isConfirmed) {
                 const _fetch = async () => {
                     try {
-                        let Res = await deleteRatingService(rating.id);
+                        let Res = await handleApi(
+                            deleteRatingService,
+                            rating.id
+                        );
                         if (Res.errorCode === 0) {
                             Swal.fire({
                                 icon: "success",
                                 title: `delete ${rating.Team.name} successfully`,
                             });
-                            // handleReload();
                         }
                     } catch (err) {
                         console.log(err);
@@ -127,33 +130,33 @@ export default function ManageRating() {
                                     <tr key={index}>
                                         <td className={cx("td-logo")}>
                                             <img
-                                                src={`${BASE_URL}${item.Team.logo_url}`}
+                                                src={`${BASE_URL}${item?.Team?.logo_url}`}
                                                 alt=""
                                             />
                                         </td>
                                         <td className={cx("td-team")}>
-                                            <p> {item.Team.name}</p>
+                                            <p> {item?.Team?.name}</p>
                                         </td>
                                         <td className={cx("td-w-l-d")}>
                                             <span className={cx("span-win")}>
-                                                {item.win}
+                                                {item?.win}
                                             </span>{" "}
                                             -{" "}
                                             <span className={cx("span-lose")}>
-                                                {item.lose}
+                                                {item?.lose}
                                             </span>{" "}
                                             -{" "}
                                             <span className={cx("span-draw")}>
-                                                {item.draw}
+                                                {item?.draw}
                                             </span>
                                         </td>
                                         <td className={cx("td-total-goal")}>
-                                            <p>{item.totalGoal}</p>
+                                            <p>{item?.totalGoal}</p>
                                         </td>
                                         <td
                                             className={cx("td-total-lost-goal")}
                                         >
-                                            <p>{item.totalLostGoal}</p>
+                                            <p>{item?.totalLostGoal}</p>
                                         </td>
                                         <td className={cx("td-action")}>
                                             <button

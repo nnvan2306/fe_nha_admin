@@ -5,9 +5,9 @@ export const handleGetScoredService = (matchId) => {
 };
 
 export const handleCreateScoredService = (data) => {
-    return axios.post("/create-scored", data);
+    return axios.post("/create-scored", data, { withCredentials: true });
 };
 
 export const handleDeleteScoredService = (id) => {
-    return axios.delete(`/delete-scored?id=${id}`);
+    return axios.delete(`/delete-scored?id=${id}`, { withCredentials: true });
 };

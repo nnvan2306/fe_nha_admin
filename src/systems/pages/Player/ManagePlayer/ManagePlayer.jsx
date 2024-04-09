@@ -12,6 +12,7 @@ import {
 } from "../../../../service/playerService";
 import moment from "moment";
 import { RouterDTO } from "../../../../utils/routes.dto";
+import { handleApi } from "../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
 
@@ -48,7 +49,7 @@ export default function ManagePlayer() {
         }).then((result) => {
             if (result.isConfirmed) {
                 const _fetch = async () => {
-                    let Res = await deletePlayerService(data.code);
+                    let Res = await handleApi(deletePlayerService, data.code);
                     if (Res.errorCode === 0) {
                         Swal.fire({
                             icon: "success",

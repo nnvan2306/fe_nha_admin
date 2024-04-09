@@ -18,7 +18,7 @@ export const getAllTeam = () => {
 };
 
 export const deletTeameService = (code) => {
-    return axios.delete(`/delete-team?code=${code}`);
+    return axios.delete(`/delete-team?code=${code}`, { withCredentials: true });
 };
 
 export const updateTeamService = (data) => {

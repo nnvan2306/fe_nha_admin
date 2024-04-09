@@ -10,6 +10,7 @@ import {
     updateCalendarService,
 } from "../../../../service/calendarService";
 import { useLocation, useNavigate } from "react-router-dom";
+import { handleApi } from "../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
 
@@ -106,7 +107,7 @@ export default function CreateCalendar() {
         };
 
         try {
-            let res = await createCalendarService(dataBuider);
+            let res = await handleApi(createCalendarService, dataBuider);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",
@@ -145,7 +146,7 @@ export default function CreateCalendar() {
             stadiumId: stadiumId,
         };
         try {
-            let res = await updateCalendarService(dataBuider);
+            let res = await handleApi(updateCalendarService, dataBuider);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",

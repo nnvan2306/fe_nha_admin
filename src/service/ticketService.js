@@ -5,17 +5,23 @@ export const getTicketService = (id) => {
 };
 
 export const createTicketService = (data) => {
-    return axios.post("/create-ticket", data);
+    return axios.post("/create-ticket", data, { withCredentials: true });
 };
 
 export const deleteTicketService = (tickets) => {
-    return axios.delete(`/delete-ticket`, { data: tickets });
+    return axios.delete(
+        `/delete-ticket`,
+        { data: tickets },
+        { withCredentials: true }
+    );
 };
 
 export const deleteAllTicketService = (calendarId) => {
-    return axios.delete(`/delete-all-ticket?calendarId=${calendarId}`);
+    return axios.delete(`/delete-all-ticket?calendarId=${calendarId}`, {
+        withCredentials: true,
+    });
 };
 
 export const handleUpdateTicketService = (data) => {
-    return axios.put("/update-ticket", data);
+    return axios.put("/update-ticket", data, { withCredentials: true });
 };

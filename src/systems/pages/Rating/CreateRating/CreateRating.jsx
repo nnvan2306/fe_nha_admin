@@ -10,6 +10,7 @@ import {
     updateRatingService,
 } from "../../../../service/ratingService";
 import { useLocation, useNavigate } from "react-router-dom";
+import { handleApi } from "../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
 
@@ -116,8 +117,8 @@ export default function CreateRating() {
         try {
             let res =
                 location === RouterDTO.rating.update
-                    ? await updateRatingService(dataBuider)
-                    : await createRatingService(dataBuider);
+                    ? await handleApi(updateRatingService, dataBuider)
+                    : await handleApi(createRatingService, dataBuider);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",

@@ -12,6 +12,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../../../utils/constants";
 import { RouterDTO } from "../../../../utils/routes.dto";
+import { handleApi } from "../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
 
@@ -195,8 +196,8 @@ export default function CreateMatch() {
         try {
             let res =
                 location === RouterDTO.match.updateMatch
-                    ? await updateMatchService(dataBuider)
-                    : await createMatchService(dataBuider);
+                    ? await handleApi(updateMatchService, dataBuider)
+                    : await handleApi(createMatchService, dataBuider);
             console.log(res);
             if (res.errorCode === 0) {
                 Swal.fire({

@@ -1,7 +1,7 @@
 import axios from "../axios";
 
 export const createCalendarService = (data) => {
-    return axios.post("/create-calendar", data);
+    return axios.post("/create-calendar", data, { withCredentials: true });
 };
 
 export const getCalendarService = (hostId, guestId) => {
@@ -9,9 +9,9 @@ export const getCalendarService = (hostId, guestId) => {
 };
 
 export const deleteCalendarService = (id) => {
-    return axios.delete(`/delete-calendar?id=${id}`);
+    return axios.delete(`/delete-calendar?id=${id}`, { withCredentials: true });
 };
 
 export const updateCalendarService = (data) => {
-    return axios.put("/update-calendar", data);
+    return axios.put("/update-calendar", data, { withCredentials: true });
 };

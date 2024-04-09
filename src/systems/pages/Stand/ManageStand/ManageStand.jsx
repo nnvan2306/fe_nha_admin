@@ -9,6 +9,7 @@ import {
 } from "../../../../service/standService";
 import { RouterDTO } from "../../../../utils/routes.dto";
 import { useNavigate, useLocation } from "react-router-dom";
+import { handleApi } from "../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
 
@@ -68,7 +69,10 @@ export default function ManageStand() {
                 const _fetch = async () => {
                     let dataBuider = [{ id: +standId }];
                     try {
-                        let Res = await handleDeleteStandService(dataBuider);
+                        let Res = await handleApi(
+                            handleDeleteStandService,
+                            dataBuider
+                        );
                         if (Res.errorCode === 0) {
                             Swal.fire({
                                 icon: "success",

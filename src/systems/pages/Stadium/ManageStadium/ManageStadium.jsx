@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
 import { BASE_URL } from "../../../../utils/constants";
+import { handleApi } from "../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
 
@@ -36,7 +37,7 @@ export default function ManageStadium() {
         }).then((result) => {
             if (result.isConfirmed) {
                 const _fetch = async () => {
-                    let Res = await deleteStadiumService(data.id);
+                    let Res = await handleApi(deleteStadiumService, data.id);
                     if (Res.errorCode === 0) {
                         Swal.fire({
                             icon: "success",

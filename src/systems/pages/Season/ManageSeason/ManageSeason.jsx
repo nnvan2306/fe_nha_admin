@@ -9,6 +9,7 @@ import { Pagination } from "antd";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import ModalUpdate from "./ModalUpdate/ModalUpdate";
+import { handleApi } from "../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
 
@@ -41,8 +42,12 @@ export default function ManageSeason() {
         }).then((result) => {
             if (result.isConfirmed) {
                 const _fetch = async () => {
-                    let Res = await deleteSeasonService(data.index);
+                    let Res = await handleApi(deleteSeasonService, data.index);
                     if (Res.errorCode === 0) {
+                        Swal.fire({
+                            icon: "success",
+                            title: `delete season ${data.name} successfully`,
+                        });
                         handleReload();
                     }
                 };

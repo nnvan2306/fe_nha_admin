@@ -14,7 +14,7 @@ export const getStadiumService = () => {
 };
 
 export const deleteStadiumService = (id) => {
-    return axios.delete(`/delete-stadium?id=${id}`);
+    return axios.delete(`/delete-stadium?id=${id}`, { withCredentials: true });
 };
 
 export const updateStadiumService = (data) => {

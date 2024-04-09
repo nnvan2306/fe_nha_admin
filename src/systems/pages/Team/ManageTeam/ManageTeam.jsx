@@ -11,6 +11,7 @@ import usePagination from "../../../../hooks/usePagination";
 import { BASE_URL } from "../../../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
+import { handleApi } from "../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
 
@@ -48,7 +49,7 @@ export default function ManageTeam() {
             if (result.isConfirmed) {
                 console.log("ok");
                 const _fetch = async () => {
-                    let Res = await deletTeameService(data.code);
+                    let Res = await handleApi(deletTeameService, data.code);
                     console.log(Res);
                     if (Res.errorCode === 0) {
                         Swal.fire({

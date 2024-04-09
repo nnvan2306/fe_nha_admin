@@ -11,6 +11,7 @@ import { getStadiumService } from "../../../../service/stadiumService";
 import { Tooltip } from "antd";
 import { BASE_URL } from "../../../../utils/constants";
 import { useLocation, useNavigate } from "react-router-dom";
+import { handleApi } from "../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
 
@@ -53,8 +54,8 @@ export default function CreateStand() {
             setListForm([
                 {
                     name: state.name,
-                    isReady: state.isReady,
-                    isVipDefault: state.isVipDefault,
+                    isReady: state.isReady ? 1 : 0,
+                    isVipDefault: state.isVipDefault ? 1 : 0,
                     priceDefault: state.priceDefault,
                     totalTicketDefault: state.totalTicketDefault,
                     stadiumId: state.stadiumId,
@@ -136,8 +137,8 @@ export default function CreateStand() {
             }
             let res =
                 location === RouterDTO.stand.update
-                    ? await handleUpdateStandService(listForm)
-                    : await handleCreateStandService(listForm);
+                    ? await handleApi(handleUpdateStandService, listForm)
+                    : await handleApi(handleCreateStandService, listForm);
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",
