@@ -40,6 +40,7 @@ export default function PrivateRouter({ children }) {
         };
 
         fetch();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [navigate]);
 
     return <div>{isAdmin ? children : <></>}</div>;
