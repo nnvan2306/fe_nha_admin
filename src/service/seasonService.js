@@ -3,9 +3,6 @@ import axios from "../axios";
 export const CreateSeasonService = (data) => {
     return axios.post("/create-season", data, {
         withCredentials: true,
-        // headers: {
-        //     "Content-Type": "multipart/form-data",
-        // },
     });
 };
 
@@ -22,9 +19,13 @@ export const getAllSeasonService = () => {
 };
 
 export const deleteSeasonService = (index) => {
-    return axios.delete(`/delete-season?index=${index}`);
+    return axios.delete(`/delete-season?index=${index}`, {
+        withCredentials: true,
+    });
 };
 
 export const updateSeasonService = (data) => {
-    return axios.put("/update-season", data);
+    return axios.put("/update-season", data, {
+        withCredentials: true,
+    });
 };

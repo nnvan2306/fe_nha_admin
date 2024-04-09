@@ -40,10 +40,8 @@ export default function ManageSeason() {
             confirmButtonText: "Yes",
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("ok");
                 const _fetch = async () => {
                     let Res = await deleteSeasonService(data.index);
-                    console.log(Res);
                     if (Res.errorCode === 0) {
                         handleReload();
                     }

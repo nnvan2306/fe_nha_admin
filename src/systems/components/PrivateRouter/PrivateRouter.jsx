@@ -24,9 +24,7 @@ export default function PrivateRouter({ children }) {
         const fetch = async () => {
             try {
                 const res = await handleApi(handleCheckRoleService);
-                console.log("res>>>", res.data);
-                if (res.data.isAdmin) {
-                    console.log(res.data);
+                if (res.errorCode === 0) {
                     setIsAdmin(true);
                 } else {
                     await handleDispatchLogoutAndLogOutService();
