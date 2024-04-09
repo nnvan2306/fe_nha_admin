@@ -7,14 +7,13 @@ export async function handleApi(api, data = null) {
         if (error.response.status === 401) {
             try {
                 await refreshTokenService();
-
                 return await api(data);
             } catch (err) {
-                console.log(err);
+                console.log("err refresh token");
                 await handleLogoutService();
+                return Promise.reject(err);
             }
         } else {
-            console.log("err");
             return Promise.reject(error);
         }
     }

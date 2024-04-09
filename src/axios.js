@@ -3,7 +3,7 @@ import { BASE_URL } from "./utils/constants";
 
 const instance = axios.create({
     baseURL: BASE_URL,
-    // withCredentials: true
+    withCredentials: true,
 });
 
 instance.interceptors.response.use((response) => {
