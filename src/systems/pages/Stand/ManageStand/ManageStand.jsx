@@ -41,7 +41,7 @@ export default function ManageStand() {
         if (state) {
             handleGetStand(state);
         }
-    }, []);
+    }, [state]);
 
     const handleGetStand = async (stadiumId) => {
         try {
