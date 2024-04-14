@@ -87,6 +87,8 @@ export default function ManageRating() {
         navigate(RouterDTO.rating.update, { state: infoRating });
     };
 
+    console.log(listRating);
+
     return (
         <div className={cx("form-manage", "container")}>
             <div className={cx("form-select-season")}>

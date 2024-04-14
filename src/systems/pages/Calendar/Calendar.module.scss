@@ -21,13 +21,15 @@
 
             button {
                 width           : 230px;
+                border          : none;
+                border-radius   : 5px;
                 padding         : 10px 20px;
                 color           : #fff;
                 font-size       : 20px;
-                border          : none;
-                border-radius   : 5px;
                 background-color: var(--color-button-primary);
             }
+
+
         }
     }
 

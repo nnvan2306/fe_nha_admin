@@ -28,8 +28,8 @@ export default function Match() {
                 <div className={cx("button-swap")}>
                     <button onClick={handleNavigate}>
                         {handleCompare()
-                            ? "To Create Player"
-                            : "To Manage Player"}
+                            ? "To Create Match"
+                            : "To Manage Match"}
                     </button>
                 </div>
             </div>
