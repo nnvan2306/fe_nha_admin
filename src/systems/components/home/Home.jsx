@@ -13,6 +13,7 @@ import Match from "../../pages/Match/Match";
 import Stadium from "../../pages/Stadium/Stadium";
 import Calendar from "../../pages/Calendar/Calendar";
 import Stand from "../../pages/Stand/Stand";
+import Bill from "../../pages/Bill/Bill";
 
 const cx = classNames.bind(styles);
 
@@ -82,6 +83,13 @@ const handleViewThumbnails = (path) => {
                 src={`${BASE_URL}/images/calendar.png`}
             ></img>
         );
+    } else if (rePath === "/bill") {
+        return (
+            <img
+                className={cx("form-img-thumbnails", "animation-top-bottom")}
+                src={`${BASE_URL}/images/bill.png`}
+            ></img>
+        );
     } else {
         return <></>;
     }
@@ -136,6 +144,10 @@ export default function Home() {
                     <Route
                         path={RouterDTO.calendar.manageCalendar}
                         element={<Calendar />}
+                    />
+                    <Route
+                        path={RouterDTO.bill.manageBill}
+                        element={<Bill />}
                     />
                 </Routes>
             </div>

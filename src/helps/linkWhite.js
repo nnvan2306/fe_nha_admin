@@ -9,4 +9,5 @@ export const linkWhite = [
     "/stadium",
     "/stand",
     "/calendar",
+    "/bill",
 ];

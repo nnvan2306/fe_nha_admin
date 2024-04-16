@@ -226,6 +226,28 @@ export default function Header() {
                                 </p>
                             </button>
                         </li>
+
+                        <li>
+                            <button
+                                className={cx(
+                                    loction === RouterDTO.bill.manageBill
+                                        ? "active"
+                                        : ""
+                                )}
+                                onClick={() =>
+                                    handleNavigate(RouterDTO.bill.manageBill)
+                                }
+                            >
+                                <p>
+                                    {" "}
+                                    <i
+                                        className="bi bi-receipt"
+                                        style={{ padding: "10px" }}
+                                    ></i>
+                                    Bill
+                                </p>
+                            </button>
+                        </li>
                     </ul>
                 </div>
                 {/* <div className=""></div> */}

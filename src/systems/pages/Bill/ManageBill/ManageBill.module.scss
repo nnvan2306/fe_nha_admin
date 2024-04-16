@@ -1,0 +1,151 @@
+.form-bill {
+    margin-top : 20px;
+    width      : 95%;
+    margin-left: 50%;
+    transform  : translateX(-50%);
+
+    table {
+        width: 100%;
+
+
+        thead {
+            tr {
+                th {
+                    border    : 1px solid #000;
+                    padding   : 10px;
+                    text-align: center;
+                }
+
+                .th-match {
+                    width: 10%;
+                }
+
+                .th-date {
+                    width: 8%;
+                }
+
+                .th-stand {
+                    width: 5%;
+                }
+
+                .th-email {
+                    width: 8%;
+                }
+
+                .th-phone {
+                    width: 10%;
+                }
+
+                .th-price {
+                    width: 8%;
+                }
+
+                .th-address {
+                    width: 8%;
+                }
+
+                .th-city {
+                    width: 8%;
+                }
+
+                .th-country {
+                    width: 8%;
+                }
+
+                .th-isDelivered {
+                    width: 5%;
+                }
+
+                .th-action {
+                    width: 20%;
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                td {
+                    border : 1px solid #ccc;
+                    padding: 10px;
+                }
+
+                .td-match {
+                    width: 10%;
+                }
+
+                .td-date {
+                    width: 8%;
+                }
+
+                .td-stand {
+                    width: 5%;
+                }
+
+                .td-email {
+                    width: 8%;
+                }
+
+                .td-phone {
+                    width: 10%;
+                }
+
+                .td-price {
+                    width: 8%;
+                }
+
+                .td-address {
+                    width: 8%;
+                }
+
+                .td-city {
+                    width: 8%;
+                }
+
+                .td-country {
+                    width: 8%;
+                }
+
+                .td-isDelivered {
+                    width: 5%;
+                }
+
+                .td-action {
+                    width: 20%;
+
+                    button {
+                        width        : 40%;
+                        margin       : 0 5%;
+                        padding      : 8px 0;
+                        color        : #fff;
+                        border       : none;
+                        border-radius: 10px;
+                        cursor       : pointer;
+
+
+                        &:hover {
+                            opacity  : 0.7;
+                            transform: scale(1.1);
+                        }
+                    }
+
+                    .btn-delete {
+                        background-color: red;
+                    }
+
+                    .btn-delivered {
+                        background-color: greenyellow;
+                    }
+
+                    .btn-notDelivered {
+                        background-color: orange;
+                    }
+                }
+            }
+        }
+    }
+
+    .form-pagination {
+        margin    : 20px 0;
+        text-align: center;
+    }
+}

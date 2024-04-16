@@ -49,17 +49,23 @@ export default function ManagePlayer() {
         }).then((result) => {
             if (result.isConfirmed) {
                 const _fetch = async () => {
-                    let Res = await handleApi(deletePlayerService, data.code);
-                    if (Res.errorCode === 0) {
-                        Swal.fire({
-                            icon: "success",
-                            title: `delete ${data.name} successfully`,
-                        });
-                        handleReload();
-                    } else {
+                    try {
+                        let Res = await handleApi(
+                            deletePlayerService,
+                            data.code
+                        );
+                        if (Res.errorCode === 0) {
+                            Swal.fire({
+                                icon: "success",
+                                title: `delete ${data.name} successfully`,
+                            });
+                            handleReload();
+                        }
+                    } catch (err) {
+                        console.log(err);
                         Swal.fire({
                             icon: "error",
-                            title: `delete ${data.name} failure !`,
+                            title: err.response.data.message,
                         });
                     }
                 };

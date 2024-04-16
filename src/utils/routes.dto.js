@@ -59,4 +59,10 @@ export const RouterDTO = Object.freeze({
         allCalendar: "/calendar/all",
         update: "/calendar/update",
     },
+    bill: {
+        manageBill: "/bill/*",
+        create: "/bill/create",
+        allBill: "/bill/all",
+        Update: "/bill/update",
+    },
 });
