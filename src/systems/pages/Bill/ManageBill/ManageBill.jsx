@@ -3,6 +3,7 @@ import styles from "./ManageBill.module.scss";
 import {
     handleDeleteBilllService,
     handleGetBillService,
+    handleUpdateActiveBillService,
 } from "../../../../service/billService";
 import usePagination from "../../../../hooks/usePagination";
 import { useState } from "react";
@@ -60,6 +61,40 @@ export default function ManageBill() {
         });
     };
 
+    const handleUpdateActiveBill = async (infoBill) => {
+        Swal.fire({
+            title: `Do you want to update IsDelivered  bill of ${infoBill.phoneNumber} ?`,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const _fetch = async () => {
+                    try {
+                        let Res = await handleApi(
+                            handleUpdateActiveBillService,
+                            infoBill.uuid
+                        );
+
+                        if (Res.errorCode === 0) {
+                            Swal.fire({
+                                icon: "success",
+                                title: `update  successfully`,
+                            });
+                            handleReload();
+                        }
+                    } catch (err) {
+                        console.log(err);
+                        Swal.fire({
+                            icon: "error",
+                            title: err.response.data.message,
+                        });
+                    }
+                };
+                _fetch();
+            }
+        });
+    };
+
     const handleChangePagination = (index) => {
         handleChangePage(index);
     };
@@ -74,7 +109,7 @@ export default function ManageBill() {
                         <th className={cx("th-stand")}>Stand</th>
                         <th className={cx("th-email")}>email</th>
                         <th className={cx("th-phone")}>Phone</th>
-                        <th className={cx("th-price")}>Price</th>
+                        <th className={cx("th-price ")}>Price</th>
                         <th className={cx("th-address")}>Address</th>
                         <th className={cx("th-city")}>City</th>
                         <th className={cx("th-country")}>Country</th>
@@ -119,6 +154,9 @@ export default function ManageBill() {
                                                 className={cx(
                                                     "btn-notDelivered"
                                                 )}
+                                                onClick={() =>
+                                                    handleUpdateActiveBill(item)
+                                                }
                                             >
                                                 IsDelivered
                                             </button>
@@ -127,6 +165,9 @@ export default function ManageBill() {
                                                 className={cx(
                                                     "btn-notDelivered"
                                                 )}
+                                                onClick={() =>
+                                                    handleUpdateActiveBill(item)
+                                                }
                                             >
                                                 IsDelivered
                                             </button>

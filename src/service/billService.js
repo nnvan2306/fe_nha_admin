@@ -7,3 +7,7 @@ export const handleDeleteBilllService = (uuid) => {
 export const handleGetBillService = ({ page, pageSize }) => {
     return axios.get(`/get-bill?page=${page}&pageSize=${pageSize}`);
 };
+
+export const handleUpdateActiveBillService = (uuid) => {
+    return axios.patch(`/update-active-bill?uuid=${uuid}`);
+};
