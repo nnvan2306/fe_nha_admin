@@ -10,6 +10,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { handleApi } from "../../../../service/handleApi";
 import { Pagination } from "antd";
+import moment from "moment";
 
 const cx = classNames.bind(styles);
 export default function ManageBill() {
@@ -70,9 +71,12 @@ export default function ManageBill() {
             if (result.isConfirmed) {
                 const _fetch = async () => {
                     try {
+                        let dataBuider = {
+                            uuid: infoBill.uuid,
+                        };
                         let Res = await handleApi(
                             handleUpdateActiveBillService,
-                            infoBill.uuid
+                            dataBuider
                         );
 
                         if (Res.errorCode === 0) {
@@ -98,6 +102,8 @@ export default function ManageBill() {
     const handleChangePagination = (index) => {
         handleChangePage(index);
     };
+
+    console.log(data);
 
     return (
         <div className={cx("form-bill")}>
@@ -125,8 +131,14 @@ export default function ManageBill() {
                             return (
                                 <tr key={index}>
                                     <td className={cx("td-match")}>Match</td>
-                                    <td className={cx("td-date")}>Date</td>
-                                    <td className={cx("td-stand")}>Stand</td>
+                                    <td className={cx("td-date")}>
+                                        {moment(
+                                            item.Ticket.Calendar.date
+                                        ).format("DD/MM/YYYY")}
+                                    </td>
+                                    <td className={cx("td-stand")}>
+                                        {item.Ticket.name}
+                                    </td>
                                     <td className={cx("td-email")}>
                                         {item.email}
                                     </td>
@@ -134,7 +146,7 @@ export default function ManageBill() {
                                         {item.phoneNumber}
                                     </td>
                                     <td className={cx("td-price")}>
-                                        {item.price}
+                                        {item.price} (VND)
                                     </td>
                                     <td className={cx("td-address")}>
                                         {item.address}
@@ -146,10 +158,18 @@ export default function ManageBill() {
                                         {item.country}
                                     </td>
                                     <td className={cx("td-isDelivered")}>
-                                        IsDelivered
+                                        {item.isDelivered ? (
+                                            <span className="text-success">
+                                                true
+                                            </span>
+                                        ) : (
+                                            <span className="text-danger">
+                                                false
+                                            </span>
+                                        )}
                                     </td>
                                     <td className={cx("td-action")}>
-                                        {item.address ? (
+                                        {item.isDelivered ? (
                                             <button
                                                 className={cx(
                                                     "btn-notDelivered"
@@ -158,18 +178,16 @@ export default function ManageBill() {
                                                     handleUpdateActiveBill(item)
                                                 }
                                             >
-                                                IsDelivered
+                                                Not Delivery
                                             </button>
                                         ) : (
                                             <button
-                                                className={cx(
-                                                    "btn-notDelivered"
-                                                )}
+                                                className={cx("btn-delivered")}
                                                 onClick={() =>
                                                     handleUpdateActiveBill(item)
                                                 }
                                             >
-                                                IsDelivered
+                                                Delivered
                                             </button>
                                         )}
 

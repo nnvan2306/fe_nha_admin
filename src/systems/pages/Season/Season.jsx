@@ -27,6 +27,7 @@ export default function Season() {
         <div className={cx("form-season")}>
             <div className={cx("control-season")}>
                 <p>Premier League</p>
+
                 <div className={cx("button-swap")}>
                     <button onClick={handleNavigate}>
                         {handleCompare()
