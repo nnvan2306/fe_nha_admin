@@ -1,155 +1,183 @@
 import classNames from "classnames/bind";
 import styles from "./Home.module.scss";
-import Header from "../header/Header";
-import { Route, Routes, useLocation } from "react-router-dom";
-import Season from "../../pages/Season/Season";
+import Sidebar from "../sidebar/Sidebar";
+import { Route, Routes } from "react-router-dom";
 import { RouterDTO } from "../../../utils/routes.dto";
-import Team from "../../pages/Team/Team";
-import Player from "../../pages/Player/Player";
-import Statistical from "../../pages/Statistical/Statistical";
-import Rating from "../../pages/Rating/Rating";
-import { BASE_URL } from "../../../utils/constants";
-import Match from "../../pages/Match/Match";
-import Stadium from "../../pages/Stadium/Stadium";
-import Calendar from "../../pages/Calendar/Calendar";
-import Stand from "../../pages/Stand/Stand";
-import Bill from "../../pages/Bill/Bill";
+import ManageSeason from "../../pages/Season/ManageSeason/ManageSeason";
+import ManageTeam from "../../pages/Team/ManageTeam/ManageTeam";
+import ManagePlayer from "../../pages/Player/ManagePlayer/ManagePlayer";
+import ManageStatistical from "../../pages/Statistical/ManageStatistical/ManageStatistical";
+import ManageRating from "../../pages/Rating/ManageRating/ManageRating";
+import ManageMatch from "../../pages/Match/ManageMatch/ManageMatch";
+import ManageStadium from "../../pages/Stadium/ManageStadium/ManageStadium";
+import ManageStand from "../../pages/Stand/ManageStand/ManageStand";
+import ManageCalendar from "../../pages/Calendar/ManageCalendar/ManageCalendar";
+import ManageBill from "../../pages/Bill/ManageBill/ManageBill";
+import ControlSwap from "../ControlSwap/ControlSwap";
+import CreateSeason from "../../pages/Season/CreateSeason/CreateSeason";
+import CreateTeam from "../../pages/Team/CreateTeam/CreateTeam";
+import CreatePlayer from "../../pages/Player/CreatePlayer/CreatePlayer";
+import CreateStatistical from "../../pages/Statistical/CreateStatistical/CreateStatistical";
+import CreateRating from "../../pages/Rating/CreateRating/CreateRating";
+import CreateMatch from "../../pages/Match/CreateMatch/CreateMatch";
+import CreateStadium from "../../pages/Stadium/CreateStadium/CreateStadium";
+import CreateStand from "../../pages/Stand/CreateStand/CreateStand";
+import CreateCalendar from "../../pages/Calendar/CreateCalendar/CreateCalendar";
 
 const cx = classNames.bind(styles);
 
-const handleViewThumbnails = (path) => {
-    if (path === "/") {
-        return (
-            <img
-                className={cx("form-img-thumbnails", "animation-opacity")}
-                src={`${BASE_URL}/images/nha2.jpg`}
-            ></img>
-        );
-    }
-    const rePath = path.split("/*")[0];
-    if (rePath === "/season") {
-        return (
-            <img
-                className={cx("form-img-thumbnails", "animation-bottom-top")}
-                src={`${BASE_URL}/images/season.jpg`}
-            ></img>
-        );
-    } else if (rePath === "/team") {
-        return (
-            <img
-                className={cx("form-img-thumbnails", "animation-right-left")}
-                src={`${BASE_URL}/images/team.jpg`}
-            ></img>
-        );
-    } else if (rePath === "/player") {
-        return (
-            <img
-                className={cx("form-img-thumbnails", "animation-left-right")}
-                src={`${BASE_URL}/images/player.jpg`}
-            ></img>
-        );
-    } else if (rePath === "/match") {
-        return (
-            <img
-                className={cx("form-img-thumbnails", "animation-top-bottom")}
-                src={`${BASE_URL}/images/match.jpg`}
-            ></img>
-        );
-    } else if (rePath === "/rating") {
-        return (
-            <img
-                className={cx("form-img-thumbnails", "animation-top-bottom")}
-                src={`${BASE_URL}/images/rating.jpg`}
-            ></img>
-        );
-    } else if (rePath === "/stadium") {
-        return (
-            <img
-                className={cx("form-img-thumbnails", "animation-top-bottom")}
-                src={`${BASE_URL}/images/stadium.jpg`}
-            ></img>
-        );
-    } else if (rePath === "/stand") {
-        return (
-            <img
-                className={cx("form-img-thumbnails", "animation-top-bottom")}
-                src={`${BASE_URL}/images/stand.png`}
-            ></img>
-        );
-    } else if (rePath === "/calendar") {
-        return (
-            <img
-                className={cx("form-img-thumbnails", "animation-top-bottom")}
-                src={`${BASE_URL}/images/calendar.png`}
-            ></img>
-        );
-    } else if (rePath === "/bill") {
-        return (
-            <img
-                className={cx("form-img-thumbnails", "animation-top-bottom")}
-                src={`${BASE_URL}/images/bill.png`}
-            ></img>
-        );
-    } else {
-        return <></>;
-    }
-};
-
 export default function Home() {
-    const location = useLocation().pathname;
-
     return (
         <div className={cx("form-main")}>
-            <div className={cx("form-header")}>
-                <Header />
+            <div className={cx("sibar")}>
+                <Sidebar />
             </div>
 
-            {handleViewThumbnails(location)}
-
             <div className={cx("form-content")}>
-                <Routes>
-                    <Route
-                        path={RouterDTO.season.manageSeason}
-                        element={<Season />}
-                    />
-                    <Route
-                        path={RouterDTO.team.manageTeam}
-                        element={<Team />}
-                    />
-                    <Route
-                        path={RouterDTO.player.managePlayer}
-                        element={<Player />}
-                    />
-                    <Route
-                        path={RouterDTO.statistical.manageStatistical}
-                        element={<Statistical />}
-                    />
-                    <Route
-                        path={RouterDTO.rating.manageRating}
-                        element={<Rating />}
-                    />
-                    <Route
-                        path={RouterDTO.match.manageMatch}
-                        element={<Match />}
-                    />
-                    <Route
-                        path={RouterDTO.stadium.manageStadium}
-                        element={<Stadium />}
-                    />
-                    <Route
-                        path={RouterDTO.stand.manageStand}
-                        element={<Stand />}
-                    />
+                <div className={cx("control-content")}>
+                    <ControlSwap />
+                </div>
+                <div className={cx("detail-content")}>
+                    <Routes>
+                        {/* season */}
 
-                    <Route
-                        path={RouterDTO.calendar.manageCalendar}
-                        element={<Calendar />}
-                    />
-                    <Route
-                        path={RouterDTO.bill.manageBill}
-                        element={<Bill />}
-                    />
-                </Routes>
+                        <Route
+                            path={RouterDTO.season.allSeason}
+                            element={<ManageSeason />}
+                        />
+                        <Route
+                            path={RouterDTO.season.create}
+                            element={<CreateSeason />}
+                        />
+
+                        {/* team */}
+
+                        <Route
+                            path={RouterDTO.team.allTeam}
+                            element={<ManageTeam />}
+                        />
+                        <Route
+                            path={RouterDTO.team.create}
+                            element={<CreateTeam />}
+                        />
+                        <Route
+                            path={RouterDTO.team.updateTeam}
+                            element={<CreateTeam />}
+                        />
+
+                        {/* player */}
+
+                        <Route
+                            path={RouterDTO.player.allPlayer}
+                            element={<ManagePlayer />}
+                        />
+                        <Route
+                            path={RouterDTO.player.create}
+                            element={<CreatePlayer />}
+                        />
+                        <Route
+                            path={RouterDTO.player.updatePlayer}
+                            element={<CreatePlayer />}
+                        />
+
+                        {/* statistical */}
+
+                        <Route
+                            path={RouterDTO.statistical.allStatistical}
+                            element={<ManageStatistical />}
+                        />
+                        <Route
+                            path={RouterDTO.statistical.create}
+                            element={<CreateStatistical />}
+                        />
+                        <Route
+                            path={RouterDTO.statistical.update}
+                            element={<CreateStatistical />}
+                        />
+
+                        {/* rating */}
+
+                        <Route
+                            path={RouterDTO.rating.allRating}
+                            element={<ManageRating />}
+                        />
+                        <Route
+                            path={RouterDTO.rating.create}
+                            element={<CreateRating />}
+                        />
+                        <Route
+                            path={RouterDTO.rating.update}
+                            element={<CreateRating />}
+                        />
+
+                        {/* match */}
+
+                        <Route
+                            path={RouterDTO.match.allMatch}
+                            element={<ManageMatch />}
+                        />
+                        <Route
+                            path={RouterDTO.match.create}
+                            element={<CreateMatch />}
+                        />
+                        <Route
+                            path={RouterDTO.match.updateMatch}
+                            element={<CreateMatch />}
+                        />
+
+                        {/* stadium */}
+
+                        <Route
+                            path={RouterDTO.stadium.allStadium}
+                            element={<ManageStadium />}
+                        />
+                        <Route
+                            path={RouterDTO.stadium.create}
+                            element={<CreateStadium />}
+                        />
+                        <Route
+                            path={RouterDTO.stadium.update}
+                            element={<CreateStadium />}
+                        />
+
+                        {/* stand */}
+
+                        <Route
+                            path={RouterDTO.stand.allStand}
+                            element={<ManageStand />}
+                        />
+                        <Route
+                            path={RouterDTO.stand.create}
+                            element={<CreateStand />}
+                        />
+                        <Route
+                            path={RouterDTO.stand.update}
+                            element={<CreateStand />}
+                        />
+
+                        {/* calendar */}
+
+                        <Route
+                            path={RouterDTO.calendar.allCalendar}
+                            element={<ManageCalendar />}
+                        />
+                        <Route
+                            path={RouterDTO.calendar.create}
+                            element={<CreateCalendar />}
+                        />
+                        <Route
+                            path={RouterDTO.calendar.update}
+                            element={<CreateCalendar />}
+                        />
+
+                        {/* bill */}
+
+                        <Route
+                            path={RouterDTO.bill.allBill}
+                            element={<ManageBill />}
+                        />
+                    </Routes>
+                </div>
             </div>
         </div>
     );

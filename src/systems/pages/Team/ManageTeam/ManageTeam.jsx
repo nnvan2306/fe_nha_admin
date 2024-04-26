@@ -10,7 +10,6 @@ import { useState } from "react";
 import usePagination from "../../../../hooks/usePagination";
 import { BASE_URL } from "../../../../utils/constants";
 import { useNavigate } from "react-router-dom";
-import { RouterDTO } from "../../../../utils/routes.dto";
 import { handleApi } from "../../../../service/handleApi";
 
 const cx = classNames.bind(styles);
@@ -34,10 +33,6 @@ export default function ManageTeam() {
 
     const handleReload = () => {
         setIsReload(!isReload);
-    };
-
-    const handleToManagePlayer = () => {
-        navigate(RouterDTO.team.managePlayerOfTeam);
     };
 
     const handleDelete = (data) => {
@@ -83,9 +78,7 @@ export default function ManageTeam() {
                             <th className={cx("col-logo")}>Logo</th>
                             <th className={cx("col-name")}>Team</th>
                             <th className={cx("col-des")}>Description</th>
-                            <th className={cx("col-manage-player")}>
-                                Manage Player
-                            </th>
+
                             <th className={cx("col-active")}>Active</th>
                         </tr>
                     </thead>
@@ -112,18 +105,6 @@ export default function ManageTeam() {
                                                     __html: item.description,
                                                 }}
                                             ></div>
-                                        </td>
-
-                                        <td className={cx("td-manage-player")}>
-                                            <div>
-                                                <button
-                                                    onClick={
-                                                        handleToManagePlayer
-                                                    }
-                                                >
-                                                    To manage
-                                                </button>
-                                            </div>
                                         </td>
 
                                         <td>

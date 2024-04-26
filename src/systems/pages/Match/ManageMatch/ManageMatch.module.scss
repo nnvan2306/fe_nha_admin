@@ -16,13 +16,13 @@
     }
 
     .form-table {
-        width     : 100%;
-        margin-top: 50px;
-        box-shadow: var(--box-shadow-div);
-
-        max-height: 700px;
-        overflow  : hidden;
-        overflow-y: auto;
+        width        : 100%;
+        margin-top   : 50px;
+        box-shadow   : var(--box-shadow-div);
+        max-height   : 700px;
+        overflow     : hidden;
+        overflow-y   : auto;
+        border-radius: 10px;
 
         &::-webkit-scrollbar {
             display: none;
@@ -30,8 +30,12 @@
 
 
         table {
-            width    : 100%;
-            // border: 1px solid #000;
+            width          : 100%;
+            height         : 100%;
+            overflow       : hidden;
+            border-collapse: separate;
+            border-radius  : 10px;
+            border-spacing : 0;
 
             thead {
 
@@ -40,6 +44,14 @@
                     border    : 1px solid #000;
                     padding   : 10px;
                     font-size : 20px;
+
+                    &:first-child {
+                        border-top-left-radius: 10px;
+                    }
+
+                    &:last-child {
+                        border-top-right-radius: 10px;
+                    }
                 }
 
 
@@ -68,119 +80,135 @@
 
             tbody {
 
-                td {
-                    border: 1px solid #ccc;
+                tr {
+                    &:last-child {
+                        td {
+                            &:first-child {
+                                border-bottom-left-radius: 10px;
+                            }
 
-                }
+                            &:last-child {
+                                border-bottom-right-radius: 10px;
+                            }
+                        }
+                    }
 
-                .td-team {
-                    padding: 20px;
-                    width  : 15% !important;
+                    td {
+                        border: 1px solid #ccc;
 
-                    .col-text {
-                        display        : flex;
-                        align-items    : center;
-                        justify-content: center;
+                    }
+
+                    .td-team {
+                        padding: 20px;
+                        width  : 15% !important;
+
+                        .col-text {
+                            display        : flex;
+                            align-items    : center;
+                            justify-content: center;
+
+                            p {
+                                text-align : center;
+                                font-size  : 30px;
+                                font-weight: 500;
+                            }
+                        }
+
+                        .logo-team {
+                            width          : 70%;
+                            height         : 100px;
+                            margin-left    : 50%;
+                            transform      : translateX(-50%);
+                            display        : flex;
+                            align-items    : center;
+                            justify-content: center;
+
+                            img {
+                                width     : 100% !important;
+                                object-fit: cover;
+                            }
+                        }
+                    }
+
+                    .td-score {
+                        width: 10%;
 
                         p {
-                            text-align : center;
-                            font-size  : 30px;
+                            font-size  : 25px;
                             font-weight: 500;
+                            text-align : center;
                         }
                     }
 
-                    .logo-team {
-                        width          : 70%;
-                        height         : 100px;
-                        margin-left    : 50%;
-                        transform      : translateX(-50%);
-                        display        : flex;
-                        align-items    : center;
-                        justify-content: center;
+                    .td-video {
+                        width  : 20%;
+                        padding: 10px;
 
-                        img {
-                            width     : 100% !important;
-                            object-fit: cover;
+                        video {
+                            width        : 80%;
+                            border-radius: 10px;
+                            box-shadow   : var(--box-shadow-div);
+                            margin-left  : 50%;
+                            transform    : translateX(-50%);
                         }
                     }
-                }
 
-                .td-score {
-                    width: 10%;
+                    .td-describe {
+                        width  : 20%;
+                        padding: 0 10px !important;
 
-                    p {
-                        font-size  : 25px;
-                        font-weight: 500;
-                        text-align : center;
-                    }
-                }
-
-                .td-video {
-                    width  : 20%;
-                    padding: 10px;
-
-                    video {
-                        width        : 80%;
-                        border-radius: 10px;
-                        box-shadow   : var(--box-shadow-div);
-                        margin-left  : 50%;
-                        transform    : translateX(-50%);
-                    }
-                }
-
-                .td-describe {
-                    width  : 20%;
-                    padding: 0 10px !important;
-
-                    p {
-                        font-size  : 20px;
-                        font-weight: 500;
-
-                        span {
+                        p {
                             font-size  : 20px;
-                            font-weight: 400;
+                            font-weight: 500;
+
+                            span {
+                                font-size  : 20px;
+                                font-weight: 400;
+                            }
                         }
                     }
-                }
 
-                .td-addScored {
-                    width: 10%;
+                    .td-addScored {
+                        width: 10%;
 
-                    .button-add {
-                        width      : 70%;
-                        margin-left: 50%;
-                        transform  : translateX(-50%);
+                        .button-add {
+                            width      : 70%;
+                            margin-left: 50%;
+                            transform  : translateX(-50%);
+                        }
+                    }
+
+                    .td-action {
+                        width  : 25%;
+                        padding: 20px;
+
+                        button {
+                            width  : 30%;
+                            margin : 0 10%;
+                            padding: 8px 10px;
+                        }
+
+                        .btn-update {
+
+                            border          : none;
+                            border-radius   : 10px;
+                            background-color: orange;
+                            color           : #fff;
+                            font-size       : 20px;
+                        }
+
+                        .btn-delete {
+                            border          : none;
+                            border-radius   : 10px;
+                            background-color: red;
+                            color           : #fff;
+                            font-size       : 20px;
+                        }
+
                     }
                 }
 
-                .td-action {
-                    width  : 25%;
-                    padding: 20px;
 
-                    button {
-                        width  : 30%;
-                        margin : 0 10%;
-                        padding: 8px 10px;
-                    }
-
-                    .btn-update {
-
-                        border          : none;
-                        border-radius   : 10px;
-                        background-color: orange;
-                        color           : #fff;
-                        font-size       : 20px;
-                    }
-
-                    .btn-delete {
-                        border          : none;
-                        border-radius   : 10px;
-                        background-color: red;
-                        color           : #fff;
-                        font-size       : 20px;
-                    }
-
-                }
             }
 
 

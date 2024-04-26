@@ -129,12 +129,12 @@ export default function ManageCalendar() {
             <table>
                 <thead>
                     <tr>
-                        <td>Host Team</td>
-                        <td>Guest Team</td>
-                        <td>Stadium</td>
-                        <td>Date</td>
-                        <td>Hour</td>
-                        <td className={cx("td-action")}>Action</td>
+                        <th>Host Team</th>
+                        <th>Guest Team</th>
+                        <th>Stadium</th>
+                        <th>Date</th>
+                        <th>Hour</th>
+                        <th className={cx("th-action")}>Action</th>
                     </tr>
                 </thead>
                 <tbody>

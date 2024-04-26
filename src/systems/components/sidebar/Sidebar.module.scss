@@ -1,0 +1,77 @@
+.sibar {
+    margin-left     : 2px;
+    width           : 100%;
+    height          : 100%;
+    overflow        : auto;
+    background-color: #f4f4f4;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    .control-auth {
+        height : 70px;
+        padding: 10px;
+
+        .avatar {
+            width           : 50px;
+            height          : 50px;
+            border-radius   : 100%;
+            background-color: #ccc;
+            margin-left     : 50%;
+            transform       : translateX(-50%);
+        }
+    }
+
+
+    .form-item {
+        padding: 10px;
+        width  : 100%;
+
+        &:hover {
+            cursor          : pointer;
+            background-color: #fff;
+
+            .icon-item {
+                i {
+                    color: blue;
+                }
+            }
+        }
+
+        p {
+            margin    : 0px;
+            text-align: center;
+        }
+
+        .icon-item {
+            i {
+                font-size: 20px;
+            }
+        }
+
+        .header-item {
+            font-size: 12px;
+            opacity  : 0.8;
+        }
+    }
+}
+
+.active {
+    color       : blue;
+    border-left : 3px solid blue;
+    padding-left: 8px !important;
+}
+
+.tooltip-text {
+    // padding         : 10px 15px;
+    // background-color: #fff;
+    // display         : flex;
+    // justify-content : center;
+    // align-items     : center;
+
+    p {
+        color : #fff;
+        margin: 20px;
+    }
+}

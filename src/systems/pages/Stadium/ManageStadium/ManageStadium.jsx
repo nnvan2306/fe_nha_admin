@@ -65,10 +65,10 @@ export default function ManageStadium() {
             <table>
                 <thead>
                     <tr className={cx("tr-head")}>
-                        <td>Name</td>
-                        <td>Location</td>
-                        <td>Image</td>
-                        <td>Action</td>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Image</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
