@@ -102,6 +102,7 @@ export default function CreateSeason() {
                 <div className={cx("form-markdown")}>
                     <label>Description</label>
                     <MdEditor
+                        className={cx("markdown")}
                         value={markdown.text}
                         style={{ height: "500px" }}
                         // onImageUpload={handleUploadImageMarkdown}

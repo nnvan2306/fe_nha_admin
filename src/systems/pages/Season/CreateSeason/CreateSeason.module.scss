@@ -1,5 +1,6 @@
 .form-create {
-    margin-top: 30px;
+    margin-top    : 30px;
+    padding-bottom: 150px;
 
     .form-input {
         width      : 80%;
@@ -22,6 +23,7 @@
     }
 
     .form-markdown {
+
         label {
             margin-bottom: 15px;
             font-size    : 20px;
@@ -32,6 +34,11 @@
         width      : 90%;
         margin-left: 50%;
         transform  : translateX(-50%);
+
+        .markdown {
+            box-shadow: var(--box-shadow-div);
+
+        }
     }
 
     .button-Create {

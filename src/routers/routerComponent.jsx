@@ -12,9 +12,9 @@ export default function RouterComponent() {
                 <Route
                     path={RouterDTO.home}
                     element={
-                        <Home />
-                        // <PrivateRouter>
-                        // </PrivateRouter>
+                        <PrivateRouter>
+                            <Home />
+                        </PrivateRouter>
                     }
                 ></Route>
 
