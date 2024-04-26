@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./Home.module.scss";
 import Sidebar from "../sidebar/Sidebar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { RouterDTO } from "../../../utils/routes.dto";
 import ManageSeason from "../../pages/Season/ManageSeason/ManageSeason";
 import ManageTeam from "../../pages/Team/ManageTeam/ManageTeam";
@@ -23,10 +23,13 @@ import CreateMatch from "../../pages/Match/CreateMatch/CreateMatch";
 import CreateStadium from "../../pages/Stadium/CreateStadium/CreateStadium";
 import CreateStand from "../../pages/Stand/CreateStand/CreateStand";
 import CreateCalendar from "../../pages/Calendar/CreateCalendar/CreateCalendar";
+import Setting from "../../pages/Setting/Setting";
 
 const cx = classNames.bind(styles);
 
 export default function Home() {
+    const location = useLocation().pathname;
+
     return (
         <div className={cx("form-main")}>
             <div className={cx("sibar")}>
@@ -34,11 +37,23 @@ export default function Home() {
             </div>
 
             <div className={cx("form-content")}>
-                <div className={cx("control-content")}>
-                    <ControlSwap />
-                </div>
+                {location === RouterDTO.setting.manageSetting ? (
+                    <></>
+                ) : (
+                    <div className={cx("control-content")}>
+                        <ControlSwap />
+                    </div>
+                )}
+
                 <div className={cx("detail-content")}>
                     <Routes>
+                        {/* setting */}
+
+                        <Route
+                            path={RouterDTO.setting.manageSetting}
+                            element={<Setting />}
+                        />
+
                         {/* season */}
 
                         <Route

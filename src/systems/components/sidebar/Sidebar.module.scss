@@ -64,14 +64,42 @@
 }
 
 .tooltip-text {
-    // padding         : 10px 15px;
-    // background-color: #fff;
-    // display         : flex;
-    // justify-content : center;
-    // align-items     : center;
 
     p {
         color : #fff;
         margin: 20px;
+    }
+}
+
+.form-auth {
+    width           : 100px;
+    height          : 80px;
+    background-color: #fff;
+    box-shadow      : var(--box-shadow-div);
+
+    .form-item {
+        height: 50%;
+
+
+        :hover {
+            cursor          : pointer;
+            background-color: #ccc;
+        }
+
+        &:first-child {
+            border-bottom: 1px solid #ccc;
+        }
+
+
+
+        p {
+            color      : #000;
+            line-height: 40px;
+
+            i {
+                margin: 10px;
+            }
+
+        }
     }
 }

@@ -65,4 +65,8 @@ export const RouterDTO = Object.freeze({
         allBill: "/bill/all",
         Update: "/bill/update",
     },
+
+    setting: {
+        manageSetting: "/setting",
+    },
 });

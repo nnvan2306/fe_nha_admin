@@ -3,21 +3,63 @@ import styles from "./Sidebar.module.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../utils/routes.dto";
 import { Tooltip } from "antd";
+import { handleLogoutService } from "../../../service/authService";
+import { useDispatch } from "react-redux";
+import { logoutAction } from "../../../features/auth/authSlice";
 
 const cx = classNames.bind(styles);
 
 export default function Sidebar() {
     const location = useLocation().pathname;
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleNavigate = (link) => {
         navigate(link);
     };
 
+    const handleLogout = async () => {
+        dispatch(logoutAction());
+        await handleLogoutService();
+        navigate(RouterDTO.auth.login);
+    };
+
+    const handleToSetting = () => {
+        navigate(RouterDTO.setting.manageSetting);
+    };
+
     return (
         <div className={cx("sibar")}>
             <div className={cx("control-auth")}>
-                <div className={cx("avatar")}></div>
+                <Tooltip
+                    placement="rightTop"
+                    trigger="click"
+                    className="bg-[#000]"
+                    title={
+                        <div className={cx("form-auth")}>
+                            <div
+                                className={cx("form-item")}
+                                onClick={() => handleToSetting()}
+                            >
+                                <p>
+                                    <i className="bi bi-gear"></i> Setting
+                                </p>
+                            </div>
+                            <div
+                                className={cx("form-item")}
+                                onClick={() => handleLogout()}
+                            >
+                                {" "}
+                                <p>
+                                    <i className="bi bi-box-arrow-right"></i>{" "}
+                                    Logout
+                                </p>
+                            </div>
+                        </div>
+                    }
+                >
+                    <div className={cx("avatar")}></div>
+                </Tooltip>
             </div>
 
             <Tooltip
