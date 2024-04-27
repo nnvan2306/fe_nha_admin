@@ -22,12 +22,16 @@
         align-items    : center;
 
         .form-input {
-            width: 50%;
+            width      : 50%;
+            margin-left: 50%;
+            transform  : translateX(-50%);
 
-            label {}
+            label {
+                margin: 0 0 10px 10px;
+            }
 
             input {
-                width        : 50%;
+                width        : 90%;
                 border-radius: 10px;
                 padding      : 8px 10px;
                 border       : 1px solid #ccc;
@@ -35,8 +39,13 @@
             }
 
             i {
-                margin-left: 10px;
-                cursor     : pointer;
+                margin-left: 20px;
+                font-size  : 20px;
+
+                &:hover {
+                    cursor : pointer;
+                    opacity: 0.7;
+                }
             }
         }
     }
