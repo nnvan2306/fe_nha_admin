@@ -4,6 +4,7 @@ const initState = {
     isLogin: false,
     name: "",
     id: 0,
+    avatar: "",
     token: null,
 };
 
@@ -19,6 +20,7 @@ export const authSlice = createSlice({
             stateClone.isLogin = true;
             stateClone.name = action.payload.name;
             stateClone.id = action.payload.id;
+            stateClone.avatar = action.payload.avatar;
             stateClone.token = action.payload.token;
 
             return stateClone;
@@ -30,12 +32,14 @@ export const authSlice = createSlice({
 
             stateClone.isLogin = false;
             stateClone.name = "";
-            (stateClone.id = 0), (stateClone.token = null);
+            stateClone.id = 0;
+            stateClone.avatar = "";
+            stateClone.token = null;
 
             return stateClone;
         },
 
-        updateUser(state, action) {
+        updateName(state, action) {
             const stateClone = {
                 ...state,
             };
@@ -44,10 +48,21 @@ export const authSlice = createSlice({
 
             return stateClone;
         },
+
+        updateAvatar(state, action) {
+            const stateClone = {
+                ...state,
+            };
+
+            stateClone.avatar = action.payload.avatar;
+
+            return stateClone;
+        },
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { loginSuccess, logoutAction, updateUser } = authSlice.actions;
+export const { loginSuccess, logoutAction, updateName, updateAvatar } =
+    authSlice.actions;
 
 export default authSlice.reducer;
