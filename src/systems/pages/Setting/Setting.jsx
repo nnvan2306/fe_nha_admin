@@ -3,8 +3,11 @@ import styles from "./Setting.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState } from "react";
 import Swal from "sweetalert2";
-import { handleUpdateUserService } from "../../../service/authService";
-import { updateName } from "../../../features/auth/authSlice";
+import {
+    handleUpdateAvatarService,
+    handleUpdateUserService,
+} from "../../../service/authService";
+import { updateAvatar, updateName } from "../../../features/auth/authSlice";
 import { Modal } from "antd";
 import handleValidateImage from "../../../helps/handleValidate";
 
@@ -24,6 +27,7 @@ export default function Setting() {
     const refAvatar = useRef(null);
 
     const id = useSelector((state) => state.authSlice.id);
+    const avatarDefault = useSelector((state) => state.authSlice.avatar);
     const dispatch = useDispatch();
 
     const showModalName = () => {
@@ -93,7 +97,40 @@ export default function Setting() {
         }
     };
 
-    const handleUpdateAvatar = async () => {};
+    const handleUpdateAvatar = async () => {
+        if (!fileAvatar) {
+            Swal.fire({
+                icon: "warning",
+                title: "please enter avatar !",
+            });
+            return;
+        }
+
+        let dataBuider = {
+            avatar: avatarDefault,
+            avatarNew: fileAvatar,
+        };
+
+        try {
+            let res = await handleUpdateAvatarService(dataBuider);
+
+            if (res.errorCode === 0) {
+                Swal.fire({
+                    icon: "success",
+                    title: "update success",
+                });
+
+                dispatch(updateAvatar({ avatar: res.data }));
+                refAvatar.current.value = null;
+            }
+        } catch (err) {
+            console.log(err);
+            Swal.fire({
+                icon: "error",
+                title: "err from server , please try again !",
+            });
+        }
+    };
 
     const handleRemoveAvatar = () => {};
 

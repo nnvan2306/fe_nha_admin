@@ -31,3 +31,7 @@ export const handleCheckRoleService = () => {
 export const handleUpdateUserService = (data) => {
     return axios.put("/update-user", data);
 };
+
+export const handleUpdateAvatarService = (data) => {
+    return axios.put("/update-avatar-user", data);
+};
