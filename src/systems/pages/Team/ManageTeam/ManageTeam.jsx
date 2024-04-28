@@ -42,10 +42,8 @@ export default function ManageTeam() {
             confirmButtonText: "Yes",
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("ok");
                 const _fetch = async () => {
                     let Res = await handleApi(deletTeameService, data.code);
-                    console.log(Res);
                     if (Res.errorCode === 0) {
                         Swal.fire({
                             icon: "success",

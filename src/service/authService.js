@@ -27,3 +27,7 @@ export const handleCheckRoleService = () => {
         withCredentials: true,
     });
 };
+
+export const handleUpdateUserService = (data) => {
+    return axios.put("/update-user", data);
+};

@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initState = {
     isLogin: false,
+    name: "",
+    id: 0,
     token: null,
 };
 
@@ -15,6 +17,8 @@ export const authSlice = createSlice({
             };
 
             stateClone.isLogin = true;
+            stateClone.name = action.payload.name;
+            stateClone.id = action.payload.id;
             stateClone.token = action.payload.token;
 
             return stateClone;
@@ -25,7 +29,18 @@ export const authSlice = createSlice({
             };
 
             stateClone.isLogin = false;
-            stateClone.token = null;
+            stateClone.name = "";
+            (stateClone.id = 0), (stateClone.token = null);
+
+            return stateClone;
+        },
+
+        updateUser(state, action) {
+            const stateClone = {
+                ...state,
+            };
+
+            stateClone.name = action.payload.name;
 
             return stateClone;
         },
@@ -33,6 +48,6 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { loginSuccess, logoutAction } = authSlice.actions;
+export const { loginSuccess, logoutAction, updateUser } = authSlice.actions;
 
 export default authSlice.reducer;
