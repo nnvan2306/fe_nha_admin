@@ -213,10 +213,7 @@ export default function Setting() {
 
                         {avatarPreview ? (
                             fileAvatar ? (
-                                <img
-                                    src={avatarPreview}
-                                    alt="avatar1111111111111"
-                                ></img>
+                                <img src={avatarPreview} alt="avatar"></img>
                             ) : (
                                 <img
                                     src={`${BASE_URL}${avatarDefault}`}
