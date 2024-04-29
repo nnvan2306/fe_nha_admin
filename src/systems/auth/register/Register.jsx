@@ -10,6 +10,7 @@ import {
 } from "../../../service/authService";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../../features/auth/authSlice";
+import { RouterDTO } from "../../../utils/routes.dto";
 
 const cx = classNames.bind(styles);
 const path = "/auth/register";
@@ -137,7 +138,7 @@ export default function Register() {
             if (fetch?.errorCode === 0) {
                 reSetValue();
                 dispatch(loginSuccess(fetch?.data));
-                navigate("/");
+                navigate(RouterDTO.season.allSeason);
             }
         } catch (err) {
             console.log(err);

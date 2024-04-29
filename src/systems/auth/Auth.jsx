@@ -6,6 +6,7 @@ import Register from "./register/Register";
 import { useSelector } from "react-redux";
 import { BASE_URL } from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
+import { RouterDTO } from "../../utils/routes.dto";
 
 const cx = classNames.bind(styles);
 
@@ -15,7 +16,7 @@ export default function Auth() {
 
     useEffect(() => {
         if (isLogin) {
-            navigate("/");
+            navigate(RouterDTO.season.allSeason);
         }
     }, [isLogin]);
 

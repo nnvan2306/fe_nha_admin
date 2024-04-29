@@ -7,6 +7,7 @@ import {
     handleLogoutService,
 } from "../../../service/authService";
 import { handleApi } from "../../../service/handleApi";
+import { RouterDTO } from "../../../utils/routes.dto";
 
 // eslint-disable-next-line react/prop-types
 export default function PrivateRouter({ children }) {
@@ -28,7 +29,7 @@ export default function PrivateRouter({ children }) {
                     setIsAdmin(true);
                 } else {
                     await handleDispatchLogoutAndLogOutService();
-                    navigate("/");
+                    navigate(RouterDTO.season.allSeason);
                 }
             } catch (err) {
                 console.log(err);
