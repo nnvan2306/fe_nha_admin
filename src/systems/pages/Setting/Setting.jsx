@@ -125,6 +125,7 @@ export default function Setting() {
                 });
 
                 dispatch(updateAvatar({ avatar: res.data }));
+                setFileAvatar(null);
                 refAvatar.current.value = null;
             }
         } catch (err) {
@@ -212,10 +213,13 @@ export default function Setting() {
 
                         {avatarPreview ? (
                             fileAvatar ? (
-                                <img src={avatarPreview} alt="avatar"></img>
+                                <img
+                                    src={avatarPreview}
+                                    alt="avatar1111111111111"
+                                ></img>
                             ) : (
                                 <img
-                                    src={`${BASE_URL}${avatarPreview}`}
+                                    src={`${BASE_URL}${avatarDefault}`}
                                     alt="avatar"
                                 />
                             )
