@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState } from "react";
 import Swal from "sweetalert2";
 import {
+    handleRemoveAvatarService,
     handleUpdateAvatarService,
     handleUpdateUserService,
 } from "../../../service/authService";
 import { updateAvatar, updateName } from "../../../features/auth/authSlice";
 import { Modal } from "antd";
 import handleValidateImage from "../../../helps/handleValidate";
+import { BASE_URL } from "../../../utils/constants";
 
 const cx = classNames.bind(styles);
 
@@ -26,6 +28,7 @@ export default function Setting() {
 
     const refAvatar = useRef(null);
 
+    const nameDefault = useSelector((state) => state.authSlice.name);
     const id = useSelector((state) => state.authSlice.id);
     const avatarDefault = useSelector((state) => state.authSlice.avatar);
     const dispatch = useDispatch();
@@ -107,8 +110,9 @@ export default function Setting() {
         }
 
         let dataBuider = {
+            id: id,
             avatar: avatarDefault,
-            avatarNew: fileAvatar,
+            file: fileAvatar,
         };
 
         try {
@@ -132,7 +136,37 @@ export default function Setting() {
         }
     };
 
-    const handleRemoveAvatar = () => {};
+    const handleRemoveAvatar = () => {
+        Swal.fire({
+            title: `Do you want remove avatar ?`,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const _fetch = async () => {
+                    let dataBuider = {
+                        id: id,
+                        avatar: avatarDefault,
+                    };
+                    let Res = await handleRemoveAvatarService(dataBuider);
+                    if (Res.errorCode === 0) {
+                        Swal.fire({
+                            icon: "success",
+                            title: `remove successfully`,
+                        });
+                        setAvatarPreview("");
+                        dispatch(updateAvatar({ avatar: "" }));
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: `remove failure !`,
+                        });
+                    }
+                };
+                _fetch();
+            }
+        });
+    };
 
     return (
         <div className={cx("form-setting")}>
@@ -144,7 +178,13 @@ export default function Setting() {
                     Your profile photo will help you personalize your account
                 </p>
                 <div className={cx("form-image")}>
-                    <img src="" alt="" />
+                    {avatarDefault ? (
+                        <img src={`${BASE_URL}${avatarDefault}`} alt="" />
+                    ) : (
+                        <div className={cx("div-img-default")}>
+                            <p>{nameDefault.slice(0, 1).toUpperCase()}</p>
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -171,7 +211,14 @@ export default function Setting() {
                         </div>
 
                         {avatarPreview ? (
-                            <img src={avatarPreview} alt="avatar" />
+                            fileAvatar ? (
+                                <img src={avatarPreview} alt="avatar"></img>
+                            ) : (
+                                <img
+                                    src={`${BASE_URL}${avatarPreview}`}
+                                    alt="avatar"
+                                />
+                            )
                         ) : (
                             <div className={cx("div-img")}>
                                 <p>{name.slice(0, 1).toUpperCase()}</p>

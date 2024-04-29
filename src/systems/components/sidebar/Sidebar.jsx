@@ -4,12 +4,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../utils/routes.dto";
 import { Tooltip } from "antd";
 import { handleLogoutService } from "../../../service/authService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../../../features/auth/authSlice";
+import { BASE_URL } from "../../../utils/constants";
 
 const cx = classNames.bind(styles);
 
 export default function Sidebar() {
+    const avatar = useSelector((state) => state.authSlice.avatar);
+    const name = useSelector((state) => state.authSlice.name);
+
     const location = useLocation().pathname;
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -58,7 +62,13 @@ export default function Sidebar() {
                         </div>
                     }
                 >
-                    <div className={cx("avatar")}></div>
+                    <div className={cx("avatar")}>
+                        {avatar ? (
+                            <img src={`${BASE_URL}${avatar}`} alt="avatar" />
+                        ) : (
+                            <p>{name.slice(0, 1).toUpperCase()}</p>
+                        )}
+                    </div>
                 </Tooltip>
             </div>
 

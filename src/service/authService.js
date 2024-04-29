@@ -29,9 +29,17 @@ export const handleCheckRoleService = () => {
 };
 
 export const handleUpdateUserService = (data) => {
-    return axios.put("/update-user", data);
+    return axios.patch("/update-name-user", data);
 };
 
 export const handleUpdateAvatarService = (data) => {
-    return axios.put("/update-avatar-user", data);
+    return axios.patch("/update-avatar-user", data, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+};
+
+export const handleRemoveAvatarService = (data) => {
+    return axios.patch("/remove-avatar", data);
 };
