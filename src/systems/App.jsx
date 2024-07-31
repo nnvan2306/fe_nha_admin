@@ -4,9 +4,9 @@ import CheckDeviceSingle from "./components/CheckDeviceSingle/CheckDeviceSingle"
 function App() {
     return (
         <>
-            <CheckDeviceSingle>
-                <RouterComponent />
-            </CheckDeviceSingle>
+            <RouterComponent />
+            {/* <CheckDeviceSingle>
+            </CheckDeviceSingle> */}
         </>
     );
 }
