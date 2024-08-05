@@ -21,8 +21,8 @@ export const getPlayerDetailSeasonService = (hostId, guestId) => {
     return axios.get(`/get-player-season?hostId=${hostId}&guestId=${guestId}`);
 };
 
-export const deletePlayerService = (code) => {
-    return axios.delete(`/delete-player?code=${code}`, {
+export const deletePlayerService = (id) => {
+    return axios.delete(`/delete-player?ids=${id}`, {
         withCredentials: true,
     });
 };

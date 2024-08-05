@@ -18,8 +18,8 @@ export const getAllSeasonService = () => {
     });
 };
 
-export const deleteSeasonService = (index) => {
-    return axios.delete(`/delete-season?index=${index}`, {
+export const deleteSeasonService = (id) => {
+    return axios.delete(`/delete-season?id=${id}`, {
         withCredentials: true,
     });
 };
