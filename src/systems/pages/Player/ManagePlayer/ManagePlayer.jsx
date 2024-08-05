@@ -46,10 +46,7 @@ export default function ManagePlayer() {
             if (result.isConfirmed) {
                 const _fetch = async () => {
                     try {
-                        let Res = await handleApi(
-                            deletePlayerService,
-                            data.code
-                        );
+                        let Res = await handleApi(deletePlayerService, data.id);
                         if (Res.errorCode === 0) {
                             Swal.fire({
                                 icon: "success",

@@ -42,7 +42,7 @@ export default function ManageSeason() {
         }).then((result) => {
             if (result.isConfirmed) {
                 const _fetch = async () => {
-                    let Res = await handleApi(deleteSeasonService, data.index);
+                    let Res = await handleApi(deleteSeasonService, data.id);
                     if (Res.errorCode === 0) {
                         Swal.fire({
                             icon: "success",
