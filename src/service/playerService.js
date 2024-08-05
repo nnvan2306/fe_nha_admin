@@ -22,7 +22,7 @@ export const getPlayerDetailSeasonService = (hostId, guestId) => {
 };
 
 export const deletePlayerService = (id) => {
-    return axios.delete(`/delete-player?ids=${id}`, {
+    return axios.delete(`/delete-player?id=${id}`, {
         withCredentials: true,
     });
 };
