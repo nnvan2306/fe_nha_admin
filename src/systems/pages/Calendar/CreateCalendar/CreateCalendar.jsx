@@ -164,6 +164,8 @@ export default function CreateCalendar() {
         setIsLoading(false);
     };
 
+    console.log(location);
+
     return (
         <div className={cx("form-create", "container")}>
             <div className={cx("row")}>
@@ -269,7 +271,7 @@ export default function CreateCalendar() {
                                         : handleCreate
                                 }
                             >
-                                {location === RouterDTO.team.updateTeam
+                                {location === RouterDTO.calendar.update
                                     ? "Edit"
                                     : "Create"}
                             </button>

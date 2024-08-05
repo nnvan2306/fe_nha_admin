@@ -53,7 +53,7 @@
                 .th-total-lost-goal,
                 .th-action {
                     text-align: center;
-                    border    : 1px solid #000;
+                    border    : 1px solid #ccc;
                     padding   : 8px;
                 }
 
@@ -211,6 +211,15 @@
                             background-color: red;
                         }
                     }
+                }
+
+
+                .empty-container {
+                    display        : flex;
+                    justify-content: center;
+                    align-items    : center;
+                    height         : 100px;
+
                 }
             }
         }

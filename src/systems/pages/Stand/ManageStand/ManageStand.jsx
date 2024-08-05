@@ -10,6 +10,7 @@ import {
 import { RouterDTO } from "../../../../utils/routes.dto";
 import { useNavigate, useLocation } from "react-router-dom";
 import { handleApi } from "../../../../service/handleApi";
+import { Empty } from "antd";
 
 const cx = classNames.bind(styles);
 
@@ -130,8 +131,7 @@ export default function ManageStand() {
                     </thead>
 
                     <tbody>
-                        {listStand &&
-                            listStand.length > 0 &&
+                        {listStand && listStand.length > 0 ? (
                             listStand.map((item, index) => {
                                 return (
                                     <tr key={index}>
@@ -188,7 +188,16 @@ export default function ManageStand() {
                                         </td>
                                     </tr>
                                 );
-                            })}
+                            })
+                        ) : (
+                            <tr>
+                                <td colSpan="6">
+                                    <div className="empty-container">
+                                        <Empty style={{ padding: "40px" }} />
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

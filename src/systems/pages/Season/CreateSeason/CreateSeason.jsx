@@ -12,7 +12,6 @@ const cx = classNames.bind(styles);
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
 export default function CreateSeason() {
-    const [code, setCode] = useState(0);
     const [name, setName] = useState("");
     const [markdown, setMarkdown] = useState({
         text: "",
@@ -24,7 +23,7 @@ export default function CreateSeason() {
     }
 
     const handleValidate = () => {
-        if (!code || !name || !markdown.text || !markdown.html) {
+        if (!name || !markdown.text || !markdown.html) {
             Swal.fire({
                 icon: "warning",
                 title: "Please enter complete information !",
@@ -35,7 +34,6 @@ export default function CreateSeason() {
     };
 
     const reSetValue = () => {
-        setCode(0);
         setName("");
         setMarkdown({
             text: "",
@@ -49,7 +47,6 @@ export default function CreateSeason() {
             return;
         }
         let dataBuider = {
-            index: code,
             name: name,
             description: markdown.html,
             des_text: markdown.text,
@@ -75,17 +72,6 @@ export default function CreateSeason() {
     return (
         <div className={cx("form-create", "container")}>
             <div className={cx("row")}>
-                <div className={cx("col-12", "col-md-6")}>
-                    <div className={cx("form-input")}>
-                        <label htmlFor="code">code</label> <br />
-                        <input
-                            type="number"
-                            id="code"
-                            value={code}
-                            onChange={(e) => setCode(e.target.value)}
-                        />
-                    </div>
-                </div>
                 <div className={cx("col-12", "col-md-6")}>
                     <div className={cx("form-input")}>
                         <label htmlFor="name">name</label> <br />

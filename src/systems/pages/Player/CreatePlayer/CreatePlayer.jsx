@@ -22,7 +22,6 @@ const cx = classNames.bind(styles);
 export default function CreatePlayer() {
     const [isLoading, setIsLoading] = useState(false);
     const [id, setId] = useState(0);
-    const [code, setCode] = useState(0);
     const [name, setName] = useState("");
     const [nationality, setNationality] = useState("");
     const [birthday, setBirthday] = useState("");
@@ -49,7 +48,6 @@ export default function CreatePlayer() {
     useEffect(() => {
         if (location === RouterDTO.player.updatePlayer) {
             setId(state.id);
-            setCode(state.code);
             setName(state.name);
             setNationality(state.nationality);
             setBirthday(state.birthday.split("T")[0]);
@@ -87,7 +85,6 @@ export default function CreatePlayer() {
     }, []);
 
     const reSetValue = () => {
-        setCode(0);
         setName("");
         setNationality("");
         setBirthday("");
@@ -127,7 +124,6 @@ export default function CreatePlayer() {
 
     const handleValidate = () => {
         if (
-            !code ||
             !name ||
             !markdown.text ||
             !markdown.html ||
@@ -158,7 +154,6 @@ export default function CreatePlayer() {
             return;
         }
         let dataBuider = {
-            code: code,
             name: name,
             nationality: nationality,
             location: locationPlayer,
@@ -193,7 +188,6 @@ export default function CreatePlayer() {
 
     const handleValidateUpdate = () => {
         if (
-            !code ||
             !name ||
             !markdown.text ||
             !markdown.html ||
@@ -223,7 +217,6 @@ export default function CreatePlayer() {
 
         let dataBuider = {
             id: id,
-            code: code,
             name: name,
             description: markdown.html,
             des_text: markdown.text,
@@ -263,72 +256,6 @@ export default function CreatePlayer() {
         <div className={cx("form-create", "container")}>
             <div className={cx("row")}>
                 <div className={cx("col-12", "col-md-6")}>
-                    <div className={cx("form-input")}>
-                        <label htmlFor="code">code</label> <br />
-                        <input
-                            type="number"
-                            id="code"
-                            value={code}
-                            onChange={(e) => setCode(e.target.value)}
-                        />
-                    </div>
-
-                    <div className={cx("form-input")}>
-                        <label htmlFor="name">name</label> <br />
-                        <input
-                            type="text"
-                            id="name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
-
-                    <div className={cx("form-input")}>
-                        <label htmlFor="nationality">nationality</label> <br />
-                        <input
-                            type="text"
-                            id="nationality"
-                            value={nationality}
-                            onChange={(e) => setNationality(e.target.value)}
-                        />
-                    </div>
-                    <div className={cx("form-input")}>
-                        <label htmlFor="birthday">birthday</label> <br />
-                        <input
-                            type="date"
-                            id="birthday"
-                            value={birthday}
-                            onChange={(e) => setBirthday(e.target.value)}
-                        />
-                    </div>
-
-                    <div className={cx("form-input", "col-3")}>
-                        <label htmlFor="height">
-                            height <span>(m)</span>
-                        </label>
-                        <br />
-                        <input
-                            type="text"
-                            id="height"
-                            value={height}
-                            onChange={(e) => setHeight(e.target.value)}
-                        />
-                    </div>
-
-                    <div className={cx("form-input", "col-3")}>
-                        <label htmlFor="weight">
-                            weight <span>(kg)</span>
-                        </label>
-                        <br />
-                        <input
-                            type="text"
-                            id="weight"
-                            value={weight}
-                            onChange={(e) => setWeight(e.target.value)}
-                        />
-                    </div>
-                </div>
-                <div className={cx("col-12", "col-md-6")}>
                     <div className={cx("form-upload-image")}>
                         <input
                             type="file"
@@ -354,6 +281,63 @@ export default function CreatePlayer() {
                             />
                         </div>
                     </div>
+                    <div className={cx("form-input")}>
+                        <label htmlFor="name">name</label> <br />
+                        <input
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </div>
+
+                    <div className={cx("form-input")}>
+                        <label htmlFor="nationality">nationality</label> <br />
+                        <input
+                            type="text"
+                            id="nationality"
+                            value={nationality}
+                            onChange={(e) => setNationality(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div className={cx("col-12", "col-md-6")}>
+                    <div className={cx("form-input", "col-3")}>
+                        <label htmlFor="height">
+                            height <span>(m)</span>
+                        </label>
+                        <br />
+                        <input
+                            type="text"
+                            id="height"
+                            value={height}
+                            onChange={(e) => setHeight(e.target.value)}
+                        />
+                    </div>
+
+                    <div className={cx("form-input", "col-3")}>
+                        <label htmlFor="weight">
+                            weight <span>(kg)</span>
+                        </label>
+                        <br />
+                        <input
+                            type="text"
+                            id="weight"
+                            value={weight}
+                            onChange={(e) => setWeight(e.target.value)}
+                        />
+                    </div>
+
+                    <div className={cx("form-input")}>
+                        <label htmlFor="birthday">birthday</label> <br />
+                        <input
+                            type="date"
+                            id="birthday"
+                            value={birthday}
+                            onChange={(e) => setBirthday(e.target.value)}
+                        />
+                    </div>
+
                     <div className={cx("form-select")}>
                         <label htmlFor="team">team</label> <br />
                         <select

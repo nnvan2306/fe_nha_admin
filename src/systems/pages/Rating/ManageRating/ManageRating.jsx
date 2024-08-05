@@ -11,6 +11,7 @@ import { BASE_URL } from "../../../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
 import { handleApi } from "../../../../service/handleApi";
+import { Empty } from "antd";
 
 const cx = classNames.bind(styles);
 
@@ -125,15 +126,14 @@ export default function ManageRating() {
                         </tr>
                     </thead>
                     <tbody>
-                        {listRating &&
-                            listRating.length > 0 &&
+                        {listRating && listRating.length > 0 ? (
                             listRating.map((item, index) => {
                                 return (
                                     <tr key={index}>
                                         <td className={cx("td-logo")}>
                                             <img
                                                 src={`${BASE_URL}${item?.Team?.logo_url}`}
-                                                alt=""
+                                                alt="logo"
                                             />
                                         </td>
                                         <td className={cx("td-team")}>
@@ -180,7 +180,16 @@ export default function ManageRating() {
                                         </td>
                                     </tr>
                                 );
-                            })}
+                            })
+                        ) : (
+                            <tr>
+                                <td colSpan="6">
+                                    <div className="empty-container">
+                                        <Empty style={{ padding: "40px" }} />
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

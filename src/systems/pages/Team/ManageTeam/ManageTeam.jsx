@@ -5,7 +5,7 @@ import {
     deletTeameService,
     getTeamservice,
 } from "../../../../service/teamService";
-import { Pagination } from "antd";
+import { Empty, Pagination } from "antd";
 import { useState } from "react";
 import usePagination from "../../../../hooks/usePagination";
 import { BASE_URL } from "../../../../utils/constants";
@@ -72,7 +72,6 @@ export default function ManageTeam() {
                 <table>
                     <thead>
                         <tr>
-                            <th className={cx("col-index")}>Code</th>
                             <th className={cx("col-logo")}>Logo</th>
                             <th className={cx("col-name")}>Team</th>
                             <th className={cx("col-des")}>Description</th>
@@ -81,12 +80,10 @@ export default function ManageTeam() {
                         </tr>
                     </thead>
                     <tbody>
-                        {data &&
-                            data.length > 0 &&
+                        {data && data.length > 0 ? (
                             data.map((item, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td>{item.code}</td>
                                         <td className={cx("td-logo")}>
                                             <img
                                                 src={`${BASE_URL}${item.logo_url}`}
@@ -131,7 +128,16 @@ export default function ManageTeam() {
                                         </td>
                                     </tr>
                                 );
-                            })}
+                            })
+                        ) : (
+                            <tr>
+                                <td colSpan="6">
+                                    <div className="empty-container">
+                                        <Empty style={{ padding: "40px" }} />
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

@@ -5,7 +5,7 @@ import {
     deleteSeasonService,
     getSeasonService,
 } from "../../../../service/seasonService";
-import { Pagination } from "antd";
+import { Empty, Pagination } from "antd";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import ModalUpdate from "./ModalUpdate/ModalUpdate";
@@ -71,19 +71,16 @@ export default function ManageSeason() {
                 <table>
                     <thead>
                         <tr>
-                            <th className={cx("col-index")}>Index</th>
                             <th className={cx("col-season")}>Season</th>
                             <th className={cx("col-des")}>Description</th>
                             <th className={cx("col-active")}>Active</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {data &&
-                            data.length > 0 &&
+                        {data && data.length > 0 ? (
                             data.map((item, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td>{item.index}</td>
                                         <td>{item.name}</td>
                                         <td>
                                             <div
@@ -118,7 +115,16 @@ export default function ManageSeason() {
                                         </td>
                                     </tr>
                                 );
-                            })}
+                            })
+                        ) : (
+                            <tr>
+                                <td colSpan="4">
+                                    <div className="empty-container">
+                                        <Empty style={{ padding: "40px" }} />
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

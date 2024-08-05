@@ -9,7 +9,7 @@ import usePagination from "../../../../hooks/usePagination";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { handleApi } from "../../../../service/handleApi";
-import { Pagination } from "antd";
+import { Empty, Pagination } from "antd";
 import moment from "moment";
 
 const cx = classNames.bind(styles);
@@ -103,8 +103,6 @@ export default function ManageBill() {
         handleChangePage(index);
     };
 
-    console.log(data);
-
     return (
         <div className={cx("form-bill")}>
             <table>
@@ -125,8 +123,7 @@ export default function ManageBill() {
                 </thead>
 
                 <tbody>
-                    {data &&
-                        data.length > 0 &&
+                    {data && data.length > 0 ? (
                         data.map((item, index) => {
                             return (
                                 <tr key={index}>
@@ -200,7 +197,16 @@ export default function ManageBill() {
                                     </td>
                                 </tr>
                             );
-                        })}
+                        })
+                    ) : (
+                        <tr>
+                            <td colSpan="12">
+                                <div className="empty-container">
+                                    <Empty style={{ padding: "40px" }} />
+                                </div>
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
             {meta && meta.currentPage <= meta.totalPages && (

@@ -64,7 +64,7 @@ export default function CreateStadium() {
             return false;
         }
 
-        if (location === RouterDTO.stadium.update) {
+        if (location !== RouterDTO.stadium.update) {
             if (isChangeFileUpdate) {
                 if (!stadiumImage) {
                     Swal.fire({
@@ -201,7 +201,10 @@ export default function CreateStadium() {
                         />
                     </div>
 
-                    <div className={cx("form-input")}>
+                    <div
+                        className={cx("form-input")}
+                        style={{ marginTop: "20px" }}
+                    >
                         <label htmlFor="location">Location</label> <br />
                         <input
                             type="text"

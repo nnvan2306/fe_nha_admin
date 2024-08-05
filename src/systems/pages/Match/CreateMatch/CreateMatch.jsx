@@ -144,7 +144,7 @@ export default function CreateMatch() {
             !seasonId ||
             !date ||
             !hour ||
-            !video
+            (!video && location !== RouterDTO.match.updateMatch)
         ) {
             Swal.fire({
                 icon: "warning",

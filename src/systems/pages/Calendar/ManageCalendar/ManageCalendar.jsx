@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
 import ModalTicket from "./ModalTicket/ModalTicket";
 import { handleApi } from "../../../../service/handleApi";
+import { Empty } from "antd";
 
 const cx = classNames.bind(styles);
 
@@ -20,6 +21,7 @@ export default function ManageCalendar() {
     const [hostId, setHostId] = useState(0);
     const [guestId, setGuestId] = useState(0);
     const [listCalendar, setListCalendar] = useState([]);
+    console.log(listCalendar);
 
     const navigate = useNavigate();
 
@@ -57,7 +59,7 @@ export default function ManageCalendar() {
 
     const handleDelete = (data) => {
         Swal.fire({
-            title: `Do you want to delete calendar ${data.Teams[0].name} vs ${data.Teams[1].name} ?`,
+            title: `Do you want to delete calendar ${data?.Teams[0]?.name} vs ${data?.Teams[1]?.name} ?`,
             showCancelButton: true,
             confirmButtonText: "Yes",
         }).then((result) => {
@@ -138,8 +140,7 @@ export default function ManageCalendar() {
                     </tr>
                 </thead>
                 <tbody>
-                    {listCalendar &&
-                        listCalendar.length > 0 &&
+                    {listCalendar && listCalendar.length > 0 ? (
                         listCalendar.map((item, index) => {
                             return (
                                 <tr key={index}>
@@ -196,7 +197,16 @@ export default function ManageCalendar() {
                                     </td>
                                 </tr>
                             );
-                        })}
+                        })
+                    ) : (
+                        <tr>
+                            <td colSpan="6">
+                                <div className="empty-container">
+                                    <Empty style={{ padding: "40px" }} />
+                                </div>
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
         </div>

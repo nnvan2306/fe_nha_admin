@@ -41,7 +41,7 @@
 
                 th {
                     text-align: center;
-                    border    : 1px solid #000;
+                    border    : 1px solid #ccc;
                     padding   : 10px;
                     font-size : 20px;
 
@@ -208,6 +208,13 @@
                     }
                 }
 
+                .empty-container {
+                    display        : flex;
+                    justify-content: center;
+                    align-items    : center;
+                    height         : 100px;
+
+                }
 
             }
 

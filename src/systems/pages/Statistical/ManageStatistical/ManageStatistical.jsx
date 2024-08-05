@@ -92,7 +92,7 @@ export default function ManageStatistical() {
                 <div className={cx("input-search")}>
                     <input
                         type="text"
-                        placeholder="Please enter the procedure code or name"
+                        placeholder="Please enter name player"
                         value={textSearch}
                         onChange={(e) => setTextSearch(e.target.value)}
                     />

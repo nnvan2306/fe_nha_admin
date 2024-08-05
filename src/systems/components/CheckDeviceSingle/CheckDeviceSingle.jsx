@@ -19,6 +19,8 @@ export default function CheckDeviceSingle({ children }) {
     };
 
     useEffect(() => {
+        console.log(isLogin);
+
         if (!isLogin) {
             handleDispatchLogoutAndLogoutService();
             navigate(RouterDTO.auth.login);

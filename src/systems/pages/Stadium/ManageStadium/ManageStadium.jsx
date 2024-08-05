@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
 import { BASE_URL } from "../../../../utils/constants";
 import { handleApi } from "../../../../service/handleApi";
+import { Empty } from "antd";
 
 const cx = classNames.bind(styles);
 
@@ -72,8 +73,7 @@ export default function ManageStadium() {
                     </tr>
                 </thead>
                 <tbody>
-                    {listStadium &&
-                        listStadium.length > 0 &&
+                    {listStadium && listStadium.length > 0 ? (
                         listStadium.map((item, index) => {
                             return (
                                 <tr key={index}>
@@ -105,7 +105,16 @@ export default function ManageStadium() {
                                     </td>
                                 </tr>
                             );
-                        })}
+                        })
+                    ) : (
+                        <tr>
+                            <td colSpan="4">
+                                <div className="empty-container">
+                                    <Empty style={{ padding: "40px" }} />
+                                </div>
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
         </div>

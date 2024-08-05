@@ -7,7 +7,7 @@ import {
     getMatchService,
 } from "../../../../service/matchService";
 import usePagination from "../../../../hooks/usePagination";
-import { Pagination, Modal, Button, Row, Col } from "antd";
+import { Pagination, Modal, Button, Row, Col, Empty } from "antd";
 import { BASE_URL } from "../../../../utils/constants";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -240,8 +240,7 @@ export default function ManageMatch() {
                         </tr>
                     </thead>
                     <tbody>
-                        {data &&
-                            data.length > 0 &&
+                        {data && data.length > 0 ? (
                             data.map((item, index) => {
                                 return (
                                     <tr key={index}>
@@ -340,7 +339,16 @@ export default function ManageMatch() {
                                         </td>
                                     </tr>
                                 );
-                            })}
+                            })
+                        ) : (
+                            <tr>
+                                <td colSpan="6">
+                                    <div className="empty-container">
+                                        <Empty style={{ padding: "40px" }} />
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

@@ -21,7 +21,6 @@ const cx = classNames.bind(styles);
 export default function CreateTeam() {
     const [isLoading, setIsLoading] = useState(false);
     const [id, setId] = useState(0);
-    const [code, setCode] = useState(0);
     const [name, setName] = useState("");
     const [logoUrlUpdate, setLogoUrlUpdate] = useState("");
     const [logo, setLogo] = useState(null);
@@ -39,7 +38,6 @@ export default function CreateTeam() {
     useEffect(() => {
         if (location === RouterDTO.team.updateTeam) {
             setId(state.id);
-            setCode(state.code);
             setName(state.name);
             setLogoUrlUpdate(state.logo_url);
             setMarkdown({
@@ -59,7 +57,6 @@ export default function CreateTeam() {
     const reSetValue = () => {
         setId(0);
         setIsChangeFileUpload(false);
-        setCode(0);
         setName("");
         setLogo(null);
         setLogoPreview("");
@@ -87,7 +84,7 @@ export default function CreateTeam() {
     };
 
     const handleValidate = () => {
-        if (!code || !name || !markdown.text || !markdown.html || !logo) {
+        if (!name || !markdown.text || !markdown.html || !logo) {
             Swal.fire({
                 icon: "warning",
                 title: "Please enter complete information !",
@@ -98,7 +95,7 @@ export default function CreateTeam() {
     };
 
     const handleValidateUpdate = () => {
-        if (!code || !name || !markdown.text || !markdown.html) {
+        if (!name || !markdown.text || !markdown.html) {
             Swal.fire({
                 icon: "warning",
                 title: "Please enter complete information !",
@@ -118,7 +115,6 @@ export default function CreateTeam() {
             return;
         }
         let dataBuider = {
-            code: code,
             name: name,
             file: logo,
             description: markdown.html,
@@ -155,14 +151,12 @@ export default function CreateTeam() {
 
         let dataBuider = {
             id: id,
-            code: code,
             name: name,
             logo_url: logoUrlUpdate,
             description: markdown.html,
             des_text: markdown.text,
             isChangeFile: isChangeFileUpload,
         };
-        console.log(dataBuider);
         if (isChangeFileUpload) {
             dataBuider.file = logo;
         }
@@ -190,28 +184,6 @@ export default function CreateTeam() {
         <div className={cx("form-create", "container")}>
             <div className={cx("row")}>
                 <div className={cx("col-12", "col-md-6")}>
-                    <div className={cx("form-input")}>
-                        <label htmlFor="code">code</label> <br />
-                        <input
-                            type="number"
-                            id="code"
-                            value={code}
-                            onChange={(e) => setCode(e.target.value)}
-                        />
-                    </div>
-
-                    <div className={cx("form-input")}>
-                        <label htmlFor="name">name</label> <br />
-                        <input
-                            type="text"
-                            id="name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
-                </div>
-
-                <div className={cx("col-12", "col-md-6")}>
                     <div className={cx("form-upload-image")}>
                         <input
                             type="file"
@@ -237,6 +209,21 @@ export default function CreateTeam() {
                                 alt=""
                             />
                         </div>
+                    </div>
+                </div>
+
+                <div
+                    className={cx("col-12", "col-md-6")}
+                    style={{ display: "flex", alignItems: "start" }}
+                >
+                    <div className={cx("form-input")}>
+                        <label htmlFor="name">name</label> <br />
+                        <input
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
                     </div>
                 </div>
             </div>

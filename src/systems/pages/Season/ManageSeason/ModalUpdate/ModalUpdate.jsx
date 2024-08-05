@@ -18,7 +18,6 @@ const ModalUpdate = memo(function ModalUpdate({
     funcReLoad,
 }) {
     const [isLoading, setIsLoading] = useState(false);
-    const [index, setIndex] = useState(infoSeason?.index);
     const [name, setName] = useState(infoSeason?.name);
     const [markdown, setMarkdown] = useState({
         text: infoSeason?.des_text,
@@ -35,7 +34,7 @@ const ModalUpdate = memo(function ModalUpdate({
     };
 
     const handleValidate = () => {
-        if (!index || !name || !markdown.html || !markdown.text) {
+        if (!name || !markdown.html || !markdown.text) {
             Swal.fire({
                 icon: "warning",
                 title: "Please enter complete information !",
@@ -56,7 +55,6 @@ const ModalUpdate = memo(function ModalUpdate({
 
         let dataBuider = {
             id: infoSeason?.id,
-            index: index,
             name: name,
             description: markdown.html,
             des_text: markdown.text,
@@ -92,15 +90,6 @@ const ModalUpdate = memo(function ModalUpdate({
             <div className={cx("form-input")}>
                 <div className={cx("container")}>
                     <div className={cx("row")}>
-                        <div className={cx("col-12", "col-md-6", "form-col")}>
-                            <label htmlFor="">Index</label> <br />
-                            <input
-                                type="number"
-                                value={index}
-                                onChange={(e) => setIndex(e.target.value)}
-                            />
-                        </div>
-
                         <div className={cx("col-12", "col-md-6", "form-col")}>
                             <label htmlFor="">Name</label> <br />
                             <input

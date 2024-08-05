@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./ManagePlayer.module.scss";
 import Swal from "sweetalert2";
-import { Pagination } from "antd";
+import { Empty, Pagination } from "antd";
 import { useState } from "react";
 import usePagination from "../../../../hooks/usePagination";
 import { BASE_URL } from "../../../../utils/constants";
@@ -35,10 +35,6 @@ export default function ManagePlayer() {
 
     const handleReload = () => {
         setIsReload(!isReload);
-    };
-
-    const handleToViewStatistical = () => {
-        // navigate(RouterDTO.team.managePlayerOfTeam);
     };
 
     const handleDelete = (data) => {
@@ -84,7 +80,6 @@ export default function ManagePlayer() {
                 <table>
                     <thead>
                         <tr>
-                            <th className={cx("col-code")}>Code</th>
                             <th className={cx("col-avatar")}>Avavtar</th>
                             <th className={cx("col-name")}>Name</th>
                             <th className={cx("col-birthday")}>Birthday</th>
@@ -97,19 +92,15 @@ export default function ManagePlayer() {
                             <th className={cx("col-weight")}>
                                 weight <span>(kg)</span>
                             </th>
-                            <th className={cx("col-statistical")}>
-                                Statistical
-                            </th>
+
                             <th className={cx("col-active")}>Active</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {data &&
-                            data.length > 0 &&
+                        {data && data.length > 0 ? (
                             data.map((item, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td>{item.code}</td>
                                         <td className={cx("td-avatar")}>
                                             <img
                                                 src={`${BASE_URL}${item.avatar_url}`}
@@ -125,17 +116,6 @@ export default function ManagePlayer() {
                                         <td>{item.nationality}</td>
                                         <td>{item.height}</td>
                                         <td>{item.weight}</td>
-                                        <td className={cx("td-statistical")}>
-                                            <div>
-                                                <button
-                                                    onClick={
-                                                        handleToViewStatistical
-                                                    }
-                                                >
-                                                    View
-                                                </button>
-                                            </div>
-                                        </td>
                                         <td>
                                             <div className={cx("form-active")}>
                                                 <button
@@ -162,7 +142,16 @@ export default function ManagePlayer() {
                                         </td>
                                     </tr>
                                 );
-                            })}
+                            })
+                        ) : (
+                            <tr>
+                                <td colSpan="8">
+                                    <div className="empty-container">
+                                        <Empty style={{ padding: "40px" }} />
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>
