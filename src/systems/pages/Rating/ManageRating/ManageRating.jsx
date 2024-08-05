@@ -54,7 +54,7 @@ export default function ManageRating() {
 
     const handleDeleteRating = async (rating) => {
         Swal.fire({
-            title: `Do you want to delete rating ${rating.Team.name} ?`,
+            title: `Do you want to delete rating ${rating?.Team?.name} ?`,
             showCancelButton: true,
             confirmButtonText: "Yes",
         }).then((result) => {
