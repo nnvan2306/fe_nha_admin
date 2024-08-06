@@ -266,7 +266,7 @@ export default function ManageStatistical() {
                                             })
                                         ) : (
                                             <tr>
-                                                <td colSpan="6">
+                                                <td colSpan="8">
                                                     <div className="empty-container">
                                                         <Empty
                                                             style={{
