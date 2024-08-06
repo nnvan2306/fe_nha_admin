@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../../../utils/routes.dto";
 import Swal from "sweetalert2";
 import { handleApi } from "../../../../service/handleApi";
+import { Empty } from "antd";
 const cx = classNames.bind(styles);
 
 export default function ManageStatistical() {
@@ -43,6 +44,7 @@ export default function ManageStatistical() {
     const handleView = async (player) => {
         setPlayerView(player);
         let res = await getStatisticService(player.id);
+        console.log(res);
         if (res.errorCode === 0) {
             setIsOptionItems(false);
             setListStatistic(res.data);
@@ -187,7 +189,7 @@ export default function ManageStatistical() {
                                     </thead>
                                     <tbody>
                                         {listStatistic &&
-                                            listStatistic.length > 0 &&
+                                        listStatistic.length > 0 ? (
                                             listStatistic.map((item, index) => {
                                                 return (
                                                     <tr key={index}>
@@ -261,7 +263,20 @@ export default function ManageStatistical() {
                                                         </td>
                                                     </tr>
                                                 );
-                                            })}
+                                            })
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="6">
+                                                    <div className="empty-container">
+                                                        <Empty
+                                                            style={{
+                                                                padding: "40px",
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )}
                                     </tbody>
                                 </table>
                             </div>

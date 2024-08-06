@@ -8,14 +8,14 @@ const cx = classNames.bind(styles);
 
 export default function ControlSwap() {
     const [control, setControl] = useState([
-        {
-            label: "Create Season",
-            path: RouterDTO.season.allSeason,
-        },
-        {
-            label: "All Season",
-            path: RouterDTO.season.allSeason,
-        },
+        // {
+        //     label: "Create Season",
+        //     path: RouterDTO.season.allSeason,
+        // },
+        // {
+        //     label: "All Season",
+        //     path: RouterDTO.season.allSeason,
+        // },
     ]);
 
     const location = useLocation().pathname;
@@ -44,7 +44,7 @@ export default function ControlSwap() {
         ) {
             setControl([
                 {
-                    label: "ALl Team",
+                    label: "All Team",
                     path: RouterDTO.team.allTeam,
                 },
                 {
@@ -60,7 +60,7 @@ export default function ControlSwap() {
         ) {
             setControl([
                 {
-                    label: "ALl Player",
+                    label: "All Player",
                     path: RouterDTO.player.allPlayer,
                 },
                 {
@@ -76,7 +76,7 @@ export default function ControlSwap() {
         ) {
             setControl([
                 {
-                    label: "ALl Statistical",
+                    label: "All Statistical",
                     path: RouterDTO.statistical.allStatistical,
                 },
             ]);
@@ -88,7 +88,7 @@ export default function ControlSwap() {
         ) {
             setControl([
                 {
-                    label: "ALl Rating",
+                    label: "All Rating",
                     path: RouterDTO.rating.allRating,
                 },
                 {
@@ -104,7 +104,7 @@ export default function ControlSwap() {
         ) {
             setControl([
                 {
-                    label: "ALl Match",
+                    label: "All Match",
                     path: RouterDTO.match.allMatch,
                 },
                 {
@@ -120,7 +120,7 @@ export default function ControlSwap() {
         ) {
             setControl([
                 {
-                    label: "ALl Stadium",
+                    label: "All Stadium",
                     path: RouterDTO.stadium.allStadium,
                 },
                 {
@@ -136,7 +136,7 @@ export default function ControlSwap() {
         ) {
             setControl([
                 {
-                    label: "ALl Stand",
+                    label: "All Stand",
                     path: RouterDTO.stand.allStand,
                 },
                 {
@@ -152,7 +152,7 @@ export default function ControlSwap() {
         ) {
             setControl([
                 {
-                    label: "ALl Calendar",
+                    label: "All Calendar",
                     path: RouterDTO.calendar.allCalendar,
                 },
                 {
@@ -168,7 +168,7 @@ export default function ControlSwap() {
         ) {
             setControl([
                 {
-                    label: "ALl Bill",
+                    label: "All Bill",
                     path: RouterDTO.bill.allBill,
                 },
             ]);
