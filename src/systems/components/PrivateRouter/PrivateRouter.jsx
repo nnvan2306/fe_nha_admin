@@ -19,7 +19,7 @@ export default function PrivateRouter({ children }) {
     const handleDispatchLogoutAndLogOutService = async () => {
         dispatch(logoutAction());
         await handleLogoutService();
-        navigate(RouterDTO.auth.login);
+        navigate(RouterDTO.auth.register);
     };
 
     useEffect(() => {
