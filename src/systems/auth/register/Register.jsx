@@ -28,7 +28,7 @@ export default function Register() {
 
     useEffect(() => {
         if (!isLogin) {
-            navigate("/auth/register");
+            navigate("/auth/login");
         }
     }, [navigate, isLogin]);
 
