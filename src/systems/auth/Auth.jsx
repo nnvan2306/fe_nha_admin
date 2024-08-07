@@ -4,7 +4,6 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Register from "./register/Register";
 import { useSelector } from "react-redux";
-import { BASE_URL } from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { RouterDTO } from "../../utils/routes.dto";
 
@@ -25,8 +24,8 @@ export default function Auth() {
     return (
         <div className={cx("form-home")}>
             <img
-                // src="https://baokhanhhoa.vn/file/e7837c02857c8ca30185a8c39b582c03/112023/cang-thang-cuoc-dua-top-4-1_20231120021400.gif"
-                src={`${BASE_URL}/images/thumbnailAuth.png`}
+                src="https://vcdn1-thethao.vnecdn.net/2020/09/11/top-1599798009-5478-1599798043.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=9kZv6VKTsxu7QK-NQ035Pw"
+                // src={`${BASE_URL}/images/thumbnailAuth.png`}
                 alt=""
             />
             <div className={cx("form-control")}>
