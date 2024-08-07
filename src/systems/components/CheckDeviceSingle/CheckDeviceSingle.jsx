@@ -19,11 +19,9 @@ export default function CheckDeviceSingle({ children }) {
     };
 
     useEffect(() => {
-        console.log(isLogin);
-
         if (!isLogin) {
             handleDispatchLogoutAndLogoutService();
-            navigate(RouterDTO.auth.login);
+            navigate(RouterDTO.auth.register);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [navigate]);
