@@ -202,7 +202,10 @@ export default function CreateMatch() {
             if (res.errorCode === 0) {
                 Swal.fire({
                     icon: "success",
-                    title: "create match successfully",
+                    title:
+                        location === RouterDTO.match.updateMatch
+                            ? "update match successfully"
+                            : "create match successfully",
                 });
                 if (location === RouterDTO.match.updateMatch) {
                     navigate(RouterDTO.match.allMatch);
