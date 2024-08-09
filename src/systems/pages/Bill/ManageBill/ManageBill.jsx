@@ -26,6 +26,8 @@ export default function ManageBill() {
         is_reload: isReload,
     });
 
+    console.log(data);
+
     const handleReload = () => {
         setIsReload(!isReload);
     };
