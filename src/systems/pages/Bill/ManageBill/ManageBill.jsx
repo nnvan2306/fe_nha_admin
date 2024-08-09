@@ -26,8 +26,6 @@ export default function ManageBill() {
         is_reload: isReload,
     });
 
-    console.log(data);
-
     const handleReload = () => {
         setIsReload(!isReload);
     };
@@ -132,7 +130,7 @@ export default function ManageBill() {
                                 <tr key={index}>
                                     <td className={cx("td-match")}>
                                         <ModalDetailCalendar
-                                            data={item.Calendar}
+                                            data={item.Ticket.Calendar}
                                         />
                                     </td>
                                     <td className={cx("td-date")}>

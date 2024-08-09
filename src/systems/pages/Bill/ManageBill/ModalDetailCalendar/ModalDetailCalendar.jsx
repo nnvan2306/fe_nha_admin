@@ -37,7 +37,7 @@ export default function ModalDetailCalendar({ data }) {
                     <div className={cx("header")}>
                         <p className="opacity-[0.5]">
                             <i className="bi bi-geo-alt mr-[10px]"></i>
-                            {data?.Stadium.name}
+                            {data?.Stadium?.name}
                             {data?.Stadium?.location}
                         </p>
                     </div>
