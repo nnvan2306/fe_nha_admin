@@ -1,7 +1,7 @@
 import { Button, Modal } from "antd";
 import { useState } from "react";
 import classNames from "classnames/bind";
-import styles from "./ManageBill.module.scss";
+import styles from "./ModalDetailCalendar.module.scss";
 
 const cx = classNames.bind(styles);
 
