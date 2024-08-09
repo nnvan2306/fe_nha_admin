@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Button, Modal } from "antd";
 import { useState } from "react";
 import classNames from "classnames/bind";
@@ -9,7 +10,6 @@ const cx = classNames.bind(styles);
 export default function ModalDetailCalendar({ data }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    console.log(data);
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -24,17 +24,23 @@ export default function ModalDetailCalendar({ data }) {
     return (
         <div className="">
             <Button type="primary" onClick={showModal}>
-                View Match
+                Stadium
             </Button>
             <Modal
-                title="View Match"
+                title="Stadium"
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
                 footer=""
             >
                 <div className={cx("form-main")}>
-                    <div className={cx("header")}></div>
+                    <div className={cx("header")}>
+                        <p className="opacity-[0.5]">
+                            <i className="bi bi-geo-alt mr-[10px]"></i>
+                            {data?.Stadium.name}
+                            {data?.Stadium?.location}
+                        </p>
+                    </div>
                 </div>
             </Modal>
         </div>
