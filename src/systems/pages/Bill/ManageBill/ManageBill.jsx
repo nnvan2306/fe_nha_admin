@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import { handleApi } from "../../../../service/handleApi";
 import { Empty, Pagination } from "antd";
 import moment from "moment";
+import ModalDetailCalendar from "./ModalDetailCalendar/ModalDetailCalendar";
 
 const cx = classNames.bind(styles);
 export default function ManageBill() {
@@ -112,7 +113,7 @@ export default function ManageBill() {
                     <tr>
                         <th className={cx("th-match")}>Match</th>
                         <th className={cx("th-date")}>Date</th>
-                        <th className={cx("th-stand")}>Stand</th>
+                        <th className={cx("th-stand")}>Stand (Total Ticket)</th>
                         <th className={cx("th-email")}>email</th>
                         <th className={cx("th-phone")}>Phone</th>
                         <th className={cx("th-price ")}>Price</th>
@@ -129,14 +130,18 @@ export default function ManageBill() {
                         data.map((item, index) => {
                             return (
                                 <tr key={index}>
-                                    <td className={cx("td-match")}>Match</td>
+                                    <td className={cx("td-match")}>
+                                        <ModalDetailCalendar
+                                            data={item.Ticket}
+                                        />
+                                    </td>
                                     <td className={cx("td-date")}>
                                         {moment(
                                             item.Ticket.Calendar.date
                                         ).format("DD/MM/YYYY")}
                                     </td>
                                     <td className={cx("td-stand")}>
-                                        {item.Ticket.name}
+                                        {item.Ticket.name} ({item.totalTicket})
                                     </td>
                                     <td className={cx("td-email")}>
                                         {item.email}
